@@ -6,3 +6,7 @@ build
 .env
 .env.*
 *.log
+word-addin
+!word-addin/src
+!word-addin/src/**
+

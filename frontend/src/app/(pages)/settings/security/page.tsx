@@ -32,6 +32,7 @@ import {
     knownErrorCodeMessage,
     userFacingApiError,
 } from "@/app/lib/userFacingError";
+import { branding } from "@/app/lib/branding";
 
 const MFA_VERIFICATION_ERROR_MESSAGES = {
     mfa_verification_failed: "The verification code is invalid or expired.",
@@ -256,13 +257,13 @@ export default function SecurityPage() {
 
             let data;
             try {
-                data = await enrollMfa("Mike");
+                data = await enrollMfa(branding.productName);
             } catch (error) {
                 if (!isDuplicateFriendlyNameError(error)) throw error;
                 traceMfa("[security/mfa] retrying enrollment with unique name", {
                     error: error instanceof Error ? error.message : String(error),
                 });
-                data = await enrollMfa(`Mike ${Date.now()}`);
+                data = await enrollMfa(`${branding.productName} ${Date.now()}`);
             }
             traceMfa("[security/mfa] enrollment created", {
                 factorId: data.id,

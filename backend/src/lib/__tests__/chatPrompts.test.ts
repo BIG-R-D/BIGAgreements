@@ -1,12 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { SYSTEM_PROMPT, buildSystemPrompt } from "../chat/prompts";
 import { COURTLISTENER_SYSTEM_PROMPT } from "../chat/tools/courtlistenerTools";
+import { productBranding } from "../branding";
 
 describe("buildSystemPrompt", () => {
     it("always contains the core identity and rules", () => {
         for (const prompt of [buildSystemPrompt(true), buildSystemPrompt(false)]) {
             expect(prompt).toContain(
-                "You are Mike, an AI legal assistant for lawyers and legal professionals.",
+                `You are ${productBranding().assistantName}, an AI legal assistant for lawyers and legal professionals.`,
             );
             expect(prompt).toContain("Do not fabricate document content.");
             expect(prompt).toContain(

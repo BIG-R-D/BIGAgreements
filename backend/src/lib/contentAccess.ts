@@ -6,6 +6,7 @@
 import type { createServerSupabase } from "./supabase";
 import { isProjectRole, type ProjectRole } from "./permissions";
 import { findProfileUserByEmail } from "./userLookup";
+import { productBranding } from "./branding";
 
 type Db = ReturnType<typeof createServerSupabase>;
 
@@ -151,7 +152,7 @@ export async function upsertContentGrant(
             return {
                 ok: false,
                 kind: "validation",
-                detail: `${email} does not belong to a Mike user.`,
+                detail: `${email} does not belong to a ${productBranding().productName} user.`,
             };
     } catch (error) {
         return {

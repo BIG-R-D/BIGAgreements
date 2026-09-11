@@ -6,6 +6,7 @@ import {
     removeGrantsForEmail,
     upsertProjectGrant,
 } from "../projectAccess";
+import { productBranding } from "../branding";
 
 type Row = Record<string, unknown>;
 
@@ -257,7 +258,7 @@ describe("project access grants", () => {
         ).resolves.toEqual({
             ok: false,
             kind: "validation",
-            detail: "future@firm.example does not belong to a Mike user.",
+            detail: `future@firm.example does not belong to a ${productBranding().productName} user.`,
         });
         expect(await grantsOf(db, "p1")).toEqual([]);
     });

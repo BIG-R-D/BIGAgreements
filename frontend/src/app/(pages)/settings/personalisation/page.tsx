@@ -10,6 +10,7 @@ import {
 } from "@/app/components/settings/PersonalisationFields";
 import { useUserProfile } from "@/app/contexts/UserProfileContext";
 import type { PersonalisationDetails } from "@/app/lib/mikeApi";
+import { branding } from "@/app/lib/branding";
 
 function fieldStatus(
     field: PersonalisationField,
@@ -147,7 +148,7 @@ function PersonalisationForm({
                     Personalisation
                 </h2>
                 <p className="text-sm text-gray-500">
-                    Tell Mike about your role and practice so responses can be
+                    Tell {branding.productName} about your role and practice so responses can be
                     tailored to your professional context.
                 </p>
                 <SettingsSection>

@@ -29,6 +29,8 @@ import {
 import { AuthDivider } from "@/app/components/auth/AuthDivider";
 import { GoogleAuthButton } from "@/app/components/auth/GoogleAuthButton";
 import { FieldLabel } from "@/app/components/ui/form-field";
+import { branding } from "@/app/lib/branding";
+import { OpenSourceNotice } from "@/app/components/shared/OpenSourceNotice";
 
 function SignupContent() {
     const router = useRouter();
@@ -203,7 +205,7 @@ function SignupContent() {
                             <div className="text-center text-xs text-gray-500">
                                 By signing up, you agree to our{" "}
                                 <Link
-                                    href="https://mikeoss.com/terms"
+                                    href={branding.termsUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-blue-600 hover:underline"
@@ -212,7 +214,7 @@ function SignupContent() {
                                 </Link>{" "}
                                 and{" "}
                                 <Link
-                                    href="https://mikeoss.com/privacy"
+                                    href={branding.privacyUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-blue-600 hover:underline"
@@ -220,6 +222,7 @@ function SignupContent() {
                                     Privacy Policy
                                 </Link>
                             </div>
+                            <OpenSourceNotice />
                             <PillButton
                                 type="submit"
                                 tone="black"

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, EB_Garamond } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/app/components/providers";
+import { branding } from "@/app/lib/branding";
 
 const inter = Inter({
     variable: "--font-inter",
@@ -15,10 +16,9 @@ const ebGaramond = EB_Garamond({
 });
 
 export const metadata: Metadata = {
-    metadataBase: new URL("https://app.mikeoss.com"),
-    title: "Mike - AI Legal Platform",
-    description:
-        "AI-powered legal document analysis and contract review platform.",
+    metadataBase: new URL(branding.publicAppUrl),
+    title: branding.productName,
+    description: branding.description,
     icons: {
         icon: [
             { url: "/icon.svg", type: "image/svg+xml" },
@@ -28,25 +28,23 @@ export const metadata: Metadata = {
     },
     openGraph: {
         type: "website",
-        url: "https://app.mikeoss.com",
-        siteName: "Mike",
-        title: "Mike - AI Legal Platform",
-        description:
-            "AI-powered legal document analysis and contract review platform.",
+        url: branding.publicAppUrl,
+        siteName: branding.productName,
+        title: branding.productName,
+        description: branding.description,
         images: [
             {
                 url: "/link-image.jpg",
                 width: 1200,
                 height: 651,
-                alt: "Mike",
+                alt: branding.productName,
             },
         ],
     },
     twitter: {
         card: "summary_large_image",
-        title: "Mike - AI Legal Platform",
-        description:
-            "AI-powered legal document analysis and contract review platform.",
+        title: branding.productName,
+        description: branding.description,
         images: ["/link-image.jpg"],
     },
 };

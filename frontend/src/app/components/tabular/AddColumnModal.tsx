@@ -15,6 +15,7 @@ import {
     LIQUID_GLASS_FLOAT_CLASS,
     LIQUID_GLASS_SUBTLE_CLASS,
 } from "@/shared/ui/LiquidGlassUI";
+import { branding } from "@/app/lib/branding";
 
 interface ColumnDraft {
     name: string;
@@ -513,7 +514,7 @@ export function AddColumnModal({ open, existingCount, onClose, onAdd, editingCol
                                             prompt: e.target.value,
                                         })
                                     }
-                                    placeholder="Write the analysis prompt — describe what Mike should extract from each document for this column…"
+                                    placeholder={`Write the analysis prompt — describe what ${branding.productName} should extract from each document for this column…`}
                                     className="mt-2 min-h-36"
                                 />
                                                 </>

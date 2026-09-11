@@ -49,6 +49,7 @@ import {
   attachLatestVersionNumbers,
 } from "../lib/documentVersions";
 import { ensureResourceAccessSummaries } from "../lib/resourceAccessSummary";
+import { productBranding } from "../lib/branding";
 
 export const workflowsRouter = Router();
 
@@ -123,7 +124,7 @@ type OpenSourceSubmissionSummary = Pick<
 };
 
 const DEFAULT_WORKFLOW_CONTRIBUTOR: WorkflowContributor = {
-  name: "Mike",
+  name: productBranding().productName,
   organisation: null,
   role: null,
   linkedin: null,
@@ -1661,7 +1662,7 @@ workflowsRouter.post(
     }
     if (missingEmails.length > 0)
       return void res.status(400).json({
-        detail: `${missingEmails[0]} does not belong to a Mike user.`,
+        detail: `${missingEmails[0]} does not belong to a ${productBranding().productName} user.`,
       });
 
     const rows = normalizedEmails.map((email: string) => ({

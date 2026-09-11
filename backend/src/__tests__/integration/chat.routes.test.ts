@@ -267,6 +267,7 @@ vi.mock("../../lib/llm", async (importOriginal) => {
 
 import { app } from "../../app";
 import { createServerSupabase } from "../../lib/supabase";
+import { productBranding } from "../../lib/branding";
 
 const VALID_BODY = {
     messages: [{ role: "user", content: "hello" }],
@@ -1735,7 +1736,7 @@ describe("chat grants, deletion and roster", () => {
 
         expect(res.status).toBe(400);
         expect(res.body.detail).toBe(
-            "future@example.com does not belong to a Mike user.",
+            `future@example.com does not belong to a ${productBranding().productName} user.`,
         );
     });
 

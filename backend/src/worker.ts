@@ -18,6 +18,7 @@
 import "dotenv/config";
 
 import { startAllWorkers, stopAllWorkers } from "./workerRuntime";
+import { productBranding } from "./lib/branding";
 
 startAllWorkers();
 
@@ -31,7 +32,7 @@ startAllWorkers();
 // not handles — so the entrypoint needs one ref'd handle of its own. This is
 // it, and it is cleared on shutdown so the process can still exit promptly.
 const keepAlive = setInterval(() => {}, 60_000);
-console.log("Mike worker process running");
+console.log(`${productBranding().productName} worker process running`);
 
 let shuttingDown = false;
 async function shutdown(signal: string) {

@@ -17,6 +17,7 @@
 import JSZip from "jszip";
 import { XMLParser, XMLBuilder } from "fast-xml-parser";
 import fastDiff from "fast-diff";
+import { productBranding } from "./branding";
 
 // ---------------------------------------------------------------------------
 // JSZip path helpers
@@ -790,7 +791,7 @@ export async function applyTrackedEdits(
     edits: EditInput[],
     opts?: { author?: string },
 ): Promise<ApplyTrackedEditsResult> {
-    const author = opts?.author ?? "Mike";
+    const author = opts?.author ?? productBranding().documentAuthor;
     const now = new Date().toISOString();
 
     const zip = await JSZip.loadAsync(bytes);

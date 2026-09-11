@@ -16,6 +16,7 @@ import {
     lookupUserByEmail,
 } from "@/app/lib/mikeApi";
 import { NewProjectModal } from "./NewProjectModal";
+import { branding } from "@/app/lib/branding";
 
 const { useUserProfile } = vi.hoisted(() => ({
     useUserProfile: vi.fn(),
@@ -165,7 +166,7 @@ describe("NewProjectModal sharing", () => {
 
         expect(
             await screen.findByText(
-                "future@firm.test does not belong to a Mike user.",
+                `future@firm.test does not belong to a ${branding.productName} user.`,
             ),
         ).toBeInTheDocument();
         expect(grantProjectAccess).not.toHaveBeenCalled();

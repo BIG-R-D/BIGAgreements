@@ -5,6 +5,7 @@ import { useUserProfile } from "@/app/contexts/UserProfileContext";
 import { userFacingApiError } from "@/app/lib/userFacingError";
 import { SettingsSection } from "../SettingsSection";
 import { SettingsToggle } from "../SettingsToggle";
+import { branding } from "@/app/lib/branding";
 
 export default function AppearancePage() {
     const { profile, updateDarkMode, updateTransparentTables } =
@@ -64,7 +65,7 @@ export default function AppearancePage() {
                             Dark mode
                         </p>
                         <p className="text-sm text-gray-500">
-                            Use a darker color palette throughout Mike.
+                            Use a darker color palette throughout {branding.productName}.
                         </p>
                         {darkModeError && (
                             <p role="alert" className="text-xs text-red-600">

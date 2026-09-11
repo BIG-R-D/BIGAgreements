@@ -1,0 +1,15 @@
+name: BIG module boundaries
+
+# Kept as its own workflow rather than a step inside ci.yml so upstream's CI
+# file stays untouched and keeps merging cleanly. See scripts/check-module-boundaries.sh
+on:
+  push:
+  pull_request:
+
+jobs:
+  boundaries:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check BIG / upstream dependency direction
+        run: bash scripts/check-module-boundaries.sh

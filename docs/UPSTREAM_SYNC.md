@@ -182,14 +182,20 @@ context, so those modules were absent and the build died with a wall of
 **Fix.** Mirror the pattern the Dockerfile already uses for exactly this
 problem with `backend/src`:
 
-- `frontend/Dockerfile` — added `COPY word-addin/src /word-addin/src`
-  alongside the existing `COPY backend/src /backend/src`
-- `frontend/Dockerfile.dockerignore` — stopped excluding `word-addin`
-  wholesale; `e2e`, `e2e-live`, `assets` and `scripts` stay excluded so the
-  context stays lean
+- `frontend/Dockerfile` — `COPY word-addin/src /word-addin/src` alongside the
+  existing `COPY backend/src /backend/src`
+- `frontend/Dockerfile.dockerignore` — keep excluding `word-addin` wholesale,
+  then re-include `word-addin/src` and `word-addin/src/**`. This keeps the
+  build context lean while making the type-imported sources available.
+
+**Fixed twice, independently.** The same defect was found and fixed on `main`
+in PRs #1 and #2 (via Railway's code-change agent) while this branch was in
+progress. The rebase kept `main`'s dockerignore form — the negation approach
+is tighter than excluding named subdirectories, and it is the version proven
+to build on Railway — plus the explanatory comment from this branch.
 
 **Offer this upstream.** It is a genuine bug affecting every Mike deployment
-that builds the documented Compose stack, and the fix is four lines. Carrying
+that builds the documented Compose stack, and the fix is a few lines. Carrying
 it as a local patch is pure cost.
 
 ---

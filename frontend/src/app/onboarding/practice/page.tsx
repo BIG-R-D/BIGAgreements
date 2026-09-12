@@ -85,8 +85,8 @@ function PracticeDetailsForm({
     return (
         <OnboardingShell
             step="Step 2 of 2"
-            title="Your legal practice"
-            description="Optionally add your professional setting, primary jurisdiction, and the areas you work in."
+            title="Your work"
+            description="Optional. Tell us where you work and what kind of work you do, so agreements start with the right details."
         >
             <form onSubmit={handleSubmit}>
                 <PersonalisationFields

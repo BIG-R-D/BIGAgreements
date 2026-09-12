@@ -7,8 +7,11 @@ describe("buildSystemPrompt", () => {
     it("always contains the core identity and rules", () => {
         for (const prompt of [buildSystemPrompt(true), buildSystemPrompt(false)]) {
             expect(prompt).toContain(
-                `You are ${productBranding().assistantName}, an AI legal assistant for lawyers and legal professionals.`,
+                `You are ${productBranding().assistantName}, helping BIG members put their working arrangements in writing.`,
             );
+            // The members are contractors, not lawyers. Guard against the
+            // upstream persona creeping back in on an upstream sync.
+            expect(prompt).not.toContain("for lawyers and legal professionals");
             expect(prompt).toContain("Do not fabricate document content.");
             expect(prompt).toContain(
                 "In user-facing responses, use natural language only",

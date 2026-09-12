@@ -68,9 +68,12 @@ export type UserPersonalisation = {
 };
 
 const PRACTICE_SETTING_LABELS: Record<string, string> = {
-  private_practice: "Private practice",
-  in_house: "In-house",
-  not_practising: "Not a practising attorney",
+  general_contractor: "General contractor",
+  subcontractor: "Subcontractor",
+  independent: "Independent contractor",
+  owner_developer: "Owner or developer",
+  vendor_supplier: "Vendor or supplier",
+  other: "Other",
 };
 
 /**

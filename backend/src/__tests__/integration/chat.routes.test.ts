@@ -245,9 +245,9 @@ vi.mock("../../lib/userSettings", () => ({
             displayName: "Ada",
             organisation: "Acme LLP",
             jurisdiction: "Singapore",
-            practiceSetting: "private_practice",
-            professionalTitle: "Partner",
-            practiceAreas: ["Litigation"],
+            practiceSetting: "general_contractor",
+            professionalTitle: "Owner",
+            practiceAreas: ["General Construction"],
         },
     })),
     persistLastSelectedChatModel: vi.fn(async () => null),
@@ -332,9 +332,9 @@ describe("POST /chat — streaming endpoint", () => {
         const systemPromptExtra = vi.mocked(chatLib.buildMessages).mock
             .calls[0]?.[2] as string;
         expect(systemPromptExtra).toContain("USER PERSONALISATION");
-        expect(systemPromptExtra).toContain('"title": "Partner"');
+        expect(systemPromptExtra).toContain('"title": "Owner"');
         expect(systemPromptExtra).toContain(
-            '"professional_setting": "Private practice"',
+            '"professional_setting": "General contractor"',
         );
 
         const metadata = JSON.parse(

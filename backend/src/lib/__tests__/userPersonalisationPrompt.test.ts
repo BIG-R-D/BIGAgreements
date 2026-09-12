@@ -8,9 +8,9 @@ describe("buildUserPersonalisationPrompt", () => {
         displayName: "Ada",
         organisation: "Acme LLP",
         jurisdiction: "Singapore",
-        practiceSetting: "private_practice",
-        professionalTitle: "Partner",
-        practiceAreas: ["Litigation", "Corporate and M&A"],
+        practiceSetting: "general_contractor",
+        professionalTitle: "Owner",
+        practiceAreas: ["General Construction"],
       },
       "nonce-1",
     );
@@ -18,11 +18,11 @@ describe("buildUserPersonalisationPrompt", () => {
     expect(prompt).toContain("USER PERSONALISATION");
     expect(prompt).toContain('"name": "Ada"');
     expect(prompt).toContain('"organisation": "Acme LLP"');
-    expect(prompt).toContain('"title": "Partner"');
-    expect(prompt).toContain('"professional_setting": "Private practice"');
+    expect(prompt).toContain('"title": "Owner"');
+    expect(prompt).toContain('"professional_setting": "General contractor"');
     expect(prompt).toContain('"jurisdiction": "Singapore"');
     expect(prompt).toContain(
-      '"practice_areas": [\n    "Litigation",\n    "Corporate and M&A"\n  ]',
+      '"practice_areas": [\n    "General Construction"\n  ]',
     );
     expect(prompt).toContain("<untrusted-content nonce=\"nonce-1\">");
   });

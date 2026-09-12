@@ -223,9 +223,9 @@ function profileRow(overrides: Record<string, unknown> = {}) {
         display_name: "Ada",
         organisation: "Acme",
         jurisdiction: "Singapore",
-        practice_setting: "private_practice",
-        professional_title: "Partner",
-        practice_areas: ["Corporate and M&A"],
+        practice_setting: "general_contractor",
+        professional_title: "Owner",
+        practice_areas: ["General Construction"],
         onboarding_version: 1,
         password_set_at: null,
         message_credits_used: 3,
@@ -309,9 +309,9 @@ describe("user.routes", () => {
                 displayName: "Ada",
                 organisation: "Acme",
                 jurisdiction: "Singapore",
-                practiceSetting: "private_practice",
-                professionalTitle: "Partner",
-                practiceAreas: ["Corporate and M&A"],
+                practiceSetting: "general_contractor",
+                professionalTitle: "Owner",
+                practiceAreas: ["General Construction"],
                 onboardingComplete: true,
                 onboardingVersion: 1,
                 passwordSet: false,
@@ -453,7 +453,7 @@ describe("user.routes", () => {
             expect(res.status).toBe(200);
             expect(res.body).toMatchObject({
                 jurisdiction: "Singapore",
-                practiceAreas: ["Corporate and M&A"],
+                practiceAreas: ["General Construction"],
                 onboardingComplete: false,
                 onboardingVersion: null,
                 passwordSet: false,
@@ -798,18 +798,18 @@ describe("user.routes", () => {
                 .set(...AUTH)
                 .send({
                     jurisdiction: " Singapore ",
-                    practiceSetting: "private_practice",
-                    professionalTitle: "Senior Associate",
-                    practiceAreas: [" Corporate and M&A ", "Litigation"],
+                    practiceSetting: "general_contractor",
+                    professionalTitle: "Owner",
+                    practiceAreas: ["General Construction"],
                 });
 
             expect(res.status).toBe(200);
             expect(res.body).toMatchObject({
                 displayName: "Ada",
                 jurisdiction: "Singapore",
-                practiceSetting: "private_practice",
-                professionalTitle: "Partner",
-                practiceAreas: ["Corporate and M&A"],
+                practiceSetting: "general_contractor",
+                professionalTitle: "Owner",
+                practiceAreas: ["General Construction"],
                 onboardingComplete: false,
                 onboardingVersion: null,
             });
@@ -863,7 +863,7 @@ describe("user.routes", () => {
                 .send({
                     jurisdiction: "Singapore",
                     practiceSetting: "law_firm",
-                    practiceAreas: ["Litigation"],
+                    practiceAreas: ["General Construction"],
                 });
 
             expect(res.status).toBe(400);
@@ -883,8 +883,8 @@ describe("user.routes", () => {
                 .set(...AUTH)
                 .send({
                     jurisdiction: "Singapore",
-                    practiceSetting: "in_house",
-                    practiceAreas: ["Litigation"],
+                    practiceSetting: "subcontractor",
+                    practiceAreas: ["General Construction"],
                 });
 
             expect(res.status).toBe(200);

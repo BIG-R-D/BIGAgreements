@@ -636,19 +636,22 @@ function serializeProfile(
 }
 
 const PRACTICE_SETTINGS = new Set([
-    "private_practice",
-    "in_house",
-    "not_practising",
+    "general_contractor",
+    "subcontractor",
+    "independent",
+    "owner_developer",
+    "vendor_supplier",
+    "other",
 ]);
 
 const PROFESSIONAL_TITLES = new Set([
-    "Partner",
-    "Senior Associate",
-    "Associate",
-    "Law Clerk",
-    "Counsel",
-    "General Counsel",
-    "Legal Counsel",
+    "Owner",
+    "Project Manager",
+    "Site Supervisor",
+    "Foreman",
+    "Estimator",
+    "Office Manager",
+    "Tradesperson",
     "Other",
 ]);
 

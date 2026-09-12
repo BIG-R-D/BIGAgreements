@@ -222,10 +222,10 @@ export function PersonalisationFields({
         professionalTitle: (
             <ProfileDropdown
                 id="professional-title"
-                label="Title"
+                label="Your role"
                 status={statusFor?.("professionalTitle")}
                 value={form.professionalTitle}
-                placeholder="Select a title"
+                placeholder="Select your role"
                 options={PROFESSIONAL_TITLE_OPTIONS.map((title) => ({
                     value: title,
                     label: title,
@@ -240,10 +240,10 @@ export function PersonalisationFields({
         practiceSetting: (
             <ProfileDropdown
                 id="practice-setting"
-                label="Professional setting"
+                label="What kind of business"
                 status={statusFor?.("practiceSetting")}
                 value={form.practiceSetting}
-                placeholder="Select a professional setting"
+                placeholder="Select the kind of business"
                 options={PRACTICE_SETTING_OPTIONS}
                 onChange={(value) =>
                     form.setPracticeSetting(
@@ -256,7 +256,7 @@ export function PersonalisationFields({
             <>
                 <ProfileDropdown
                     id="jurisdiction"
-                    label="Jurisdiction of practice"
+                    label="Where you work"
                     status={statusFor?.("jurisdiction")}
                     value={form.jurisdictionChoice || null}
                     placeholder="Select a country"
@@ -276,7 +276,7 @@ export function PersonalisationFields({
                 {form.jurisdictionChoice === OTHER_JURISDICTION_OPTION && (
                     <div className="mt-4">
                         <FieldLabelRow
-                            label="Other jurisdiction"
+                            label="Other location"
                             htmlFor="other-jurisdiction"
                             status={statusFor?.("otherJurisdiction")}
                         />
@@ -287,7 +287,7 @@ export function PersonalisationFields({
                                 form.setOtherJurisdiction(event.target.value)
                             }
                             maxLength={100}
-                            placeholder="Enter your jurisdiction"
+                            placeholder="Where do you work?"
                             className={`w-full ${authInputClassName}`}
                         />
                     </div>
@@ -297,7 +297,7 @@ export function PersonalisationFields({
         practiceAreas: (
             <div>
                 <FieldLabelRow
-                    label="Practice areas"
+                    label="Work you do"
                     status={statusFor?.("practiceAreas")}
                 />
                 <DropdownMenu>
@@ -315,7 +315,7 @@ export function PersonalisationFields({
                             <span className="truncate">
                                 {form.practiceAreas.length
                                     ? `${form.practiceAreas.length} selected`
-                                    : "Select practice areas"}
+                                    : "Select the work you do"}
                             </span>
                             <ChevronDown className="h-4 w-4 shrink-0 text-gray-400" />
                         </button>
@@ -374,7 +374,7 @@ export function PersonalisationFields({
                 {form.otherSelected && (
                     <div className="mt-4">
                         <FieldLabelRow
-                            label="Other practice area"
+                            label="Other type of work"
                             htmlFor="other-practice-area"
                             status={statusFor?.("otherPracticeArea")}
                         />

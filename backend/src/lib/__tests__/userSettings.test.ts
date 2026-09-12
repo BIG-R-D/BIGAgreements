@@ -60,9 +60,9 @@ describe("getUserModelSettings router-model allowlist", () => {
                 display_name: "Ada",
                 organisation: "Acme LLP",
                 jurisdiction: "Singapore",
-                practice_setting: "private_practice",
-                professional_title: "Partner",
-                practice_areas: ["Litigation"],
+                practice_setting: "general_contractor",
+                professional_title: "Owner",
+                practice_areas: ["General Construction"],
             }),
         );
 
@@ -70,9 +70,9 @@ describe("getUserModelSettings router-model allowlist", () => {
             displayName: "Ada",
             organisation: "Acme LLP",
             jurisdiction: "Singapore",
-            practiceSetting: "private_practice",
-            professionalTitle: "Partner",
-            practiceAreas: ["Litigation"],
+            practiceSetting: "general_contractor",
+            professionalTitle: "Owner",
+            practiceAreas: ["General Construction"],
         });
     });
 

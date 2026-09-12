@@ -148,8 +148,8 @@ function PersonalisationForm({
                     Personalisation
                 </h2>
                 <p className="text-sm text-gray-500">
-                    Tell {branding.productName} about your role and practice so responses can be
-                    tailored to your professional context.
+                    Tell {branding.productName} about your work so agreements and
+                    answers start with the right details.
                 </p>
                 <SettingsSection>
                     <div className="p-4">

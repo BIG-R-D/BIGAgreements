@@ -20,19 +20,26 @@ create table if not exists public.user_profiles (
   practice_setting text
     check (
       practice_setting is null
-      or practice_setting in ('private_practice', 'in_house', 'not_practising')
+      or practice_setting in (
+        'general_contractor',
+        'subcontractor',
+        'independent',
+        'owner_developer',
+        'vendor_supplier',
+        'other'
+      )
     ),
   professional_title text
     check (
       professional_title is null
       or professional_title in (
-        'Partner',
-        'Senior Associate',
-        'Associate',
-        'Law Clerk',
-        'Counsel',
-        'General Counsel',
-        'Legal Counsel',
+        'Owner',
+        'Project Manager',
+        'Site Supervisor',
+        'Foreman',
+        'Estimator',
+        'Office Manager',
+        'Tradesperson',
         'Other'
       )
     ),

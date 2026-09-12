@@ -1,5 +1,5 @@
 /**
- * BIG Agreements product branding.
+ * Contract Tool product branding.
  *
  * Single source of truth for every member-facing product name, URL and
  * address the backend emits. Upstream Mike hardcoded these as literals across
@@ -39,10 +39,10 @@ export interface ProductBranding {
 }
 
 const DEFAULTS: ProductBranding = {
-  productName: "BIG Agreements",
-  productShortName: "BIG Agreements",
-  assistantName: "BIG Agreements",
-  documentAuthor: "BIG Agreements",
+  productName: "Contract Tool",
+  productShortName: "Contract Tool",
+  assistantName: "Contract Tool",
+  documentAuthor: "Contract Tool",
   supportEmail: "support@bigapp.work",
   publicAppUrl: "https://legal.bigapp.ai",
   marketingUrl: "https://bigapp.work",

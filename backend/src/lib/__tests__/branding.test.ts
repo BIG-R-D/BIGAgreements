@@ -8,9 +8,9 @@ import {
 const base: NodeJS.ProcessEnv = {};
 
 describe("productBranding", () => {
-  it("defaults to the BIG Agreements brand", () => {
+  it("defaults to the Contract Tool brand", () => {
     const branding = productBranding(base);
-    expect(branding.productName).toBe("BIG Agreements");
+    expect(branding.productName).toBe("Contract Tool");
     expect(branding.supportEmail).toBe("support@bigapp.work");
     expect(branding.publicAppUrl).toBe("https://legal.bigapp.ai");
   });
@@ -35,7 +35,7 @@ describe("productBranding", () => {
   });
 
   it("ignores blank overrides rather than blanking the brand", () => {
-    expect(productName({ PRODUCT_NAME: "   " })).toBe("BIG Agreements");
+    expect(productName({ PRODUCT_NAME: "   " })).toBe("Contract Tool");
   });
 
   it("strips trailing slashes from URLs", () => {

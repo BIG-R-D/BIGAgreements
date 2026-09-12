@@ -2,7 +2,7 @@ import Image from "next/image";
 import { branding } from "@/app/lib/branding";
 
 /**
- * The BIG Agreements brand mark.
+ * The Contract Tool brand mark.
  *
  * Deliberately separate from status indication. A flat multicolour logo cannot
  * spin or recolour for an error without looking broken, so brand surfaces use

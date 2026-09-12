@@ -1,5 +1,5 @@
 /**
- * BIG Agreements product branding for the web application.
+ * Contract Tool product branding for the web application.
  *
  * Mirrors `backend/src/big/config/branding.ts`. Kept as a separate module
  * rather than imported across the app/backend boundary because Next.js inlines
@@ -39,7 +39,7 @@ export interface ProductBranding {
     logoUrl: string;
 }
 
-const productName = process.env.NEXT_PUBLIC_PRODUCT_NAME || "BIG Agreements";
+const productName = process.env.NEXT_PUBLIC_PRODUCT_NAME || "Contract Tool";
 
 export const branding: ProductBranding = {
     productName,
@@ -62,6 +62,6 @@ export const branding: ProductBranding = {
         process.env.NEXT_PUBLIC_PRIVACY_URL || "https://bigapp.work/privacy",
     description:
         process.env.NEXT_PUBLIC_PRODUCT_DESCRIPTION ||
-        "The BIG contract tool. Create, review and sign agreements for your jobs.",
+        "Create, review and sign agreements for your jobs.",
     logoUrl: process.env.NEXT_PUBLIC_PRODUCT_LOGO || "/big-logo.png",
 };

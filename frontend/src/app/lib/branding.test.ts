@@ -20,18 +20,18 @@ afterEach(() => {
 });
 
 describe("branding defaults", () => {
-    it("falls back to the BIG Agreements brand when nothing is configured", async () => {
+    it("falls back to the Contract Tool brand when nothing is configured", async () => {
         const branding = await loadBranding();
-        expect(branding.productName).toBe("BIG Agreements");
-        expect(branding.productShortName).toBe("BIG Agreements");
-        expect(branding.assistantName).toBe("BIG Agreements");
+        expect(branding.productName).toBe("Contract Tool");
+        expect(branding.productShortName).toBe("Contract Tool");
+        expect(branding.assistantName).toBe("Contract Tool");
         expect(branding.marketingUrl).toBe("https://bigapp.work");
         expect(branding.publicAppUrl).toBe("https://legal.bigapp.ai");
         expect(branding.supportEmail).toBe("support@bigapp.work");
         expect(branding.legalFooter).toBe("BIG R/D");
         expect(branding.termsUrl).toBe("https://bigapp.work/terms");
         expect(branding.privacyUrl).toBe("https://bigapp.work/privacy");
-        expect(branding.description).toContain("contract tool");
+        expect(branding.description).toContain("agreements");
         expect(branding.logoUrl).toBe("/big-logo.png");
     });
 
@@ -87,6 +87,6 @@ describe("branding overrides", () => {
 
     it("treats an empty override as unset rather than blanking the brand", async () => {
         const branding = await loadBranding({ NEXT_PUBLIC_PRODUCT_NAME: "" });
-        expect(branding.productName).toBe("BIG Agreements");
+        expect(branding.productName).toBe("Contract Tool");
     });
 });

@@ -19,7 +19,7 @@ import {
 import { cn } from "@/app/lib/utils";
 import type { PersonalisationDetails } from "@/app/lib/mikeApi";
 import {
-    COUNTRY_OPTIONS,
+    US_STATE_OPTIONS,
     OTHER_JURISDICTION_OPTION,
     PRACTICE_AREA_OPTIONS,
     PRACTICE_SETTING_OPTIONS,
@@ -85,8 +85,8 @@ export function usePersonalisationFields(
     );
     const initialUsesOtherJurisdiction =
         !!initial.jurisdiction &&
-        !COUNTRY_OPTIONS.includes(
-            initial.jurisdiction as (typeof COUNTRY_OPTIONS)[number],
+        !US_STATE_OPTIONS.includes(
+            initial.jurisdiction as (typeof US_STATE_OPTIONS)[number],
         );
     const [jurisdictionChoice, setJurisdictionChoiceState] = useState(
         initialUsesOtherJurisdiction
@@ -259,11 +259,11 @@ export function PersonalisationFields({
                     label="Where you work"
                     status={statusFor?.("jurisdiction")}
                     value={form.jurisdictionChoice || null}
-                    placeholder="Select a country"
+                    placeholder="Select a state"
                     options={[
-                        ...COUNTRY_OPTIONS.map((country) => ({
-                            value: country,
-                            label: country,
+                        ...US_STATE_OPTIONS.map((state) => ({
+                            value: state,
+                            label: state,
                         })),
                         {
                             value: OTHER_JURISDICTION_OPTION,
@@ -276,7 +276,7 @@ export function PersonalisationFields({
                 {form.jurisdictionChoice === OTHER_JURISDICTION_OPTION && (
                     <div className="mt-4">
                         <FieldLabelRow
-                            label="Other location"
+                            label="Somewhere else"
                             htmlFor="other-jurisdiction"
                             status={statusFor?.("otherJurisdiction")}
                         />
@@ -287,7 +287,7 @@ export function PersonalisationFields({
                                 form.setOtherJurisdiction(event.target.value)
                             }
                             maxLength={100}
-                            placeholder="Where do you work?"
+                            placeholder="Which state do you work in?"
                             className={`w-full ${authInputClassName}`}
                         />
                     </div>

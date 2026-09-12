@@ -222,7 +222,7 @@ function profileRow(overrides: Record<string, unknown> = {}) {
     return {
         display_name: "Ada",
         organisation: "Acme",
-        jurisdiction: "Singapore",
+        jurisdiction: "Georgia",
         practice_setting: "general_contractor",
         professional_title: "Owner",
         practice_areas: ["General Construction"],
@@ -308,7 +308,7 @@ describe("user.routes", () => {
             expect(res.body).toMatchObject({
                 displayName: "Ada",
                 organisation: "Acme",
-                jurisdiction: "Singapore",
+                jurisdiction: "Georgia",
                 practiceSetting: "general_contractor",
                 professionalTitle: "Owner",
                 practiceAreas: ["General Construction"],
@@ -452,7 +452,7 @@ describe("user.routes", () => {
 
             expect(res.status).toBe(200);
             expect(res.body).toMatchObject({
-                jurisdiction: "Singapore",
+                jurisdiction: "Georgia",
                 practiceAreas: ["General Construction"],
                 onboardingComplete: false,
                 onboardingVersion: null,
@@ -797,7 +797,7 @@ describe("user.routes", () => {
                 .post("/user/onboarding")
                 .set(...AUTH)
                 .send({
-                    jurisdiction: " Singapore ",
+                    jurisdiction: " Georgia ",
                     practiceSetting: "general_contractor",
                     professionalTitle: "Owner",
                     practiceAreas: ["General Construction"],
@@ -806,7 +806,7 @@ describe("user.routes", () => {
             expect(res.status).toBe(200);
             expect(res.body).toMatchObject({
                 displayName: "Ada",
-                jurisdiction: "Singapore",
+                jurisdiction: "Georgia",
                 practiceSetting: "general_contractor",
                 professionalTitle: "Owner",
                 practiceAreas: ["General Construction"],
@@ -861,7 +861,7 @@ describe("user.routes", () => {
                 .post("/user/onboarding")
                 .set(...AUTH)
                 .send({
-                    jurisdiction: "Singapore",
+                    jurisdiction: "Georgia",
                     practiceSetting: "law_firm",
                     practiceAreas: ["General Construction"],
                 });
@@ -882,7 +882,7 @@ describe("user.routes", () => {
                 .post("/user/onboarding")
                 .set(...AUTH)
                 .send({
-                    jurisdiction: "Singapore",
+                    jurisdiction: "Georgia",
                     practiceSetting: "subcontractor",
                     practiceAreas: ["General Construction"],
                 });

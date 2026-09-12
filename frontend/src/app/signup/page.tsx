@@ -30,7 +30,6 @@ import { AuthDivider } from "@/app/components/auth/AuthDivider";
 import { GoogleAuthButton } from "@/app/components/auth/GoogleAuthButton";
 import { FieldLabel } from "@/app/components/ui/form-field";
 import { branding } from "@/app/lib/branding";
-import { OpenSourceNotice } from "@/app/components/shared/OpenSourceNotice";
 
 function SignupContent() {
     const router = useRouter();
@@ -222,7 +221,6 @@ function SignupContent() {
                                     Privacy Policy
                                 </Link>
                             </div>
-                            <OpenSourceNotice />
                             <PillButton
                                 type="submit"
                                 tone="black"

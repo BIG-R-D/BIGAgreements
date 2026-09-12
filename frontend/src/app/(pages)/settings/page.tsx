@@ -17,6 +17,7 @@ import {
 import { WarningPopup } from "@/app/components/popups/WarningPopup";
 import { deleteAccount, isMfaRequiredError } from "@/app/lib/mikeApi";
 import { SettingsSection } from "./SettingsSection";
+import { OpenSourceNotice } from "@/app/components/shared/OpenSourceNotice";
 
 const isDev = process.env.NODE_ENV !== "production";
 const devLog = (...args: Parameters<typeof console.log>) => {
@@ -396,6 +397,10 @@ export default function SettingsPage() {
                     </div>
                 </SettingsSection>
             </section>
+            {/* AGPL-3.0 section 13: the source offer must stay reachable by
+                the people using the service. Moved off the auth screens, not
+                dropped. See docs/OPEN_SOURCE_COMPLIANCE.md */}
+            <OpenSourceNotice className="pt-2 pb-6" />
             <ConfirmPopup
                 open={deleteConfirm}
                 title="Delete account?"

@@ -41,8 +41,15 @@ ours.
 **Status: addressed in Phase 1.**
 
 - `frontend/src/app/components/shared/OpenSourceNotice.tsx` renders the offer.
-- It appears on the login and signup screens — reachable without an account,
-  because the offer is owed to everyone who interacts with the service.
+- It appears in **Settings**, reachable by every signed-in member.
+- It was originally on the login and signup screens and was moved off them as a
+  product decision. **Open question for legal review:** section 13 speaks of
+  the users who interact with the modified version over a network. Members are
+  unambiguously those users and can reach it. Whether an anonymous visitor who
+  never signs in also needs to be offered it is the judgement call created by
+  this move; if the answer is yes, the notice needs a route reachable without
+  an account (a footer link or /legal page) rather than returning to the auth
+  screens.
 - The link target is `NEXT_PUBLIC_OPEN_SOURCE_NOTICE_URL`
   (default `https://github.com/BIG-R-D/BIGAgreements`).
 

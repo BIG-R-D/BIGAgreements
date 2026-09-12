@@ -17,7 +17,6 @@ import { AuthDivider } from "@/app/components/auth/AuthDivider";
 import { GoogleAuthButton } from "@/app/components/auth/GoogleAuthButton";
 import { FieldLabel } from "@/app/components/ui/form-field";
 import { knownErrorCodeMessage } from "@/app/lib/userFacingError";
-import { OpenSourceNotice } from "@/app/components/shared/OpenSourceNotice";
 
 const LOGIN_ERROR_MESSAGES = {
     invalid_credentials: "The email or password is incorrect.",
@@ -157,7 +156,6 @@ export default function LoginPage() {
                         Sign up
                     </Link>
                 </div>
-                <OpenSourceNotice />
             </div>
         </div>
     );

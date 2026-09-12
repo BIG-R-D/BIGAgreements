@@ -21,6 +21,7 @@ import type {
   UserApiKeys,
 } from "./types";
 import { REASONING_LEVELS } from "./types";
+import { productBranding } from "../branding";
 
 const OPENROUTER_BASE_URL =
   process.env.OPENROUTER_BASE_URL?.trim().replace(/\/+$/, "") ||
@@ -142,7 +143,7 @@ async function createRouterAdapter(
       apiKey: key,
       baseURL: OPENROUTER_BASE_URL,
       compatibility: "strict",
-      appName: "Mike",
+      appName: productBranding().productName,
       appUrl: process.env.FRONTEND_URL,
       fetch: aiSdkFetch,
     });
@@ -187,7 +188,7 @@ async function createRouterAdapter(
 
 function unsupportedOpenCodeGoModel(model: string): Error {
   return new Error(
-    `OpenCode Go model ${openCodeGoModelId(model)} requires a protocol Mike does not support yet. Select a model listed in Settings → Bring Your Own Keys → Routers.`,
+    `OpenCode Go model ${openCodeGoModelId(model)} requires a protocol ${productBranding().productName} does not support yet. Select a model listed in Settings → Bring Your Own Keys → Routers.`,
   );
 }
 

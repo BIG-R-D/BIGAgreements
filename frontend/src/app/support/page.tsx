@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/contexts/AuthContext";
 import { FieldLabel } from "@/app/components/ui/form-field";
 import { authenticatedFetch } from "@/app/lib/authEvents";
+import { branding } from "@/app/lib/branding";
 
 type FeedbackType = "bug" | "feature" | "question" | "other";
 
@@ -44,7 +45,7 @@ export default function SupportPage() {
         {
             value: "question",
             label: "Question",
-            description: "Ask a question about using Mike",
+            description: `Ask a question about using ${branding.productName}`,
         },
         {
             value: "other",
@@ -175,7 +176,7 @@ export default function SupportPage() {
                                         onChange={(e) =>
                                             setLink(e.target.value)
                                         }
-                                        placeholder="https://mikeoss.com/..."
+                                        placeholder={`${branding.marketingUrl}/...`}
                                         className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
                                     />
                                     <p className="text-xs text-gray-500 mt-1">

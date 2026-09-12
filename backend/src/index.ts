@@ -3,6 +3,10 @@ import path from "node:path";
 import { app } from "./app";
 import { manifestPublicKey } from "./lib/manifestSigning";
 import { validateRuntimeConfiguration } from "./lib/runtimeConfig";
+import {
+  productBranding,
+  validateBrandingConfiguration,
+} from "./lib/branding";
 import { startAllWorkers, stopAllWorkers } from "./workerRuntime";
 
 const PORT = process.env.PORT ?? 3001;
@@ -13,6 +17,7 @@ const PORT = process.env.PORT ?? 3001;
 // deployment whose exports will fail later.
 try {
   validateRuntimeConfiguration();
+  validateBrandingConfiguration();
   const signingKey = manifestPublicKey();
   if (signingKey) {
     console.log(`Export manifests signed with key ${signingKey.key_id}`);
@@ -70,7 +75,7 @@ function spawnWorkerThread(): void {
 
 const server = app.listen(PORT, () => {
   console.log(
-    `Mike backend running on port ${PORT} (workers: ${WORKERS_MODE})`,
+    `${productBranding().productName} backend running on port ${PORT} (workers: ${WORKERS_MODE})`,
   );
   if (WORKERS_MODE === "thread") {
     spawnWorkerThread();

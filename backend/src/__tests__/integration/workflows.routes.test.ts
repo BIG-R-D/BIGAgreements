@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import request from "supertest";
+import { productBranding } from "../../lib/branding";
 
 // ---------------------------------------------------------------------------
 // Hoisted mock fns we want to reconfigure per-test.
@@ -606,7 +607,7 @@ describe("workflows.routes", () => {
 
       expect(res.status).toBe(400);
       expect(res.body.detail).toBe(
-        "future@firm.test does not belong to a Mike user.",
+        `future@firm.test does not belong to a ${productBranding().productName} user.`,
       );
     });
 

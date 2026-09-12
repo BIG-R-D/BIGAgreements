@@ -9,6 +9,8 @@
 .git
 backend/dist
 backend/supabase
+# word-addin/src is type-imported by frontend/src/wordAddin/*.test.ts,
+# which `next build` type-checks. Keep those sources, drop everything else.
 word-addin
 !word-addin/src
 !word-addin/src/**

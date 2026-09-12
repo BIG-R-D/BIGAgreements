@@ -4,6 +4,7 @@ import userEvent from "@testing-library/user-event";
 import { getOrg, lookupUserByEmail, MikeApiError } from "@/app/lib/mikeApi";
 import { AccessModal } from "./AccessModal";
 import { OrganizationAccessEditor } from "./AccessEditor";
+import { branding } from "@/app/lib/branding";
 
 // `importOriginal` keeps the real `MikeApiError` class: `userFacingApiError`
 // decides with `instanceof`, so a stand-in class would make every 4xx look
@@ -314,7 +315,7 @@ describe("AccessModal — per-recipient roles", () => {
         await user.click(screen.getByRole("button", { name: "Add" }));
         expect(
             await screen.findByText(
-                "newcounsel@outside.example does not belong to a Mike user.",
+                `newcounsel@outside.example does not belong to a ${branding.productName} user.`,
             ),
         ).toBeInTheDocument();
         expect(onGrant).not.toHaveBeenCalled();

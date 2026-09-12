@@ -11,6 +11,8 @@ COPY frontend/package*.json ./
 RUN npm ci
 COPY frontend/ ./
 COPY backend/src /backend/src
+# Same reason as backend/src above: frontend/src/wordAddin/*.test.ts
+# type-import ../../../word-addin/src, and next build type-checks them.
 COPY word-addin/src /word-addin/src
 
 RUN npm run build

@@ -6,6 +6,7 @@ import {
     extractTrackedChangeIds,
     resolveTrackedChange,
 } from "../docxTrackedChanges";
+import { productBranding } from "../branding";
 
 const W_NS =
     'xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"';
@@ -108,7 +109,7 @@ describe("applyTrackedEdits", () => {
         const xml = await readDocumentXml(result.bytes);
         expect(xml).toContain("<w:del");
         expect(xml).toContain("<w:ins");
-        expect(xml).toContain(`w:author="Mike"`);
+        expect(xml).toContain(`w:author="${productBranding().documentAuthor}"`);
         expect(xml).toContain("<w:delText");
 
         // Accepted view of the output shows the replacement applied.

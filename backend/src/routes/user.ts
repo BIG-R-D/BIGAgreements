@@ -69,6 +69,7 @@ import {
     type RouterModelSelections,
     type RouterSlug,
 } from "../lib/routerModels";
+import { normalizeTrades } from "../lib/trades";
 
 export const userRouter = Router();
 
@@ -669,19 +670,11 @@ function normalizeProfessionalTitle(
 }
 
 function normalizePracticeAreas(value: unknown): string[] | null {
-    if (!Array.isArray(value)) return null;
-    const practiceAreas = Array.from(
-        new Set(
-            value
-                .filter((item): item is string => typeof item === "string")
-                .map((item) => item.trim())
-                .filter(Boolean),
-        ),
-    );
-    if (
-        practiceAreas.length > 20 ||
-        practiceAreas.some((item) => item.length > 100)
-    ) {
+    // Validated against the canonical trade list rather than accepting any
+    // string: an unrecognised value would be silently cleared by the next
+    // taxonomy migration, losing a member's answer without telling them.
+    const practiceAreas = normalizeTrades(value);
+    if (practiceAreas === null) {
         return null;
     }
     return practiceAreas;

@@ -35,6 +35,8 @@ export interface ProductBranding {
     privacyUrl: string;
     /** One-line description used in page metadata and share cards. */
     description: string;
+    /** Brand logo served from /public. Swap the file, not the code. */
+    logoUrl: string;
 }
 
 const productName = process.env.NEXT_PUBLIC_PRODUCT_NAME || "BIG Agreements";
@@ -61,11 +63,5 @@ export const branding: ProductBranding = {
     description:
         process.env.NEXT_PUBLIC_PRODUCT_DESCRIPTION ||
         "Generate, review and translate agreements for BIG members.",
+    logoUrl: process.env.NEXT_PUBLIC_PRODUCT_LOGO || "/big-logo.svg",
 };
-
-/** Page title for a named view, e.g. "Settings — BIG Agreements". */
-export function pageTitle(section?: string): string {
-    return section
-        ? `${section} — ${branding.productName}`
-        : branding.productName;
-}

@@ -7,6 +7,7 @@ import {
   productBranding,
   validateBrandingConfiguration,
 } from "./lib/branding";
+import { logPreflight } from "./lib/deploymentPreflight";
 import { startAllWorkers, stopAllWorkers } from "./workerRuntime";
 
 const PORT = process.env.PORT ?? 3001;
@@ -77,6 +78,9 @@ const server = app.listen(PORT, () => {
   console.log(
     `${productBranding().productName} backend running on port ${PORT} (workers: ${WORKERS_MODE})`,
   );
+  // Report subsystems that fail lazily, so a misconfigured deploy is visible
+  // at boot rather than at a member's first upload or prompt.
+  logPreflight();
   if (WORKERS_MODE === "thread") {
     spawnWorkerThread();
   } else if (WORKERS_MODE === "inline") {

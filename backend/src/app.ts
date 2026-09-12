@@ -23,6 +23,7 @@ import { auditRouter } from "./routes/audit";
 import { authRouter } from "./routes/auth";
 import { uploadSessionsRouter } from "./routes/uploadSessions";
 import { manifestPublicKey } from "./lib/manifestSigning";
+import { preflightFindings } from "./lib/deploymentPreflight";
 import {
   handleUnhandledError,
   protectInternalErrorResponses,
@@ -302,6 +303,17 @@ app.use("/audit", auditRouter);
 app.use("/upload-sessions", uploadSessionsRouter);
 
 app.get("/health", (_req, res) => res.json({ ok: true }));
+
+// Deeper than /health: which optional subsystems are actually usable. Names no
+// secrets — only which variables are absent and what that breaks — so it is
+// safe to expose and useful as a post-deploy smoke check.
+app.get("/readiness", (_req, res) => {
+  const findings = preflightFindings();
+  res.json({
+    ok: findings.every((f) => f.severity !== "blocking"),
+    findings,
+  });
+});
 
 // The Ed25519 public key this deployment signs project export manifests with,
 // or null when no key is configured. Deliberately open: whoever checks a

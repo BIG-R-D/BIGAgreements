@@ -54,6 +54,17 @@ export interface JurisdictionRule {
   threshold?: RuleThreshold;
   sourceIds: string[];
   status: RuleStatus;
+  /**
+   * Reviewer-facing only. Never rendered to a member. Records where a drafted
+   * figure came from and what specifically needs confirming, so verification
+   * is a check rather than research from scratch.
+   */
+  reviewNote?: string;
+  /**
+   * How much to trust a drafted value before review. "recalled" means it was
+   * written from general knowledge and is the most likely thing to be wrong.
+   */
+  confidence?: "recalled" | "sourced" | "confirmed";
 }
 
 export interface JurisdictionRuleSet {

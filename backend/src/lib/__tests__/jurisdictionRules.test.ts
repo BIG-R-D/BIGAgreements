@@ -153,4 +153,12 @@ describe("renderRule", () => {
   it("omits threshold language when there is none", () => {
     expect(renderRule(set().rules[0])).not.toMatch(/threshold|over \$/i);
   });
+
+  it("never leaks a reviewer note to a member", () => {
+    const rule = set().rules[0];
+    rule.reviewNote = "INTERNAL: confirm against O.C.G.A. 43-41-17(g)";
+    rule.confidence = "recalled";
+    const text = renderRule(rule);
+    expect(text).not.toMatch(/INTERNAL|confirm against|recalled/i);
+  });
 });

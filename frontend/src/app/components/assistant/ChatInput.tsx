@@ -670,7 +670,7 @@ export const ChatInput = forwardRef<ChatInputHandle, Props>(function ChatInput(
                             disabled={!canSend}
                             placeholder={
                                 canSend
-                                    ? "How can I help?"
+                                    ? "Ask about a project agreement..."
                                     : "Viewing only — sending needs edit access"
                             }
                             value={value}
@@ -715,7 +715,7 @@ export const ChatInput = forwardRef<ChatInputHandle, Props>(function ChatInput(
                                 <button
                                     type="button"
                                     onClick={() => setWorkflowModalOpen(true)}
-                                    aria-label="Open workflows"
+                                    aria-label="Open templates"
                                     className={cn(
                                         "flex items-center gap-1.5 rounded-lg px-2 h-8 text-sm transition-colors",
                                         selectedWorkflow
@@ -735,7 +735,7 @@ export const ChatInput = forwardRef<ChatInputHandle, Props>(function ChatInput(
                                                 : "hidden sm:inline"
                                         }
                                     >
-                                        Workflows
+                                        Agreement Templates
                                     </span>
                                 </button>
                             )}

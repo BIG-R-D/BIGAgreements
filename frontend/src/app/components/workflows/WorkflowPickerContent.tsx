@@ -99,8 +99,8 @@ export function WorkflowPickerContent({
         (search
             ? "No matches found"
             : workflowType === "all"
-              ? "No workflows found"
-              : `No ${workflowType} workflows found`);
+              ? "No templates found"
+              : `No ${workflowType === "tabular" ? "review" : "assistant"} templates found`);
     const handleSelectWorkflow = (workflow: Workflow | null) => {
         onSelect(workflow);
         setMobilePane(workflow ? "details" : "list");
@@ -120,7 +120,7 @@ export function WorkflowPickerContent({
                 <SearchBar
                     value={search}
                     onValueChange={onSearchChange}
-                    placeholder="Search workflows..."
+                    placeholder="Search templates..."
                 />
 
                 <div
@@ -282,7 +282,7 @@ function WorkflowPreviewSkeleton({ mode }: { mode: "prompt" | "columns" }) {
     return (
         <div
             role="status"
-            aria-label={`Loading workflow ${mode}`}
+            aria-label={`Loading template ${mode}`}
             className="min-w-0 flex-1 space-y-3 px-3 py-3"
         >
             {(mode === "columns"

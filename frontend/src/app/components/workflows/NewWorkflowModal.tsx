@@ -513,13 +513,13 @@ export function NewWorkflowModal({
     const jurisdictionField = (
         <div>
             <FieldLabel htmlFor="workflow-jurisdiction">
-                Jurisdiction
+                State / jurisdiction
             </FieldLabel>
             <ModalSelect
                 id="workflow-jurisdiction"
                 value={jurisdiction}
                 options={jurisdictionOptions}
-                placeholder="Select jurisdiction"
+                placeholder="Select state or jurisdiction"
                 disabled={viewOnly}
                 open={openDropdown === "jurisdiction"}
                 onOpenChange={(nextOpen) =>
@@ -575,7 +575,7 @@ export function NewWorkflowModal({
                     value={customJurisdiction}
                     disabled={viewOnly}
                     onChange={(e) => setCustomJurisdiction(e.target.value)}
-                    placeholder="Enter jurisdiction…"
+                    placeholder="Enter state or jurisdiction…"
                     className="mt-2"
                 />
             )}
@@ -587,8 +587,8 @@ export function NewWorkflowModal({
             open={open}
             onClose={handleClose}
             breadcrumbs={[
-                "Workflows",
-                isEditing ? "View and Edit details" : "New workflow",
+                "Agreement Templates",
+                isEditing ? "View and Edit details" : "New template",
                 ...(!isEditing
                     ? [
                           step === "details"
@@ -625,7 +625,7 @@ export function NewWorkflowModal({
                                       : "Creating…"
                                   : isEditing
                                     ? "Save"
-                                    : "Create workflow",
+                                    : "Create template",
                               type: isEditing ? "submit" : "button",
                               form: isEditing ? formId : undefined,
                               onClick: isEditing
@@ -697,7 +697,7 @@ export function NewWorkflowModal({
                         onDirectGrantsChange={setDirectGrants}
                         orgOverrides={orgOverrides}
                         onOrgOverridesChange={setOrgOverrides}
-                        ownerLabel="Workflow owners"
+                        ownerLabel="Template owners"
                     />
                 ) : !isEditing && step === "assets" ? (
                     <div className="flex min-h-0 flex-1 flex-col">
@@ -719,7 +719,7 @@ export function NewWorkflowModal({
                                     type="text"
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
-                                    placeholder="Add workflow name"
+                                    placeholder="e.g. Plumbing service agreement"
                                     variant="minimal"
                                     disabled={viewOnly}
                                     autoFocus={!viewOnly}
@@ -742,7 +742,7 @@ export function NewWorkflowModal({
                                                 },
                                                 {
                                                     value: "tabular",
-                                                    label: "Tabular",
+                                                    label: "Review",
                                                     icon: TabularReviewSkeuoIcon,
                                                 },
                                             ]}
@@ -798,13 +798,13 @@ export function NewWorkflowModal({
 
                             <div>
                                 <FieldLabel htmlFor="workflow-practice">
-                                    Practice area
+                                    Trade / discipline
                                 </FieldLabel>
                                 <ModalSelect
                                     id="workflow-practice"
                                     value={practice}
                                     options={PRACTICE_OPTIONS}
-                                    placeholder="Select practice area"
+                                    placeholder="Select trade or discipline"
                                     disabled={viewOnly}
                                     open={openDropdown === "practice"}
                                     onOpenChange={(nextOpen) =>
@@ -835,7 +835,7 @@ export function NewWorkflowModal({
                                             practiceEditedRef.current = true;
                                             setCustomPractice(e.target.value);
                                         }}
-                                        placeholder="Enter practice area…"
+                                        placeholder="Enter trade or discipline…"
                                         className="mt-2"
                                     />
                                 )}

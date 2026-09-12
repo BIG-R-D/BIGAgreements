@@ -44,9 +44,9 @@ const ACTION_LABELS: Record<string, string> = {
   "document.uploaded": "Document upload",
   "document.generated": "Generated document",
   "document.edited": "Document edit",
-  "workflow.applied": "Workflow",
-  "tabular.created": "Tabular review",
-  "tabular.generated": "Tabular run",
+  "workflow.applied": "Template",
+  "tabular.created": "Review",
+  "tabular.generated": "Review run",
   "export.chats": "Chat export",
   "export.account": "Account export",
   "export.tabular": "Review export",
@@ -70,8 +70,8 @@ const GLASS_DOT =
 const SURFACE_LABELS: Record<string, string> = {
   assistant: "Assistant",
   project: "Project",
-  tabular: "Tabular",
-  workflows: "Workflows",
+  tabular: "Review",
+  workflows: "Agreement Templates",
   account: "Account",
 };
 

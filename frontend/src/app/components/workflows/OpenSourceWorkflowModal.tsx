@@ -118,7 +118,7 @@ export function OpenSourceWorkflowModal({
             setError(
                 userFacingApiError(
                     err,
-                    "Failed to submit workflow for review.",
+                    "Failed to submit template for review.",
                 ),
             );
         }
@@ -133,7 +133,7 @@ export function OpenSourceWorkflowModal({
                 resetModalState();
             }}
             breadcrumbs={[
-                "Workflows",
+                "Agreement Templates",
                 submitted
                     ? "Submitted"
                     : pending
@@ -162,10 +162,10 @@ export function OpenSourceWorkflowModal({
                         <Check className="h-6 w-6" />
                     </div>
                     <h3 className="text-2xl font-serif text-gray-950">
-                        Workflow submitted
+                        Template submitted
                     </h3>
                     <p className="mt-3 max-w-sm text-xs leading-6 text-gray-600">
-                        Your workflow snapshot has been submitted for review.
+                        Your template snapshot has been submitted for review.
                         You&apos;ll be notified by email if it is accepted.
                     </p>
                     <p className="mt-6 text-xs font-medium text-gray-500">
@@ -178,7 +178,7 @@ export function OpenSourceWorkflowModal({
                         Contribute to open source legal
                     </h3>
                     <p className="leading-6 text-xs text-gray-600">
-                        Submit a snapshot of this workflow for review. If
+                        Submit a snapshot of this template for review. If
                         accepted, it will be shared under the Apache License 2.0
                         in the{" "}
                         <a
@@ -189,7 +189,7 @@ export function OpenSourceWorkflowModal({
                         >
                             Open-Legal-Products/mike-workflows
                         </a>{" "}
-                        repo. You&apos;ll be notified by email if your workflow
+                        repo. You&apos;ll be notified by email if your template
                         is accepted.
                     </p>
                     {pending && (
@@ -250,7 +250,7 @@ export function OpenSourceWorkflowModal({
                                                 event.target.value,
                                             )
                                         }
-                                        placeholder="Acme LLP"
+                                        placeholder="Summit Construction"
                                         disabled={loading}
                                     />
                                 </div>
@@ -266,7 +266,7 @@ export function OpenSourceWorkflowModal({
                                                 event.target.value,
                                             )
                                         }
-                                        placeholder="Senior Associate"
+                                        placeholder="Project Manager"
                                         disabled={loading}
                                     />
                                 </div>

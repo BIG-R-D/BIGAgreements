@@ -309,9 +309,9 @@ export function ProjectsOverview() {
     );
     const practiceFilterButton = (
         <TableFilters
-            label="Filter by practice"
+            label="Filter by trade or discipline"
             value={practiceFilter}
-            allLabel="All Practices"
+            allLabel="All trades and disciplines"
             options={practices.map((practice) => ({
                 value: practice,
                 label: practice,
@@ -351,7 +351,7 @@ export function ProjectsOverview() {
     );
     const reviewsFilterButton = (
         <TableFilters
-            label="Sort by tabular reviews"
+            label="Sort by comparisons"
             value={reviewsSortDirection}
             allLabel="Default Order"
             widthClassName="w-40"
@@ -592,13 +592,13 @@ export function ProjectsOverview() {
                         </TableHeaderCell>
                         <TableHeaderCell className="w-32">
                             <div className="flex items-center gap-1">
-                                <span>CM</span>
+                                <span>Reference</span>
                                 {!loading && cmFilterButton}
                             </div>
                         </TableHeaderCell>
                         <TableHeaderCell className="w-36">
                             <div className="flex items-center gap-1">
-                                <span>Practice</span>
+                                <span>Trade / discipline</span>
                                 {!loading && practiceFilterButton}
                             </div>
                         </TableHeaderCell>
@@ -622,7 +622,7 @@ export function ProjectsOverview() {
                         </TableHeaderCell>
                         <TableHeaderCell className="w-36">
                             <div className="flex items-center gap-1">
-                                <span>Tabular Reviews</span>
+                                <span>Comparisons</span>
                                 {!loading && reviewsFilterButton}
                             </div>
                         </TableHeaderCell>
@@ -704,7 +704,7 @@ export function ProjectsOverview() {
                             <EmptyState
                                 icon={<OpenProjectSvgIcon />}
                                 title="Projects"
-                                description="Upload documents into projects and to commence chats and tabular reviews with them."
+                                description="Keep your project agreements, documents, chats, and reviews together."
                                 action={
                                     <PillButton
                                         tone="black"

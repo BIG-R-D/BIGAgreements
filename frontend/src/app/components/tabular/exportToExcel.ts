@@ -28,7 +28,7 @@ function sanitizeFilename(name: string): string {
             .replace(/[\\/:*?"<>|]/g, "")
             .replace(/\s+/g, " ")
             .trim()
-            .slice(0, 80) || "Tabular Review"
+            .slice(0, 80) || "Agreement Review"
     );
 }
 

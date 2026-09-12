@@ -519,7 +519,7 @@ export function WorkflowAppliedBlock({
 }) {
     return (
         <EventBlock showConnector={showConnector} dotColor="green">
-            <span className="font-medium">Read Workflow</span>{" "}
+            <span className="font-medium">Read Template</span>{" "}
             {onClick ? (
                 <button
                     onClick={onClick}

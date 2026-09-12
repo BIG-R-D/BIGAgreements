@@ -175,7 +175,7 @@ export function NewWorkflowModal({
       onClose();
     } catch (reason) {
       setError(
-        reason instanceof Error ? reason.message : "Failed to create workflow"
+        reason instanceof Error ? reason.message : "Failed to create template"
       );
     } finally {
       setCreating(false);
@@ -209,10 +209,10 @@ export function NewWorkflowModal({
     <Modal
       open={open}
       onClose={close}
-      parentLabel="Workflows"
-      title="New workflow"
+      parentLabel="Agreement Templates"
+      title="New template"
       primaryAction={{
-        label: creating ? "Creating…" : "Create workflow",
+        label: creating ? "Creating…" : "Create template",
         onClick: () => void create(),
         disabled: !title.trim() || creating,
       }}
@@ -233,7 +233,7 @@ export function NewWorkflowModal({
               id="new-workflow-title"
               value={title}
               onChange={(event) => setTitle(event.target.value)}
-              placeholder="Add workflow name"
+              placeholder="e.g. Plumbing service agreement"
               variant="minimal"
               autoFocus
             />
@@ -265,7 +265,7 @@ export function NewWorkflowModal({
 
           <div>
             <ModalFieldLabel htmlFor="new-workflow-practice">
-              Practice area
+              Trade / discipline
             </ModalFieldLabel>
             <ModalSelect
               id="new-workflow-practice"
@@ -280,7 +280,7 @@ export function NewWorkflowModal({
               <ModalTextInput
                 value={customPractice}
                 onChange={(event) => setCustomPractice(event.target.value)}
-                placeholder="Enter practice area…"
+                placeholder="Enter trade or discipline…"
                 className="mt-2"
               />
             )}
@@ -288,7 +288,7 @@ export function NewWorkflowModal({
 
           <div>
             <ModalFieldLabel htmlFor="new-workflow-jurisdiction">
-              Jurisdiction
+              State / jurisdiction
             </ModalFieldLabel>
             <ModalSelect
               id="new-workflow-jurisdiction"
@@ -323,7 +323,7 @@ export function NewWorkflowModal({
               <ModalTextInput
                 value={customJurisdiction}
                 onChange={(event) => setCustomJurisdiction(event.target.value)}
-                placeholder="Enter jurisdiction…"
+                placeholder="Enter state or jurisdiction…"
                 className="mt-2"
               />
             )}
@@ -331,7 +331,7 @@ export function NewWorkflowModal({
 
           {importedFileName && (
             <p className="text-xs text-gray-500">
-              The imported Markdown will become the workflow instructions.
+              The imported Markdown will become the template instructions.
             </p>
           )}
           {error && (

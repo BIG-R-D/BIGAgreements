@@ -363,9 +363,9 @@ export function NewTRModal({
             ? [
                   "Projects",
                   `${projectName}${projectCmNumber ? ` (#${projectCmNumber})` : ""}`,
-                  "New Tabular Review",
+                  "New comparison",
               ]
-            : ["Tabular Reviews", "New Tabular Review"];
+            : ["Compare & Review", "New comparison"];
 
     return (
         <Modal
@@ -505,7 +505,7 @@ export function NewTRModal({
 
                         {/* Workflow template */}
                         <div>
-                            <FieldLabel as="p">Workflow template</FieldLabel>
+                            <FieldLabel as="p">Review template</FieldLabel>
                             <ModalSelect
                                 id="new-tr-workflow-template"
                                 value={selectedWorkflowId ?? ""}

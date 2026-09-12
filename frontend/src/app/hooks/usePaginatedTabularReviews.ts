@@ -119,7 +119,7 @@ export function usePaginatedTabularReviews(options: {
                 )
                     return;
                 console.error("[tabular reviews] failed to load", error);
-        setError(paginationError(error, "Unable to load tabular reviews"));
+        setError(paginationError(error, "Unable to load reviews"));
                 setHasMore(false);
             })
             .finally(() => {
@@ -169,7 +169,7 @@ export function usePaginatedTabularReviews(options: {
             ) {
                 console.error("[tabular reviews] failed to load more", error);
         setLoadMoreError(
-          paginationError(error, "Unable to load tabular reviews"),
+          paginationError(error, "Unable to load reviews"),
         );
             }
         } finally {

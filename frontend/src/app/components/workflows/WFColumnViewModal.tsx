@@ -25,7 +25,7 @@ export function WFColumnViewModal({ col, onClose }: Props) {
         <Modal
             open
             onClose={onClose}
-            breadcrumbs={["Workflows", col.name]}
+            breadcrumbs={["Agreement Templates", col.name]}
             primaryAction={{
                 label: "Close",
                 onClick: onClose,

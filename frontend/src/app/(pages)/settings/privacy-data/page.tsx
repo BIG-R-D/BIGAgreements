@@ -40,17 +40,17 @@ const DELETE_DATA_COPY: Record<
     chats: {
         title: "Delete all chats?",
         message:
-            "This will permanently delete your assistant and tabular review chat history. This action cannot be undone.",
+            "This will permanently delete your assistant and review chat history. This action cannot be undone.",
     },
     "tabular-reviews": {
-        title: "Delete all tabular reviews?",
+        title: "Delete all reviews?",
         message:
-            "This will permanently delete all tabular reviews you own, including their cells and review chats. This action cannot be undone.",
+            "This will permanently delete all reviews you own, including their cells and review chats. This action cannot be undone.",
     },
     projects: {
         title: "Delete all projects?",
         message:
-            "This will permanently delete all projects you own, including their documents, chats, and tabular reviews. This action cannot be undone.",
+            "This will permanently delete all projects you own, including their documents, chats, and reviews. This action cannot be undone.",
     },
 };
 
@@ -177,7 +177,7 @@ export default function PrivacyDataPage() {
                 setPendingMfaAction("export-tabular-reviews");
                 return;
             }
-            alert("Failed to export tabular reviews. Please try again.");
+            alert("Failed to export reviews. Please try again.");
         } finally {
             setIsExportingTabularReviews(false);
         }
@@ -255,7 +255,7 @@ export default function PrivacyDataPage() {
                                 Export chats
                             </p>
                             <p className="text-sm text-gray-500">
-                                Download assistant and tabular review chat
+                                Download assistant and review chat
                                 history as JSON.
                             </p>
                         </div>
@@ -275,10 +275,10 @@ export default function PrivacyDataPage() {
                     <div className="flex flex-col gap-3 px-4 py-5 sm:flex-row sm:items-center sm:justify-between">
                         <div className="space-y-1">
                             <p className="text-sm font-medium text-gray-700">
-                                Export tabular reviews
+                                Export reviews
                             </p>
                             <p className="text-sm text-gray-500">
-                                Download all owned tabular reviews, cells, and
+                                Download all owned reviews, cells, and
                                 review chat records as JSON.
                             </p>
                         </div>
@@ -304,7 +304,7 @@ export default function PrivacyDataPage() {
                             </p>
                             <p className="text-sm text-gray-500">
                                 Download account metadata, projects, document
-                                metadata, workflows, and review data as JSON.
+                                metadata, templates, and review data as JSON.
                             </p>
                         </div>
                         <PillButton
@@ -334,8 +334,7 @@ export default function PrivacyDataPage() {
                                 Delete all chats
                             </p>
                             <p className="text-sm text-gray-500">
-                                Permanently delete your assistant and tabular
-                                review chat history.
+                                Permanently delete your assistant and review chat history.
                             </p>
                         </div>
                         <PillButton
@@ -352,10 +351,10 @@ export default function PrivacyDataPage() {
                     <div className="flex flex-col gap-3 px-4 py-5 sm:flex-row sm:items-center sm:justify-between">
                         <div className="space-y-1">
                             <p className="text-sm font-medium text-gray-700">
-                                Delete all tabular reviews
+                                Delete all reviews
                             </p>
                             <p className="text-sm text-gray-500">
-                                Permanently delete all tabular reviews you own,
+                                Permanently delete all reviews you own,
                                 including cells and review chats.
                             </p>
                         </div>
@@ -379,7 +378,7 @@ export default function PrivacyDataPage() {
                             </p>
                             <p className="text-sm text-gray-500">
                                 Permanently delete all projects you own,
-                                including documents, chats, and tabular reviews.
+                                including documents, chats, and reviews.
                             </p>
                         </div>
                         <PillButton

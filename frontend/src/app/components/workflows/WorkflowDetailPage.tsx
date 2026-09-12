@@ -373,9 +373,9 @@ export function WorkflowDetailPage({ id, workflowType }: Props) {
           shrink
           breadcrumbs={[
             {
-              label: "Workflows",
+              label: "Agreement Templates",
               onClick: () => router.push("/workflows"),
-              title: "Back to Workflows",
+              title: "Back to Templates",
             },
             { loading: true, skeletonClassName: "w-40" },
           ]}
@@ -394,7 +394,7 @@ export function WorkflowDetailPage({ id, workflowType }: Props) {
   if (notFound || !workflow) {
     return (
       <div className="flex-1 flex items-center justify-center">
-        <p className="text-gray-400 font-serif">Workflow not found.</p>
+        <p className="text-gray-400 font-serif">Template not found.</p>
       </div>
     );
   }
@@ -405,7 +405,7 @@ export function WorkflowDetailPage({ id, workflowType }: Props) {
     workflow.open_source_submission?.status === "pending";
   const workflowActionItems: HeaderActionsMenuItem[] = [
     {
-      label: "Download workflow",
+      label: "Download template",
       icon: Download,
       onSelect: () => downloadWorkflowZip(workflow, promptMd, columns),
     },
@@ -446,16 +446,16 @@ export function WorkflowDetailPage({ id, workflowType }: Props) {
     >
       <UploadOverlay
         open={draggingAssets}
-        label="Drop files here to add as workflow assets"
+        label="Drop files here to add as template assets"
       />
       {/* Page header */}
       <PageHeader
         shrink
         breadcrumbs={[
           {
-            label: "Workflows",
+            label: "Agreement Templates",
             onClick: () => router.push("/workflows"),
-            title: "Back to Workflows",
+            title: "Back to Templates",
           },
           {
             label: (
@@ -503,7 +503,7 @@ export function WorkflowDetailPage({ id, workflowType }: Props) {
             canShare
               ? {
                   onClick: () => setShareOpen(true),
-                  title: "Open workflow access",
+                  title: "Open template access",
                   iconOnly: true,
                   icon: <Users className="h-4 w-4" />,
                 }
@@ -512,7 +512,7 @@ export function WorkflowDetailPage({ id, workflowType }: Props) {
               type: "custom",
               render: (
                 <HeaderActionsMenu
-                  title="Workflow actions"
+                  title="Template actions"
                   items={workflowActionItems}
                 />
               ),
@@ -540,7 +540,7 @@ export function WorkflowDetailPage({ id, workflowType }: Props) {
           setAddSavedAssetsOpen(false);
         }}
         breadcrumb={[
-          "Workflows",
+          "Agreement Templates",
           workflow.metadata.title,
           "Assets",
           "Add Assets",
@@ -578,14 +578,14 @@ export function WorkflowDetailPage({ id, workflowType }: Props) {
           resource={{ id }}
           fetchAccess={fetchWorkflowAccess}
           currentUserEmail={user?.email ?? null}
-          breadcrumb={["Workflows", workflow.metadata.title, "Access"]}
+          breadcrumb={["Agreement Templates", workflow.metadata.title, "Access"]}
           access={{
             grants: workflowShares.map((share) => ({
               email: share.shared_with_email,
               role: share.role,
             })),
             orgId: workflow.org_id ?? null,
-            ownerLabel: "Workflow owners",
+            ownerLabel: "Template owners",
             canManage: canShare,
             onGrant: async (email, role) => {
               await shareWorkflow(id, { emails: [email], role });
@@ -605,11 +605,11 @@ export function WorkflowDetailPage({ id, workflowType }: Props) {
       )}
       <ConfirmPopup
         open={deleteOpen}
-        title="Delete workflow?"
+        title="Delete template?"
         message={
           workflow.is_default
-            ? "Deleting this default workflow also permanently deletes its corresponding Quick Action. The default workflow will not be created again automatically."
-            : "This workflow will be permanently deleted."
+            ? "Deleting this default template also permanently deletes its corresponding Quick Action. The default template will not be created again automatically."
+            : "This template will be permanently deleted."
         }
         confirmLabel="Delete"
         confirmVariant="danger"
@@ -776,7 +776,7 @@ export function WorkflowDetailPage({ id, workflowType }: Props) {
                   <EmptyState
                     icon={<TabularReviewSkeuoIcon />}
                     title="Columns"
-                    description="Add columns to define what this tabular review workflow extracts from each document."
+                    description="Add columns to define what this review template extracts from each document."
                     action={
                       !readOnly && (
                         <PillButton

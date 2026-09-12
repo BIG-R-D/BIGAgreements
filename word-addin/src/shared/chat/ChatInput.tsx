@@ -42,7 +42,7 @@ export function ChatInput({
     onSubmit,
     isLoading = false,
     onCancel,
-    placeholder = "How can I help?",
+    placeholder = "Ask about a project agreement...",
     disabled = false,
     leftSlot,
     rightSlot,

@@ -65,7 +65,7 @@ async function fillAndAdd(
     email: string,
     role: string,
 ) {
-    await user.type(screen.getByPlaceholderText("Add project name"), "Matter");
+    await user.type(screen.getByPlaceholderText("e.g. Riverside housing development"), "Matter");
     expect(
         screen.queryByPlaceholderText("Add by email..."),
     ).not.toBeInTheDocument();
@@ -130,7 +130,7 @@ describe("NewProjectModal sharing", () => {
         });
         renderModal();
 
-        expect(await screen.findByLabelText("Practice")).toHaveTextContent(
+        expect(await screen.findByLabelText("Trade / discipline")).toHaveTextContent(
             "Corporate and M&A",
         );
     });
@@ -183,7 +183,7 @@ describe("NewProjectModal sharing", () => {
         // say what the server will serve for it on every future load.
         const user = userEvent.setup({ delay: null });
         const onCreated = renderModal();
-        await user.type(screen.getByPlaceholderText("Add project name"), "P");
+        await user.type(screen.getByPlaceholderText("e.g. Riverside housing development"), "P");
         await submit(user);
 
         await waitFor(() => expect(onCreated).toHaveBeenCalled());
@@ -201,7 +201,7 @@ describe("NewProjectModal sharing", () => {
         const onCreated = renderModal();
 
         await user.type(
-            screen.getByPlaceholderText("Add project name"),
+            screen.getByPlaceholderText("e.g. Riverside housing development"),
             "Matter",
         );
         await user.click(screen.getByRole("button", { name: "Next" }));
@@ -327,7 +327,7 @@ describe("NewProjectModal sharing", () => {
         const user = userEvent.setup({ delay: null });
         renderModal();
         await user.type(
-            screen.getByPlaceholderText("Add project name"),
+            screen.getByPlaceholderText("e.g. Riverside housing development"),
             "Matter",
         );
         expect(
@@ -394,7 +394,7 @@ describe("NewProjectModal sharing", () => {
             await screen.findByRole("menuitem", { name: "Elite Law LLP" }),
         );
         await user.type(
-            screen.getByPlaceholderText("Add project name"),
+            screen.getByPlaceholderText("e.g. Riverside housing development"),
             "Matter",
         );
         await user.click(screen.getByRole("button", { name: "Next" }));

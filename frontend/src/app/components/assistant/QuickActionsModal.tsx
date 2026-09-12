@@ -50,7 +50,7 @@ export function QuickActionsModal({
     if (!open || workflows.length > 0) return;
     void listWorkflows("assistant")
       .then((rows) => setWorkflows(rows))
-      .catch(() => setError("Could not load assistant workflows."));
+      .catch(() => setError("Could not load assistant templates."));
   }, [open, workflows.length]);
 
   const availableWorkflows = useMemo(() => {
@@ -344,11 +344,11 @@ function QuickActionForm({
         />
       </div>
       <div>
-        <FieldLabel htmlFor="quick-action-workflow">Workflow used</FieldLabel>
+        <FieldLabel htmlFor="quick-action-workflow">Template used</FieldLabel>
         <ModalSelect
           id="quick-action-workflow"
           value={workflowId}
-          placeholder="Select an assistant workflow"
+          placeholder="Select an assistant template"
           options={workflowOptions}
           onChange={onWorkflowChange}
         />
@@ -365,7 +365,7 @@ function QuickActionForm({
       </div>
       <ToggleRow
         label="Request document upload"
-        caption="Ask for source documents before launching this workflow."
+        caption="Ask for project documents before using this template."
         checked={documentUpload}
         onChange={onDocumentUploadChange}
       />

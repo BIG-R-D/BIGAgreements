@@ -41,7 +41,7 @@ export function WorkflowModal({
         if (cancelled) return;
         setWorkflows([]);
         setError(
-          reason instanceof Error ? reason.message : "Failed to load workflows."
+          reason instanceof Error ? reason.message : "Failed to load templates."
         );
       })
       .finally(() => {
@@ -58,7 +58,7 @@ export function WorkflowModal({
     <Modal
       open={open}
       onClose={onClose}
-      title="Add workflow"
+      title="Add template"
       primaryAction={{
         label: "Use",
         disabled: !selected || !(selected.skill_md ?? "").trim(),

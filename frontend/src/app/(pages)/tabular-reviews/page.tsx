@@ -320,7 +320,7 @@ export default function TabularReviewsPage() {
         // so the refusal must say "member", not "admin" (the review page and
         // this list previously disagreed about the same action).
         if (!can(roleFrom(review), "content.edit")) {
-            refuse(review.id, "edit tabular review details", "editor");
+            refuse(review.id, "edit review details", "editor");
             return;
         }
         setDetailsReview(review);
@@ -332,7 +332,7 @@ export default function TabularReviewsPage() {
     }) {
         if (!detailsReview) return;
         if (!can(roleFrom(detailsReview), "content.edit")) {
-            refuse(detailsReview.id, "edit tabular review details", "editor");
+            refuse(detailsReview.id, "edit review details", "editor");
             return;
         }
         const updated = await updateTabularReview(detailsReview.id, {
@@ -411,7 +411,7 @@ export default function TabularReviewsPage() {
 
     async function handleDeleteReviewRow(review: TabularReview) {
         if (!can(roleFrom(review), "container.delete")) {
-            refuse(review.id, "delete this tabular review");
+            refuse(review.id, "delete this review");
             return;
         }
         const snapshot = reviews;
@@ -532,12 +532,12 @@ export default function TabularReviewsPage() {
                         type: "new",
                         onClick: () => setNewTROpen(true),
                         loading: creating,
-                        title: "New tabular review",
+                        title: "New comparison",
                     },
                 ]}
             >
                 <h1 className="text-2xl font-medium font-serif text-gray-900">
-                    Tabular Reviews
+                    Compare &amp; Review
                 </h1>
             </PageHeader>
 
@@ -658,7 +658,7 @@ export default function TabularReviewsPage() {
                             <>
                                 <TabularReviewSkeuoIcon className="mb-4 h-8 w-8" />
                                 <p className="text-2xl font-medium font-serif text-gray-900">
-                                    Tabular Reviews
+                                    Compare &amp; Review
                                 </p>
                                 <p className="mt-1 text-xs text-gray-400 max-w-xs text-left">
                                     Extract data from documents into tables

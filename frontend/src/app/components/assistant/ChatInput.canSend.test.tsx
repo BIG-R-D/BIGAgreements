@@ -92,7 +92,7 @@ describe("ChatInput canSend gating", () => {
             screen.queryByRole("button", { name: "Add documents" }),
         ).toBeNull();
         expect(
-            screen.queryByRole("button", { name: "Open workflows" }),
+            screen.queryByRole("button", { name: "Open templates" }),
         ).toBeNull();
     });
 
@@ -130,7 +130,7 @@ describe("ChatInput canSend gating", () => {
         );
 
         expect(
-            screen.getByPlaceholderText("How can I help?"),
+            screen.getByPlaceholderText("Ask about a project agreement..."),
         ).not.toBeDisabled();
         expect(
             screen.getByRole("button", { name: "Add documents" }),

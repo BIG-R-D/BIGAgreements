@@ -117,7 +117,7 @@ export function CreateOrganizationModal({
               id="new-organization-name"
               autoFocus
               value={name}
-              placeholder="e.g. Elite Law LLP"
+              placeholder="e.g. Summit Construction"
               disabled={creating || createdOrg !== null}
               onChange={(event) => {
                 setName(event.target.value);
@@ -464,7 +464,7 @@ export function OrganizationSettingsModal({
             </p>
             <p className="mt-1 max-w-md text-xs text-gray-400">
               Only an empty organization can be deleted. Move or delete its
-              projects, chats, reviews, documents and workflows first.
+              projects, chats, reviews, documents and templates first.
             </p>
             <PillButton
               tone="danger"

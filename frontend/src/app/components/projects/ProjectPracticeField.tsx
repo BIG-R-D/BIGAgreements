@@ -56,7 +56,7 @@ export function ProjectPracticeField({
                 value={selectedOption}
                 options={options}
                 onChange={handleSelect}
-                placeholder="Select practice"
+                placeholder="Select trade or discipline"
                 disabled={disabled}
             />
             {selectedOption === OPTION_OTHER && (
@@ -64,7 +64,7 @@ export function ProjectPracticeField({
                     type="text"
                     value={customValue}
                     onChange={(event) => onChange(event.target.value)}
-                    placeholder="Enter practice..."
+                    placeholder="Enter trade or discipline..."
                     disabled={disabled}
                 />
             )}

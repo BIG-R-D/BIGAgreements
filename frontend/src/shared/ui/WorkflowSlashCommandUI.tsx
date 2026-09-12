@@ -20,7 +20,7 @@ export function WorkflowSlashCommandUI({ title }: { title: string }) {
                     <span className="text-gray-700">
                         {command}
                     </span>{" "}
-                    in chat to activate this workflow.
+                    in chat to activate this template.
                 </>
             ) : (
                 <span aria-hidden="true">&nbsp;</span>

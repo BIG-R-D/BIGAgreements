@@ -110,10 +110,10 @@ describe("WorkflowList pack toolbar", () => {
       within(toolbar as HTMLElement).queryByText("All"),
     ).not.toBeInTheDocument();
     expect(
-      within(toolbar as HTMLElement).queryByText("Assistant"),
+      within(toolbar as HTMLElement).queryByText("Agreement Assistant"),
     ).not.toBeInTheDocument();
     expect(
-      within(toolbar as HTMLElement).queryByText("Tabular"),
+      within(toolbar as HTMLElement).queryByText("Compare & Review"),
     ).not.toBeInTheDocument();
     expect(
       within(toolbar as HTMLElement).queryByText("Add-ons"),
@@ -140,7 +140,7 @@ describe("WorkflowList pack toolbar", () => {
         prompt_md: "Draft from the precedent.",
         contributors: [],
         language: "English",
-        practice: "General Transactions",
+        practice: "General Construction",
         jurisdictions: ["General"],
         active: true,
         updated_at: "2026-08-28T00:00:00.000Z",
@@ -183,7 +183,7 @@ describe("WorkflowList pack toolbar", () => {
         prompt_md: "Draft from the precedent.",
         contributors: [],
         language: "English",
-        practice: "General Transactions",
+        practice: "General Construction",
         jurisdictions: ["General"],
         active: true,
         updated_at: "2026-08-28T00:00:00.000Z",
@@ -220,7 +220,7 @@ describe("WorkflowList pack toolbar", () => {
         user_id: "user-1",
         access_scope: "private",
         metadata: {
-          title: "Private workflow",
+          title: "Private template",
           type: "assistant",
           contributors: [],
           language: "English",
@@ -235,7 +235,7 @@ describe("WorkflowList pack toolbar", () => {
         access_scope: "shared",
         direct_grant_count: 1,
         metadata: {
-          title: "Shared workflow",
+          title: "Shared template",
           type: "assistant",
           contributors: [],
           language: "English",
@@ -250,7 +250,7 @@ describe("WorkflowList pack toolbar", () => {
         access_scope: "organization",
         organization_name: "Elite Law LLP",
         metadata: {
-          title: "Firm workflow",
+          title: "Firm template",
           type: "assistant",
           contributors: [],
           language: "English",

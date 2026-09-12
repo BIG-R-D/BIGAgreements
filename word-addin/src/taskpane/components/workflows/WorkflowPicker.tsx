@@ -89,7 +89,7 @@ export function WorkflowPicker({
       .catch((reason: unknown) => {
         if (cancelled) return;
         setFetchError(
-          reason instanceof Error ? reason.message : "Failed to load workflows"
+          reason instanceof Error ? reason.message : "Failed to load templates"
         );
       })
       .finally(() => {
@@ -188,7 +188,7 @@ export function WorkflowPicker({
           setSaveError(
             reason instanceof Error
               ? reason.message
-              : "Failed to save workflow instructions"
+              : "Failed to save template instructions"
           );
         });
     }, 800);
@@ -212,7 +212,7 @@ export function WorkflowPicker({
           data-testid="workflows-page-title"
           className="mb-3 px-1"
         >
-          Workflows
+          Agreement Templates
         </PageTitle>
         <WorkflowList
           workflows={workflows}
@@ -221,7 +221,7 @@ export function WorkflowPicker({
           onSelect={openWorkflow}
           loading={fetchLoading}
           error={fetchError}
-          emptyMessage="No workflows found."
+          emptyMessage="No agreement templates found."
         />
       </div>
     );

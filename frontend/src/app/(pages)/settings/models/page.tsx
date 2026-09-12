@@ -122,7 +122,7 @@ export default function ModelPreferencesPage() {
                         />
                     </div>
                     <div className="px-4 py-5">
-                        <FieldLabel>Tabular review model</FieldLabel>
+                        <FieldLabel>Review model</FieldLabel>
                         <p className="text-xs text-gray-400 mb-2">
                             Preselected when creating a review. Each review
                             stores its own model and can be changed separately.

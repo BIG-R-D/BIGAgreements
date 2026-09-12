@@ -900,7 +900,7 @@ export function LibraryCollectionPage({
             <PageHeader
                 breadcrumbs={[
                     {
-                        label: "Library",
+                        label: "Documents",
                         onClick: () => router.push("/library"),
                     },
                     {

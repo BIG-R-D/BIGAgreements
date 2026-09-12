@@ -146,7 +146,7 @@ export function WorkflowDetailsModal({
       onClose();
     } catch (reason) {
       setError(
-        reason instanceof Error ? reason.message : "Failed to update workflow",
+        reason instanceof Error ? reason.message : "Failed to update template",
       );
     } finally {
       setSaving(false);
@@ -164,7 +164,7 @@ export function WorkflowDetailsModal({
       onClose();
     } catch (reason) {
       setDeleteError(
-        reason instanceof Error ? reason.message : "Failed to delete workflow",
+        reason instanceof Error ? reason.message : "Failed to delete template",
       );
     } finally {
       setDeleting(false);
@@ -176,7 +176,7 @@ export function WorkflowDetailsModal({
       <Modal
         open={open}
         onClose={onClose}
-        parentLabel="Workflows"
+        parentLabel="Agreement Templates"
         title="View and Edit details"
         primaryAction={
           readOnly
@@ -198,7 +198,7 @@ export function WorkflowDetailsModal({
                 id="workflow-details-title"
                 value={title}
                 onChange={(event) => setTitle(event.target.value)}
-                placeholder="Add workflow name"
+                placeholder="e.g. Plumbing service agreement"
                 variant="minimal"
                 disabled={readOnly}
               />
@@ -232,7 +232,7 @@ export function WorkflowDetailsModal({
 
             <div>
               <ModalFieldLabel htmlFor="workflow-details-practice">
-                Practice area
+                Trade / discipline
               </ModalFieldLabel>
               <ModalSelect
                 id="workflow-details-practice"
@@ -248,7 +248,7 @@ export function WorkflowDetailsModal({
                 <ModalTextInput
                   value={customPractice}
                   onChange={(event) => setCustomPractice(event.target.value)}
-                  placeholder="Enter practice area…"
+                  placeholder="Enter trade or discipline…"
                   disabled={readOnly}
                   className="mt-2"
                 />
@@ -257,7 +257,7 @@ export function WorkflowDetailsModal({
 
             <div>
               <ModalFieldLabel htmlFor="workflow-details-jurisdiction">
-                Jurisdiction
+                State / jurisdiction
               </ModalFieldLabel>
               <ModalSelect
                 id="workflow-details-jurisdiction"
@@ -275,7 +275,7 @@ export function WorkflowDetailsModal({
                   onChange={(event) =>
                     setCustomJurisdiction(event.target.value)
                   }
-                  placeholder="Enter jurisdiction…"
+                  placeholder="Enter state or jurisdiction…"
                   disabled={readOnly}
                   className="mt-2"
                 />
@@ -294,8 +294,8 @@ export function WorkflowDetailsModal({
       <Modal
         open={deleteConfirmOpen}
         onClose={() => !deleting && onDeleteConfirmOpenChange(false)}
-        parentLabel="Workflows"
-        title="Delete workflow?"
+        parentLabel="Agreement Templates"
+        title="Delete template?"
         primaryAction={{
           label: deleting ? "Deleting…" : "Delete",
           tone: "danger",
@@ -311,8 +311,8 @@ export function WorkflowDetailsModal({
         <div className="pb-5 text-sm leading-6 text-gray-600">
           <p>
             {workflow.is_default
-              ? "Deleting this default workflow also permanently deletes its corresponding Quick Action. It will not be recreated automatically."
-              : "This workflow will be permanently deleted."}
+              ? "Deleting this default template also permanently deletes its corresponding Quick Action. It will not be recreated automatically."
+              : "This template will be permanently deleted."}
           </p>
           {deleteError && (
             <p role="alert" className="mt-3 text-red-500">

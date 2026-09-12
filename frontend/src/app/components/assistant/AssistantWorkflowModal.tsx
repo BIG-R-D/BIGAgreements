@@ -25,9 +25,9 @@ export function AssistantWorkflowModal({
               "Projects",
               `${projectName}${projectCmNumber ? ` (#${projectCmNumber})` : ""}`,
               "Assistant",
-              "Add workflow",
+              "Add template",
           ]
-        : ["Assistant", "Add workflow"];
+        : ["Assistant", "Add template"];
 
     return (
         <WorkflowPickerModal

@@ -372,7 +372,7 @@ export const WorkflowAssets = forwardRef<
           <TableEmptyState>
             <EmptyState
               title="Assets"
-              description="Upload assets that this workflow can use when it runs."
+              description="Upload assets that this template can use when it runs."
             />
           </TableEmptyState>
         ) : (

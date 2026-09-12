@@ -533,7 +533,7 @@ export const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
               isLoading={isResponseLoading}
               onCancel={onCancel}
               disabled={false}
-              placeholder="How can I help?"
+              placeholder="Ask about a project agreement..."
               attachments={
                 selectedWorkflow || attachedDocuments.length > 0 ? (
                   <>
@@ -546,7 +546,7 @@ export const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
                         <button
                           type="button"
                           onClick={() => onSelectedWorkflowChange(null)}
-                          aria-label={`Remove workflow ${selectedWorkflow.title}`}
+                          aria-label={`Remove template ${selectedWorkflow.title}`}
                           className="ml-0.5 rounded-full p-0.5 text-white/60 transition-colors hover:bg-white/20 hover:text-white"
                         >
                           <X className="h-2.5 w-2.5" />

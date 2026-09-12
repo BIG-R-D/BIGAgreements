@@ -759,7 +759,7 @@ export function TRView({ reviewId, projectId }: Props) {
         // `is_owner === false` check was the file's last leftover of the
         // ownership model: it refused org admins and members a change the
         // server accepts, and mislabelled the refusal admin-tier.
-        if (!requireContent("change the tabular review model")) return;
+        if (!requireContent("change the review model")) return;
         const updated = await updateTabularReview(reviewId, { model });
         setReview((current) =>
             current ? { ...current, model: updated.model } : current,
@@ -1042,7 +1042,7 @@ export function TRView({ reviewId, projectId }: Props) {
         if (!canEditDetails) {
             if (roleKnown) {
                 setOwnerOnlyAction({
-                    action: "edit tabular review details",
+                    action: "edit review details",
                     requiredRole: "editor",
                 });
             }
@@ -1055,7 +1055,7 @@ export function TRView({ reviewId, projectId }: Props) {
         title: string;
         projectId?: string | null;
     }) {
-        if (!review || !requireStructure("edit tabular review details"))
+        if (!review || !requireStructure("edit review details"))
             return;
         // Only send project_id when it actually changes: moving a review
         // between projects is creator-only server-side, and sending an
@@ -1094,7 +1094,7 @@ export function TRView({ reviewId, projectId }: Props) {
 
     function requestReviewDelete() {
         if (!can(reviewRole, "container.delete")) {
-            if (roleKnown) setOwnerOnlyAction("delete this tabular review");
+            if (roleKnown) setOwnerOnlyAction("delete this review");
             return;
         }
         setDeleteReviewStatus("idle");
@@ -1121,7 +1121,7 @@ export function TRView({ reviewId, projectId }: Props) {
     }
 
     function requestWorkflow() {
-        if (!requireStructure("apply a workflow")) return;
+        if (!requireStructure("apply a template")) return;
         setWorkflowModalOpen(true);
     }
 
@@ -1226,21 +1226,21 @@ export function TRView({ reviewId, projectId }: Props) {
                               ]
                             : [
                                   {
-                                      label: "Tabular Reviews",
+                                      label: "Compare & Review",
                                       onClick: () =>
                                           router.push("/tabular-reviews"),
-                                      title: "Back to Tabular Reviews",
+                                      title: "Back to Compare & Review",
                                   },
                               ]),
                         ...(projectId
                             ? [
                                   {
-                                      label: "Tabular Reviews",
+                                      label: "Compare & Review",
                                       onClick: () =>
                                           router.push(
                                               `/projects/${projectId}/tabular-reviews`,
                                           ),
-                                      title: "Back to Tabular Reviews",
+                                      title: "Back to Compare & Review",
                                   },
                               ]
                             : []),
@@ -1282,7 +1282,7 @@ export function TRView({ reviewId, projectId }: Props) {
                                                 disabled: !roleKnown,
                                             },
                                             {
-                                                label: "Apply workflow",
+                                                label: "Apply template",
                                                 icon: WandSparkles,
                                                 onSelect: requestWorkflow,
                                                 disabled: !roleKnown,
@@ -1294,7 +1294,7 @@ export function TRView({ reviewId, projectId }: Props) {
                                                     exportTabularReviewToExcel({
                                                         reviewTitle:
                                                             review?.title ||
-                                                            "Tabular Review",
+                                                            "Comparison",
                                                         columns,
                                                         rows,
                                                         cells,
@@ -1753,7 +1753,7 @@ export function TRView({ reviewId, projectId }: Props) {
                             (project.cm_number
                                 ? ` (#${project.cm_number})`
                                 : ""),
-                        "Tabular Reviews",
+                        "Comparisons",
                         ...(review ? [review.title || "Untitled Review"] : []),
                         "Add Documents",
                     ]}
@@ -1770,7 +1770,7 @@ export function TRView({ reviewId, projectId }: Props) {
                     onClose={() => setAddDocsOpen(false)}
                     onSelect={(docs: Document[]) => handleAddDocuments(docs)}
                     breadcrumb={[
-                        "Tabular Reviews",
+                        "Comparisons",
                         ...(review ? [review.title || "Untitled Review"] : []),
                         "Add Documents",
                     ]}
@@ -1796,7 +1796,7 @@ export function TRView({ reviewId, projectId }: Props) {
                 fetchAccess={getTabularReviewPeople}
                 currentUserEmail={user?.email ?? null}
                 breadcrumb={[
-                    "Tabular Reviews",
+                    "Comparisons",
                     review?.title || "Untitled Review",
                     "Access",
                 ]}
@@ -1834,17 +1834,17 @@ export function TRView({ reviewId, projectId }: Props) {
                                       : ""),
                           ]
                         : []),
-                    "Tabular Reviews",
+                    "Comparisons",
                     review?.title || "Untitled Review",
-                    "Add workflow",
+                    "Add template",
                 ]}
                 applying={applyingWorkflow}
             />
 
             <ConfirmPopup
                 open={deleteReviewConfirmOpen}
-                title="Delete tabular review?"
-                message="This will permanently delete the tabular review and its generated cells."
+                title="Delete review?"
+                message="This will permanently delete the review and its generated cells."
                 confirmLabel="Delete"
                 confirmVariant="danger"
                 confirmStatus={
@@ -1888,13 +1888,13 @@ export function TRView({ reviewId, projectId }: Props) {
             <WarningPopup
                 open={modelRequiredWarning}
                 title="Select a model"
-                message="Select a model for this tabular review before running it."
+                message="Select a model for this review before running it."
                 onClose={() => setModelRequiredWarning(false)}
             />
 
             <WarningPopup
                 open={generationGuard === "running"}
-                title="Tabular review is already running"
+                title="Comparison is already running"
                 message="This review is being run in another tab or by another collaborator. Wait for that run to finish or be stopped before trying again."
                 onClose={() => {
                     if (!reloadingLatestReview) setGenerationGuard(null);
@@ -1909,7 +1909,7 @@ export function TRView({ reviewId, projectId }: Props) {
             <WarningPopup
                 open={generationGuard === "stale"}
                 title="A newer version is available"
-                message="Load the latest version of this tabular review before running it."
+                message="Load the latest version of this review before running it."
                 onClose={() => {
                     if (!reloadingLatestReview) setGenerationGuard(null);
                 }}

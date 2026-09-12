@@ -25,7 +25,7 @@ export function WorkflowSlashMenu({
     <div
       id={WORD_WORKFLOW_SLASH_MENU_ID}
       role="listbox"
-      aria-label="Workflow commands"
+      aria-label="Template commands"
       className="liquid-glass-translucent absolute bottom-full left-0 z-10 mb-1.5 grid max-h-56 w-full gap-1 overflow-y-auto rounded-[18px] p-1 overscroll-contain"
     >
       {workflows.map((workflow, index) => {

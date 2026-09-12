@@ -261,7 +261,7 @@ export const TRTable = forwardRef<TRTableHandle, Props>(function TRTable(
                     <EmptyState
                         className="mx-auto w-full max-w-xs flex-1 justify-center"
                         icon={<TabularReviewSkeuoIcon />}
-                        title="Tabular Review"
+                        title="Comparison"
                         description="Add columns and documents to get started."
                         action={
                             <div className="flex items-center gap-2">

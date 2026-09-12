@@ -33,7 +33,7 @@ function SelectedWorkflowSummary({ workflow }: { workflow: Workflow }) {
     return (
         <div className="mb-3 flex shrink-0 items-center justify-between gap-3">
             <span className="shrink-0 text-xs font-medium text-gray-700">
-                Selected workflow
+                Selected template
             </span>
             <span className="min-w-0 flex-1 truncate text-right text-xs text-gray-500">
                 {workflow.metadata.title}
@@ -203,8 +203,8 @@ export function UseWorkflowModal({ workflow, onClose, skipSelect = false }: Prop
                     : {}),
             }));
             const content = assistantPrompt.trim()
-                ? `implement workflow\n${assistantPrompt.trim()}`
-                : "implement workflow";
+                ? `implement template\n${assistantPrompt.trim()}`
+                : "implement template";
             setNewChatMessages([
                 {
                     role: "user",
@@ -258,16 +258,16 @@ export function UseWorkflowModal({ workflow, onClose, skipSelect = false }: Prop
                   { value: "project" as const, label: "Project assistant" },
               ]
             : [
-                  { value: "workspace" as const, label: "Tabular reviews" },
+                  { value: "workspace" as const, label: "Reviews" },
                   {
                       value: "project" as const,
-                      label: "Project tabular reviews",
+                      label: "Project reviews",
                   },
               ];
 
     const breadcrumbs =
         screen === "select"
-            ? ["Workflows", "Select workflow"]
+            ? ["Agreement Templates", "Select template"]
             : [
                   <button
                       key="workflows"
@@ -275,7 +275,7 @@ export function UseWorkflowModal({ workflow, onClose, skipSelect = false }: Prop
                       onClick={() => setScreen("select")}
                       className="transition-colors hover:text-gray-700"
                   >
-                      Workflows
+                      Agreement Templates
                   </button>,
                   wf.metadata.title,
                   wf.metadata.type === "assistant" ? "New Chat" : "New Review",

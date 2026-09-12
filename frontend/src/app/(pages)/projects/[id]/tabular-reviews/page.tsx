@@ -118,7 +118,7 @@ export default function ProjectTabularReviewsPage({ params }: Props) {
         // list must refuse with the member sentence the review page uses.
         if (!can(roleFrom(review), "content.edit")) {
             setOwnerOnlyAction({
-                action: "edit tabular review details",
+                action: "edit review details",
                 requiredRole: "editor",
             });
             return;
@@ -133,7 +133,7 @@ export default function ProjectTabularReviewsPage({ params }: Props) {
         if (!detailsReview) return;
         if (!can(roleFrom(detailsReview), "content.edit")) {
             setOwnerOnlyAction({
-                action: "edit tabular review details",
+                action: "edit review details",
                 requiredRole: "editor",
             });
             return;
@@ -164,7 +164,7 @@ export default function ProjectTabularReviewsPage({ params }: Props) {
 
     async function handleDeleteReviewRow(review: TabularReview) {
         if (!can(roleFrom(review), "container.delete")) {
-            setOwnerOnlyAction("delete this tabular review");
+            setOwnerOnlyAction("delete this review");
             return;
         }
         const snapshot = reviews;

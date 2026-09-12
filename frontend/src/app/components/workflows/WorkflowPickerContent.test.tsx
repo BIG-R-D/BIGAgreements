@@ -62,7 +62,7 @@ describe("WorkflowPickerContent row labels", () => {
         );
 
         expect(
-            screen.getByRole("status", { name: "Loading workflow prompt" }),
+            screen.getByRole("status", { name: "Loading template prompt" }),
         ).toBeInTheDocument();
         expect(screen.queryByText("No prompt defined.")).not.toBeInTheDocument();
     });

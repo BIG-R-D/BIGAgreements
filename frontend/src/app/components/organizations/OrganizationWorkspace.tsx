@@ -73,7 +73,7 @@ type OrganizationTab = "people" | "projects" | "workflows";
 const TABS: { id: OrganizationTab; label: string }[] = [
   { id: "people", label: "People" },
   { id: "projects", label: "Projects" },
-  { id: "workflows", label: "Workflows" },
+  { id: "workflows", label: "Agreement Templates" },
 ];
 
 const EMPTY_RESOURCES: OrgResources = { projects: [], workflows: [] };
@@ -368,9 +368,9 @@ export function OrganizationWorkspace({ orgId }: { orgId: string }) {
           kind="workflows"
           rows={resources.workflows.map((workflow) => ({
             id: workflow.id,
-            name: resourceName(workflow.title, "Untitled workflow"),
+            name: resourceName(workflow.title, "Untitled template"),
             context:
-              workflow.type === "tabular" ? "Tabular review" : "Assistant",
+              workflow.type === "tabular" ? "Review" : "Assistant",
             createdAt: workflow.created_at,
             href: `/workflows/${workflow.id}`,
           }))}
@@ -782,14 +782,14 @@ function ResourceTable({
   const copy = {
     projects: {
       title: "Projects",
-      context: "Practice",
+      context: "Trade / discipline",
       empty: "No projects belong to this organization.",
       icon: <ClosedProjectSvgIcon />,
     },
     workflows: {
-      title: "Workflows",
+      title: "Agreement Templates",
       context: "Type",
-      empty: "No workflows belong to this organization.",
+      empty: "No templates belong to this organization.",
       icon: <WorkflowSkeuoIcon />,
     },
   }[kind];

@@ -295,7 +295,7 @@ function WorkflowAddonPreviewDialog({
       open
       onClose={onClose}
       breadcrumbs={[
-        "Workflows",
+        "Agreement Templates",
         "Add-ons",
         addon.title,
         ...(selectedAsset ? [selectedAsset.filename] : []),
@@ -357,11 +357,11 @@ function WorkflowAddonPreviewDialog({
               <MetadataItem label="Language" value={addon.language || "—"} />
               <MetadataItem label="Version" value={addon.version || "—"} />
               <MetadataItem
-                label="Practice"
+                label="Trade / discipline"
                 value={addon.practice || "General"}
               />
               <MetadataItem
-                label="Jurisdiction"
+                label="State / jurisdiction"
                 value={addon.jurisdictions?.join(", ") || "—"}
               />
             </div>

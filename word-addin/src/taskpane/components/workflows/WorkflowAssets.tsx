@@ -106,7 +106,7 @@ export function WorkflowAssets({
         <div>
           <p className="font-medium text-gray-700">Assets</p>
           <p className="mt-0.5 text-[11px] text-gray-400">
-            Available when this workflow runs.
+            Available when this template runs.
           </p>
         </div>
         {!readOnly && (

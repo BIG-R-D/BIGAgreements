@@ -405,7 +405,7 @@ export function NewProjectModal({ open, onClose, onCreated }: Props) {
                                 type="text"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                placeholder="Add project name"
+                                placeholder="e.g. Riverside housing development"
                                 variant="minimal"
                                 autoFocus
                             />
@@ -413,14 +413,14 @@ export function NewProjectModal({ open, onClose, onCreated }: Props) {
 
                         <div>
                             <FieldLabel htmlFor="new-project-cm-number">
-                                CM number
+                                Project reference
                             </FieldLabel>
                             <FormTextInput
                                 id="new-project-cm-number"
                                 type="text"
                                 value={cmNumber}
                                 onChange={(e) => setCmNumber(e.target.value)}
-                                placeholder="Add a CM number..."
+                                placeholder="e.g. PROJ-2026-014"
                                 variant="minimal"
                                 className="text-xl text-gray-600"
                             />
@@ -428,7 +428,7 @@ export function NewProjectModal({ open, onClose, onCreated }: Props) {
 
                         <div>
                             <FieldLabel htmlFor="new-project-practice">
-                                Practice
+                                Trade / discipline
                             </FieldLabel>
                             <ProjectPracticeField
                                 id="new-project-practice"

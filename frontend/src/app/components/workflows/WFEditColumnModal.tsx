@@ -117,7 +117,7 @@ export function WFEditColumnModal({ column, onClose, onSave, onDelete }: Props) 
         <Modal
             open
             onClose={onClose}
-            breadcrumbs={["Workflows", "Edit column"]}
+            breadcrumbs={["Agreement Templates", "Edit column"]}
             primaryAction={{
                 label: "Save changes",
                 type: "submit",

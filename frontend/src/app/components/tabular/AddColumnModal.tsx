@@ -218,7 +218,7 @@ export function AddColumnModal({ open, existingCount, onClose, onAdd, editingCol
             open={open}
             onClose={handleClose}
             breadcrumbs={[
-                "Tabular Review",
+                "Comparison",
                 isEditing ? "Edit column" : "New column",
             ]}
             primaryAction={{

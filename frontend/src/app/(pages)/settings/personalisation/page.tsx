@@ -156,7 +156,7 @@ function PersonalisationForm({
                         <PersonalisationFields
                             form={form}
                             className="space-y-8"
-                            practiceAreasAriaLabel="Practice areas"
+                            practiceAreasAriaLabel="Work you do"
                             statusFor={(field) =>
                                 fieldStatus(field, savingField, savedField)
                             }

@@ -22,7 +22,7 @@ export function WorkflowList({
   loading = false,
   error = null,
   selectedId,
-  emptyMessage = "No assistant workflows found",
+  emptyMessage = "No assistant templates found",
 }: WorkflowListProps): React.ReactElement {
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -42,14 +42,14 @@ export function WorkflowList({
         <input
           value={search}
           onChange={(event) => onSearchChange(event.target.value)}
-          placeholder="Search workflows..."
+          placeholder="Search templates..."
           className="min-w-0 flex-1 border-0 bg-transparent text-xs text-gray-800 outline-none placeholder:text-gray-400"
         />
       </label>
       <div className="mt-2 min-h-0 flex-1 overflow-y-auto rounded-sm pb-3">
         {loading ? (
           <div className="flex h-full items-center justify-center">
-            <Spinner label="Loading workflows…" />
+            <Spinner label="Loading templates…" />
           </div>
         ) : error ? (
           <p className="py-8 text-center text-sm text-destructive">{error}</p>

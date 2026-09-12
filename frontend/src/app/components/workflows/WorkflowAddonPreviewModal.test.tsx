@@ -55,7 +55,7 @@ function addon(assets: WorkflowAddon["assets"]): WorkflowAddon {
       { name: "Mike", organisation: null, role: null, linkedin: null },
     ],
     language: "English",
-    practice: "General Transactions",
+    practice: "General Construction",
     jurisdictions: ["General"],
     active: true,
     updated_at: "2026-08-28T00:00:00.000Z",

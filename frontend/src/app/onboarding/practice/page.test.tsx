@@ -45,41 +45,41 @@ describe("OnboardingPracticePage", () => {
         completeOnboarding.mockResolvedValue(true);
     });
 
-    it("saves a country and multiple practice areas", async () => {
+    it("saves a custom location and multiple trades", async () => {
         const user = userEvent.setup();
         render(<OnboardingPracticePage />);
 
         await user.click(
             screen.getByRole("button", {
-                name: "Jurisdiction of practice",
+                name: "Where you work",
             }),
         );
         await user.click(
             screen.getByRole("menuitemradio", { name: "Other" }),
         );
         await user.type(
-            screen.getByRole("textbox", { name: "Other jurisdiction" }),
+            screen.getByRole("textbox", { name: "Somewhere else" }),
             "England and Wales",
         );
-        await user.click(screen.getByRole("button", { name: "Title" }));
+        await user.click(screen.getByRole("button", { name: "Your role" }));
         await user.click(
-            screen.getByRole("menuitemradio", { name: "Senior Associate" }),
+            screen.getByRole("menuitemradio", { name: "Site Supervisor" }),
         );
         await user.click(
-            screen.getByRole("button", { name: "Professional setting" }),
+            screen.getByRole("button", { name: "What kind of business" }),
         );
         await user.click(
-            screen.getByRole("menuitemradio", { name: "Private practice" }),
+            screen.getByRole("menuitemradio", { name: "General contractor" }),
         );
         await user.click(
-            screen.getByRole("button", { name: "Select practice areas" }),
+            screen.getByRole("button", { name: "Select the work you do" }),
         );
         await user.click(
-            screen.getByRole("menuitemcheckbox", { name: "Litigation" }),
+            screen.getByRole("menuitemcheckbox", { name: "Electrical" }),
         );
         await user.click(
             screen.getByRole("menuitemcheckbox", {
-                name: "Data Protection and Privacy",
+                name: "Plumbing",
             }),
         );
         await user.keyboard("{Escape}");
@@ -88,11 +88,11 @@ describe("OnboardingPracticePage", () => {
         await waitFor(() =>
             expect(completeOnboarding).toHaveBeenCalledWith({
                 jurisdiction: "England and Wales",
-                practiceSetting: "private_practice",
-                professionalTitle: "Senior Associate",
+                practiceSetting: "general_contractor",
+                professionalTitle: "Site Supervisor",
                 practiceAreas: [
-                    "Litigation",
-                    "Data Protection and Privacy",
+                    "Electrical",
+                    "Plumbing",
                 ],
             }),
         );
@@ -105,22 +105,22 @@ describe("OnboardingPracticePage", () => {
 
         await user.click(
             screen.getByRole("button", {
-                name: "Jurisdiction of practice",
+                name: "Where you work",
             }),
         );
         await user.click(
-            screen.getByRole("menuitemradio", { name: "Australia" }),
+            screen.getByRole("menuitemradio", { name: "Georgia" }),
         );
         await user.click(
-            screen.getByRole("button", { name: "Professional setting" }),
+            screen.getByRole("button", { name: "What kind of business" }),
         );
         await user.click(
             screen.getByRole("menuitemradio", {
-                name: "Not a practising attorney",
+                name: "Subcontractor",
             }),
         );
         await user.click(
-            screen.getByRole("button", { name: "Select practice areas" }),
+            screen.getByRole("button", { name: "Select the work you do" }),
         );
         await user.click(
             screen.getByRole("menuitemcheckbox", { name: "Other" }),
@@ -129,7 +129,7 @@ describe("OnboardingPracticePage", () => {
         await user.click(screen.getByRole("button", { name: "Finish" }));
 
         expect(screen.getByRole("alert")).toHaveTextContent(
-            "Enter your other practice area",
+            "Enter the other type of work",
         );
         expect(completeOnboarding).not.toHaveBeenCalled();
     });

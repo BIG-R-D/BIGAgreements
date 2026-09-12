@@ -145,14 +145,14 @@ export function ProjectDetailsModal({
                             setError(null);
                         }}
                         disabled={!canEdit || saving}
-                        placeholder="Add project name"
+                        placeholder="e.g. Riverside housing development"
                         variant="minimal"
                     />
                 </div>
 
                 <div>
                     <FieldLabel htmlFor="project-details-cm">
-                        CM number
+                        Project reference
                     </FieldLabel>
                     <FormTextInput
                         id="project-details-cm"
@@ -163,7 +163,7 @@ export function ProjectDetailsModal({
                             setError(null);
                         }}
                         disabled={!canEdit || saving}
-                        placeholder="Add a CM number..."
+                        placeholder="e.g. PROJ-2026-014"
                         variant="minimal"
                         className="text-xl text-gray-600"
                     />
@@ -171,7 +171,7 @@ export function ProjectDetailsModal({
 
                 <div>
                     <FieldLabel htmlFor="project-details-practice">
-                        Practice
+                        Trade / discipline
                     </FieldLabel>
                     <ProjectPracticeField
                         id="project-details-practice"

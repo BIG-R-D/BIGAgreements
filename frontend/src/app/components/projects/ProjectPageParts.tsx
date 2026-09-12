@@ -466,7 +466,7 @@ export function ProjectPageHeader({
                 ...(activeSection === "assistant"
                     ? [{ label: "Chats" }]
                     : activeSection === "reviews"
-                      ? [{ label: "Tabular Reviews" }]
+                      ? [{ label: "Comparisons" }]
                       : (documentFolderBreadcrumbs ?? [])),
             ]}
             actionGroups={[

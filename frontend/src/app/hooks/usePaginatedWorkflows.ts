@@ -185,7 +185,7 @@ export function usePaginatedWorkflows(options: {
                 )
                     return;
                 console.error("[workflows] failed to load", error);
-        setError(paginationError(error, "Unable to load workflows"));
+        setError(paginationError(error, "Unable to load templates"));
                 setHasMore(false);
             })
             .finally(() => {
@@ -249,7 +249,7 @@ export function usePaginatedWorkflows(options: {
                 requestVersion === requestVersionRef.current
             ) {
                 console.error("[workflows] failed to load more", error);
-        setLoadMoreError(paginationError(error, "Unable to load workflows"));
+        setLoadMoreError(paginationError(error, "Unable to load templates"));
             }
         } finally {
             if (

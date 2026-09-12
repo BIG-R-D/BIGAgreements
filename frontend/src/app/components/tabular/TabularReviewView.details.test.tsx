@@ -156,7 +156,7 @@ describe("TabularReviewView details gate", () => {
 
         expect(
             await screen.findByText(
-                "Only an editor can edit tabular review details.",
+                "Only an editor can edit review details.",
             ),
         ).toBeInTheDocument();
         expect(screen.queryByTestId("details-can-edit")).not.toBeInTheDocument();
@@ -243,7 +243,7 @@ describe("TabularReviewView details gate", () => {
         fireEvent.click(screen.getByText("change model"));
 
         expect(
-            await screen.findByText(/Only an editor can change the tabular review model/,
+            await screen.findByText(/Only an editor can change the review model/,
             ),
         ).toBeInTheDocument();
         expect(updateTabularReview).not.toHaveBeenCalled();

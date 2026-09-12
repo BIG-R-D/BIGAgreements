@@ -54,7 +54,7 @@ function PracticeDetailsForm({
         if (saved) {
             router.replace("/assistant");
         } else {
-            setError("Unable to save your practice details");
+            setError("Unable to save your trade or discipline details");
             setSubmitting(false);
         }
     };

@@ -10,10 +10,10 @@ const { updatePersonalisation } = vi.hoisted(() => ({
 vi.mock("@/app/contexts/UserProfileContext", () => ({
     useUserProfile: () => ({
         profile: {
-            jurisdiction: "Singapore",
-            practiceSetting: "private_practice",
-            professionalTitle: "Associate",
-            practiceAreas: ["Litigation"],
+            jurisdiction: "Alabama",
+            practiceSetting: "general_contractor",
+            professionalTitle: "Foreman",
+            practiceAreas: [],
         },
         updatePersonalisation,
     }),
@@ -29,27 +29,27 @@ describe("PersonalisationPage", () => {
         const user = userEvent.setup();
         render(<PersonalisationPage />);
 
-        await user.click(screen.getByRole("button", { name: "Title" }));
+        await user.click(screen.getByRole("button", { name: "Your role" }));
         await user.click(
-            screen.getByRole("menuitemradio", { name: "General Counsel" }),
+            screen.getByRole("menuitemradio", { name: "Site Supervisor" }),
         );
         await user.click(
-            screen.getByRole("button", { name: "Professional setting" }),
+            screen.getByRole("button", { name: "What kind of business" }),
         );
         await user.click(
-            screen.getByRole("menuitemradio", { name: "In-house" }),
+            screen.getByRole("menuitemradio", { name: "Subcontractor" }),
         );
         await user.click(
-            screen.getByRole("button", { name: "Jurisdiction of practice" }),
+            screen.getByRole("button", { name: "Where you work" }),
         );
         await user.click(
-            screen.getByRole("menuitemradio", { name: "Australia" }),
+            screen.getByRole("menuitemradio", { name: "Georgia" }),
         );
         await user.click(
-            screen.getByRole("button", { name: "Practice areas" }),
+            screen.getByRole("button", { name: "Work you do" }),
         );
         const practiceAreaOption = screen.getByRole("menuitemcheckbox", {
-            name: "Data Protection and Privacy",
+            name: "Plumbing",
         });
         expect(practiceAreaOption).toHaveClass(
             "text-xs",
@@ -61,13 +61,13 @@ describe("PersonalisationPage", () => {
         await user.keyboard("{Escape}");
         await waitFor(() =>
             expect(updatePersonalisation).toHaveBeenCalledWith({
-                jurisdiction: "Australia",
-                practiceSetting: "in_house",
-                professionalTitle: "General Counsel",
-                practiceAreas: ["Litigation", "Data Protection and Privacy"],
+                jurisdiction: "Georgia",
+                practiceSetting: "subcontractor",
+                professionalTitle: "Site Supervisor",
+                practiceAreas: ["Plumbing"],
             }),
         );
-        expect(screen.getByText("Practice areas").parentElement).toHaveTextContent(
+        expect(screen.getByText("Work you do").parentElement).toHaveTextContent(
             "Saved",
         );
         expect(screen.queryByText("(optional)")).not.toBeInTheDocument();
@@ -78,23 +78,23 @@ describe("PersonalisationPage", () => {
         render(<PersonalisationPage />);
 
         await user.click(
-            screen.getByRole("button", { name: "Practice areas" }),
+            screen.getByRole("button", { name: "Work you do" }),
         );
         await user.click(screen.getByRole("menuitemcheckbox", { name: "Other" }));
         await user.keyboard("{Escape}");
         expect(
-            screen.getByText("Enter your other practice area"),
+            screen.getByText("Enter the other type of work"),
         ).toBeInTheDocument();
 
-        await user.click(screen.getByRole("button", { name: "Title" }));
-        await user.click(screen.getByRole("menuitemradio", { name: "Partner" }));
+        await user.click(screen.getByRole("button", { name: "Your role" }));
+        await user.click(screen.getByRole("menuitemradio", { name: "Owner" }));
         await waitFor(() =>
             expect(updatePersonalisation).toHaveBeenCalledWith({
-                jurisdiction: "Singapore",
-                practiceSetting: "private_practice",
-                professionalTitle: "Partner",
+                jurisdiction: "Alabama",
+                practiceSetting: "general_contractor",
+                professionalTitle: "Owner",
                 // The half-finished Other box falls back to the stored areas.
-                practiceAreas: ["Litigation"],
+                practiceAreas: [],
             }),
         );
     });
@@ -104,11 +104,11 @@ describe("PersonalisationPage", () => {
         const { unmount } = render(<PersonalisationPage />);
 
         // Title edit is pending (still inside the debounce window)...
-        await user.click(screen.getByRole("button", { name: "Title" }));
-        await user.click(screen.getByRole("menuitemradio", { name: "Partner" }));
+        await user.click(screen.getByRole("button", { name: "Your role" }));
+        await user.click(screen.getByRole("menuitemradio", { name: "Owner" }));
         // ...when the user ticks "Other" and leaves it empty.
         await user.click(
-            screen.getByRole("button", { name: "Practice areas" }),
+            screen.getByRole("button", { name: "Work you do" }),
         );
         await user.click(screen.getByRole("menuitemcheckbox", { name: "Other" }));
         await user.keyboard("{Escape}");
@@ -116,10 +116,10 @@ describe("PersonalisationPage", () => {
         unmount(); // flush: the Title change must survive
         await waitFor(() =>
             expect(updatePersonalisation).toHaveBeenCalledWith({
-                jurisdiction: "Singapore",
-                practiceSetting: "private_practice",
-                professionalTitle: "Partner",
-                practiceAreas: ["Litigation"],
+                jurisdiction: "Alabama",
+                practiceSetting: "general_contractor",
+                professionalTitle: "Owner",
+                practiceAreas: [],
             }),
         );
     });
@@ -128,14 +128,14 @@ describe("PersonalisationPage", () => {
         const user = userEvent.setup();
         const { unmount } = render(<PersonalisationPage />);
 
-        await user.click(screen.getByRole("button", { name: "Title" }));
-        await user.click(screen.getByRole("menuitemradio", { name: "Partner" }));
+        await user.click(screen.getByRole("button", { name: "Your role" }));
+        await user.click(screen.getByRole("menuitemradio", { name: "Owner" }));
         expect(updatePersonalisation).not.toHaveBeenCalled();
 
         unmount();
         await waitFor(() =>
             expect(updatePersonalisation).toHaveBeenCalledWith(
-                expect.objectContaining({ professionalTitle: "Partner" }),
+                expect.objectContaining({ professionalTitle: "Owner" }),
             ),
         );
     });

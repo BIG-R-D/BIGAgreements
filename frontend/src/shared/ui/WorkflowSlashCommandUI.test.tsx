@@ -11,7 +11,7 @@ describe("WorkflowSlashCommandUI", () => {
         expect(command).toHaveClass("text-gray-700");
         expect(command).not.toHaveClass("font-mono", "font-medium");
         expect(command.parentElement).toHaveTextContent(
-            "Type /contract-intake-2026 in chat to activate this workflow.",
+            "Type /contract-intake-2026 in chat to activate this template.",
         );
     });
 

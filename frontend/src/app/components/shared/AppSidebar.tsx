@@ -43,16 +43,17 @@ import {
 } from "@/app/components/ui/liquid-surface";
 import { branding } from "@/app/lib/branding";
 
+// Member-facing labels preserve the existing upstream routes.
 const NAV_ITEMS = [
-    { href: "/assistant", label: "Assistant", icon: ChatSkeuoIcon },
+    { href: "/assistant", label: "Agreement Assistant", icon: ChatSkeuoIcon },
     { href: "/projects", label: "Projects", icon: FolderSkeuoIcon },
-    { href: "/library", label: "Library", icon: LibrarySkeuoIcon },
+    { href: "/library", label: "Documents", icon: LibrarySkeuoIcon },
     {
         href: "/tabular-reviews",
-        label: "Tabular Review",
+        label: "Compare & Review",
         icon: TabularReviewSkeuoIcon,
     },
-    { href: "/workflows", label: "Workflows", icon: WorkflowSkeuoIcon },
+    { href: "/workflows", label: "Agreement Templates", icon: WorkflowSkeuoIcon },
 ];
 
 const RECENT_PROJECT_PAGE_SIZE = 10;
@@ -361,7 +362,7 @@ export function AppSidebar({ isOpen, onToggle }: AppSidebarProps) {
                                     shouldAnimate ? "sidebar-fade-in" : ""
                                 }`}
                             >
-                                <span>Recent Projects</span>
+                                <span>Recent projects</span>
                                 <ChevronDown
                                     className={`h-3.5 w-3.5 transition-transform ${
                                         projectsCollapsed ? "-rotate-90" : ""

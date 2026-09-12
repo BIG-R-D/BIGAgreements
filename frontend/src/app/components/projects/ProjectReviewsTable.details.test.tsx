@@ -81,7 +81,7 @@ describe("ProjectReviewsTable details gate", () => {
 
         expect(onOpenDetails).not.toHaveBeenCalled();
         expect(onOwnerOnlyAction).toHaveBeenCalledWith({
-            action: "edit tabular review details",
+            action: "edit review details",
             requiredRole: "editor",
         });
     });

@@ -62,7 +62,7 @@ export function DocumentActions({
         setWorkflowsError(
           reason instanceof Error
             ? reason.message
-            : "Could not load assistant workflows.",
+            : "Could not load assistant templates.",
         );
       });
     return () => {
@@ -354,12 +354,12 @@ function QuickActionForm({
       </div>
       <div>
         <ModalFieldLabel htmlFor="quick-action-workflow">
-          Workflow used
+          Template used
         </ModalFieldLabel>
         <ModalSelect
           id="quick-action-workflow"
           value={workflowId}
-          placeholder="Select an assistant workflow"
+          placeholder="Select an assistant template"
           options={workflowOptions}
           onChange={onWorkflowChange}
         />

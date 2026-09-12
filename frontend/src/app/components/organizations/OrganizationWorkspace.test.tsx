@@ -94,7 +94,7 @@ beforeEach(() => {
         id: "workflow-1",
         user_id: "u2",
         org_id: "org-1",
-        title: "Disclosure workflow",
+        title: "Disclosure template",
         type: "tabular",
         practice: "Corporate",
         created_at: "2026-09-01T00:00:00Z",
@@ -129,9 +129,9 @@ describe("OrganizationWorkspace", () => {
     expect(screen.getByRole("link", { name: "Open Apollo" })).toHaveClass(
       "liquid-glass-hover",
     );
-    await user.click(screen.getByRole("button", { name: "Workflows" }));
+    await user.click(screen.getByRole("button", { name: "Agreement Templates" }));
     expect(
-      screen.getByRole("link", { name: "Open Disclosure workflow" }),
+      screen.getByRole("link", { name: "Open Disclosure template" }),
     ).toHaveClass("liquid-glass-hover");
     expect(screen.queryByRole("button", { name: "Chats" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Reviews" })).not.toBeInTheDocument();
@@ -266,7 +266,7 @@ describe("OrganizationWorkspace", () => {
       screen.queryByRole("button", { name: "Organization settings" }),
     ).not.toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: "Workflows" }));
-    expect(screen.getByText("Disclosure workflow")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Agreement Templates" }));
+    expect(screen.getByText("Disclosure template")).toBeInTheDocument();
   });
 });

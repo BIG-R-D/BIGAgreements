@@ -457,8 +457,8 @@ export function OrganizationAccessEditor({
     const deniedAssignments = assignments.filter(
         (assignment) => assignment.role === "deny",
     );
-    const resourceNoun = ownerLabel.toLowerCase().startsWith("workflow")
-        ? "workflow"
+    const resourceNoun = /^(workflow|template)/i.test(ownerLabel)
+        ? "template"
         : "project";
     const organizationMembersLabel = organizationName || "organisation";
     const ownerDescription = `Add ${organizationMembersLabel} members as owners with rights to manage access, settings and delete the ${resourceNoun}.`;

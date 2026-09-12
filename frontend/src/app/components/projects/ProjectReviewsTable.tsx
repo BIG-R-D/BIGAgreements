@@ -253,7 +253,7 @@ export function ProjectReviewsTable({
                     ) : (
                         <EmptyState
                             icon={<TabularReviewSkeuoIcon />}
-                            title="Tabular Reviews"
+                            title="Comparisons"
                             description="Extract data from project documents into tables using AI."
                             action={
                                 <PillButton
@@ -317,7 +317,7 @@ export function ProjectReviewsTable({
                                                                 ) {
                                                                     onOwnerOnlyAction(
                                                                         {
-                                                                            action: "edit tabular review details",
+                                                                            action: "edit review details",
                                                                             requiredRole:
                                                                                 "editor",
                                                                         },
@@ -402,7 +402,7 @@ export function ProjectReviewsTable({
                                                 )
                                             ) {
                                                 onOwnerOnlyAction({
-                                                    action: "edit tabular review details",
+                                                    action: "edit review details",
                                                     requiredRole: "editor",
                                                 });
                                                 return;

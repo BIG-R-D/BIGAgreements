@@ -70,8 +70,8 @@ type WorkflowListTab = "all" | "assistant" | "tabular" | "addons";
 
 const WORKFLOW_TABS: { id: WorkflowListTab; label: string }[] = [
   { id: "all", label: "All" },
-  { id: "assistant", label: "Assistant" },
-  { id: "tabular", label: "Tabular" },
+  { id: "assistant", label: "Agreement Assistant" },
+  { id: "tabular", label: "Compare & Review" },
   { id: "addons", label: "Add-ons" },
 ];
 const WORKFLOW_TAB_IDS = WORKFLOW_TABS.map((tab) => tab.id);
@@ -402,7 +402,7 @@ export function WorkflowList({
       setWorkflows((current) =>
         restoreOptimisticallyDeletedRows(current, snapshot, failedIds),
       );
-      setActionError("Some selected workflows could not be deleted.");
+      setActionError("Some selected templates could not be deleted.");
     }
     setDeleteStatus("complete");
     window.setTimeout(() => {
@@ -459,14 +459,14 @@ export function WorkflowList({
   const includesUnloadedWorkflows =
     pendingDeleteIds.length > pendingDeleteWorkflows.length;
   const deleteWarningMessage = includesUnloadedWorkflows
-    ? "This will permanently delete every selected workflow, including matching workflows that are not currently shown. If any are default workflows, their corresponding Quick Actions will also be deleted and will not be recreated automatically."
+    ? "This will permanently delete every selected template, including matching templates that are not currently shown. If any are default templates, their corresponding Quick Actions will also be deleted and will not be recreated automatically."
     : pendingDefaultDeleteCount > 0
       ? pendingDeleteWorkflows.length === 1
-        ? "Deleting this default workflow also permanently deletes its corresponding Quick Action. The default workflow will not be created again automatically."
-        : `The selected workflows will be permanently deleted. ${pendingDefaultDeleteCount} ${pendingDefaultDeleteCount === 1 ? "is a default workflow, so its corresponding Quick Action will" : "are default workflows, so their corresponding Quick Actions will"} also be deleted. Deleted defaults will not be created again automatically.`
+        ? "Deleting this default template also permanently deletes its corresponding Quick Action. The default template will not be created again automatically."
+        : `The selected templates will be permanently deleted. ${pendingDefaultDeleteCount} ${pendingDefaultDeleteCount === 1 ? "is a default template, so its corresponding Quick Action will" : "are default templates, so their corresponding Quick Actions will"} also be deleted. Deleted defaults will not be created again automatically.`
       : pendingDeleteWorkflows.length === 1
-        ? "This workflow will be permanently deleted."
-        : "The selected workflows will be permanently deleted.";
+        ? "This template will be permanently deleted."
+        : "The selected templates will be permanently deleted.";
 
   return (
     <div className="flex h-full min-h-0 flex-1 flex-col overflow-hidden">
@@ -477,7 +477,7 @@ export function WorkflowList({
           packKey
             ? [
                 {
-                  label: "Workflows",
+                  label: "Agreement Templates",
                   onClick: () => router.push("/workflows"),
                 },
                 { label: "Add-ons", onClick: closeAddonPack },
@@ -494,17 +494,17 @@ export function WorkflowList({
             value: search,
             onChange: setSearch,
             placeholder:
-              activeTab === "addons" ? "Search add-ons…" : "Search workflows…",
+              activeTab === "addons" ? "Search add-ons…" : "Search templates…",
           },
           {
             type: "new",
             onClick: () => setNewModalOpen(true),
-            title: "New workflow",
+            title: "New template",
           },
         ]}
       >
         <h1 className="font-serif text-2xl font-medium text-gray-900">
-          Workflows
+          Agreement Templates
         </h1>
       </PageHeader>
 
@@ -561,7 +561,7 @@ export function WorkflowList({
           key={activeTab}
           workflows={visibleWorkflows}
           loading={loading}
-          error={workflowsError ? "Unable to load workflows." : ""}
+          error={workflowsError ? "Unable to load templates." : ""}
           onOpen={setSelected}
           onEdit={(workflow) => router.push(workflowDetailPath(workflow))}
           onDelete={(workflow) => requestWorkflowDeletion([workflow])}
@@ -629,8 +629,8 @@ export function WorkflowList({
         open={pendingDeleteIds.length > 0}
         title={
           pendingDeleteIds.length === 1
-            ? "Delete workflow?"
-            : "Delete workflows?"
+            ? "Delete template?"
+            : "Delete templates?"
         }
         message={deleteWarningMessage}
         confirmLabel="Delete"
@@ -713,7 +713,7 @@ function WorkflowTable({
   const typeOptions = useMemo<TableFilterOption<string>[]>(
     () => [
       { value: "assistant", label: "Assistant" },
-      { value: "tabular", label: "Tabular" },
+      { value: "tabular", label: "Review" },
     ],
     [],
   );
@@ -796,13 +796,13 @@ function WorkflowTable({
                 disabled={selectableIds.length === 0 || selectingAll}
                 onChange={toggleAll}
                 className={TABLE_CHECKBOX_CLASS}
-                title="Select all deletable workflows"
+                title="Select all deletable templates"
               />
             )}
             <span className="mr-1">Name</span>
             {!loading && (
               <TableFilters
-                label="Sort by workflow name"
+                label="Sort by template name"
                 value={nameSortDirection}
                 allLabel="Default Order"
                 widthClassName="w-40"
@@ -831,7 +831,7 @@ function WorkflowTable({
             <span>Type</span>
             {!loading && (
               <TableFilters
-                label="Filter by workflow type"
+                label="Filter by template type"
                 value={typeFilter}
                 allLabel="All Types"
                 widthClassName="w-40"
@@ -843,12 +843,12 @@ function WorkflowTable({
             )}
           </TableHeaderCell>
           <TableHeaderCell className="flex w-52 items-center gap-1">
-            <span>Practice</span>
+            <span>Trade / discipline</span>
             {!loading && (
               <TableFilters
-                label="Filter by practice"
+                label="Filter by trade or discipline"
                 value={practiceFilter}
-                allLabel="All Practices"
+                allLabel="All trades and disciplines"
                 widthClassName="w-52"
                 options={practiceOptions}
                 onChange={(value) =>
@@ -858,7 +858,7 @@ function WorkflowTable({
             )}
           </TableHeaderCell>
           <TableHeaderCell className="flex w-40 items-center gap-1">
-            <span>Jurisdiction</span>
+            <span>State / jurisdiction</span>
             {!loading && (
               <TableFilters
                 label="Filter by jurisdiction"
@@ -924,9 +924,9 @@ function WorkflowTable({
         <TableEmptyState>
           <EmptyState
             icon={<WorkflowSkeuoIcon />}
-            title="Workflows"
+            title="Agreement Templates"
             description={
-              error || "Create a reusable workflow or import one from Add-ons."
+              error || "Create a reusable template or import one from Add-ons."
             }
             action={
               <PillButton tone="black" size="sm" onClick={onCreate}>
@@ -939,8 +939,8 @@ function WorkflowTable({
         <TableEmptyState>
           <EmptyState
             icon={<WorkflowSkeuoIcon />}
-            title="No matching workflows"
-            description="Adjust the table filters to see more workflows."
+            title="No matching templates"
+            description="Adjust the table filters to see more templates."
           />
         </TableEmptyState>
       ) : (
@@ -1027,7 +1027,7 @@ function WorkflowTable({
                           type="checkbox"
                           disabled
                           className={TABLE_CHECKBOX_CLASS}
-                          title="Shared workflows cannot be deleted"
+                          title="Shared templates cannot be deleted"
                           aria-label={`Select ${workflow.metadata.title}`}
                         />
                       )
@@ -1051,7 +1051,7 @@ function WorkflowTable({
                     <span className="inline-flex items-center gap-1.5 text-xs text-gray-600">
                       <Icon className="h-3 w-3 shrink-0" />
                       {workflow.metadata.type === "tabular"
-                        ? "Tabular"
+                        ? "Review"
                         : "Assistant"}
                     </span>
                   </TableCell>
@@ -1245,7 +1245,7 @@ function AddonTable({
         <TableCell className="ml-auto w-28">
           <span className="inline-flex items-center gap-1.5 text-xs text-gray-600">
             <Icon className="h-3 w-3 shrink-0" />
-            {addon.type === "tabular" ? "Tabular" : "Assistant"}
+            {addon.type === "tabular" ? "Compare & Review" : "Agreement Assistant"}
           </span>
         </TableCell>
         <TableCell className="w-52 text-xs text-gray-600">
@@ -1302,8 +1302,8 @@ function AddonTable({
             Name
           </TableStickyCell>
           <TableHeaderCell className="ml-auto w-28">Type</TableHeaderCell>
-          <TableHeaderCell className="w-52">Practice</TableHeaderCell>
-          <TableHeaderCell className="w-40">Jurisdiction</TableHeaderCell>
+          <TableHeaderCell className="w-52">Trade / discipline</TableHeaderCell>
+          <TableHeaderCell className="w-40">State / jurisdiction</TableHeaderCell>
           <TableHeaderCell className="w-28">Language</TableHeaderCell>
           <TableHeaderCell className="w-20" />
         </TableHeaderRow>
@@ -1454,7 +1454,7 @@ function AddonTable({
                       Pack
                     </TableCell>
                     <TableCell className="w-52 text-xs text-gray-600">
-                      {pack.addons.length} workflow
+                      {pack.addons.length} template
                       {pack.addons.length === 1 ? "" : "s"}
                     </TableCell>
                     <TableCell className="w-40 text-xs text-gray-600">

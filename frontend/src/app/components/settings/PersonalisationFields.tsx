@@ -157,9 +157,9 @@ export function usePersonalisationFields(
         details,
         invalidGroups,
         validationError: jurisdictionIncomplete
-            ? "Enter your jurisdiction of practice"
+            ? "Enter the state you work in"
             : practiceAreasIncomplete
-              ? "Enter your other practice area"
+              ? "Enter the other type of work"
               : null,
         setJurisdictionChoice(value: string) {
             setJurisdictionChoiceState(value);
@@ -385,7 +385,7 @@ export function PersonalisationFields({
                                 form.setOtherArea(event.target.value)
                             }
                             maxLength={100}
-                            placeholder="Enter your practice area"
+                            placeholder="Enter your trade or discipline"
                             className={`w-full ${authInputClassName}`}
                         />
                     </div>

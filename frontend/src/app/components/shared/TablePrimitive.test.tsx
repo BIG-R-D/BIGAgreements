@@ -225,7 +225,7 @@ describe("table tree indentation", () => {
     it("applies tree indentation to primary cells", () => {
         render(
             <TablePrimaryCell
-                label="Nested workflow"
+                label="Nested template"
                 selected={false}
                 onSelectionChange={vi.fn()}
                 style={tableTreeCellStyle(1)}
@@ -234,7 +234,7 @@ describe("table tree indentation", () => {
 
         expect(
             screen.getByRole("checkbox", {
-                name: "Select Nested workflow",
+                name: "Select Nested template",
             }).parentElement?.parentElement,
         ).toHaveStyle({ paddingLeft: "37px" });
     });

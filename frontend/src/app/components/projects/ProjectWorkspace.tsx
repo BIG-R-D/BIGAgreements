@@ -428,7 +428,7 @@ export function ProjectWorkspaceProvider({
         // an unexplained failed submit.
         if (!canDo("content.edit")) {
             denyUnlessLoading({
-                action: "create a tabular review",
+                action: "create a review",
                 requiredRole: "editor",
             });
             return;
@@ -645,7 +645,7 @@ export function ProjectWorkspaceProvider({
                 <ConfirmPopup
                     open={deleteProjectConfirmOpen}
                     title="Delete project?"
-                    message="This will permanently delete the project and its related documents, chats, and tabular reviews."
+                    message="This will permanently delete the project and its related documents, chats, and reviews."
                     confirmLabel="Delete"
                     confirmVariant="danger"
                     confirmStatus={
@@ -722,7 +722,7 @@ export function ProjectSectionToolbar({
                     : [
                           { id: "documents", label: "Documents" },
                           { id: "assistant", label: "Chats" },
-                          { id: "reviews", label: "Tabular Reviews" },
+                          { id: "reviews", label: "Comparisons" },
                       ]
             }
             active={activeSection}

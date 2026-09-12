@@ -90,7 +90,7 @@ export function TabularReviewDetailsModal({
             });
             setSaved(true);
         } catch {
-            setError("Could not update tabular review details.");
+            setError("Could not update review details.");
         } finally {
             setSaving(false);
         }
@@ -101,7 +101,7 @@ export function TabularReviewDetailsModal({
             open={open}
             onClose={onClose}
             breadcrumbs={[
-                "Tabular Reviews",
+                "Comparisons",
                 review.title || "Untitled Review",
                 "Details",
             ]}

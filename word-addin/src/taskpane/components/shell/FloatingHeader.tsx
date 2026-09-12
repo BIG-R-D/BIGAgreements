@@ -80,7 +80,7 @@ const SECTIONS = [
     label: "Quick Actions",
     icon: quickActionsIcon,
   },
-  { value: "workflows" as const, label: "Workflows", icon: workflowIcon },
+  { value: "workflows" as const, label: "Agreement Templates", icon: workflowIcon },
   { value: "settings" as const, label: "Settings", icon: settingsIcon },
 ];
 
@@ -186,11 +186,11 @@ export function FloatingHeader({
           >
             <LiquidTextButton
               onClick={onWorkflowBack}
-              aria-label="Back to workflows"
-              title="Back to workflows"
+              aria-label="Back to templates"
+              title="Back to templates"
             >
               <ChevronLeft className="h-3.5 w-3.5" />
-              Workflows
+              Agreement Templates
             </LiquidTextButton>
           </LiquidActionRow>
         )}
@@ -224,8 +224,8 @@ export function FloatingHeader({
             <DropdownTrigger asChild>
               <HeaderButtonUI
                 iconOnly
-                aria-label="Workflow actions"
-                title="Workflow actions"
+                aria-label="Template actions"
+                title="Template actions"
               >
                 <Ellipsis className="h-4 w-4" />
               </HeaderButtonUI>
@@ -266,8 +266,8 @@ export function FloatingHeader({
           <HeaderButtonUI
             iconOnly
             onClick={onNewWorkflow}
-            aria-label="New workflow"
-            title="New workflow"
+            aria-label="New template"
+            title="New template"
           >
             <Plus className="h-4 w-4" />
           </HeaderButtonUI>

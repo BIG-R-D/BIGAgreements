@@ -1,5 +1,5 @@
 export const DEFAULT_WORKFLOW_LANGUAGE = "English";
-export const DEFAULT_WORKFLOW_PRACTICE = "General Transactions";
+export const DEFAULT_WORKFLOW_PRACTICE = "General Construction";
 export const DEFAULT_WORKFLOW_JURISDICTION = "General";
 
 export const WORKFLOW_LANGUAGE_OPTIONS = [
@@ -46,24 +46,18 @@ export const WORKFLOW_LANGUAGE_OPTIONS = [
 ] as const;
 
 export const WORKFLOW_PRACTICE_OPTIONS = [
-  "General Transactions",
-  "Corporate",
-  "Finance",
-  "Litigation",
-  "Real Estate",
-  "Tax",
-  "Employment",
-  "IP",
-  "Competition",
-  "Tech Transactions",
-  "Project Finance",
-  "EC/VC",
-  "Private Equity",
-  "Private Credit",
-  "ECM",
-  "DCM",
-  "Lev Fin",
-  "Arbitration",
+  "General Construction",
+  "Carpentry",
+  "Electrical",
+  "Plumbing",
+  "HVAC",
+  "Roofing",
+  "Concrete and Masonry",
+  "Drywall and Painting",
+  "Flooring",
+  "Landscaping",
+  "Remodeling",
+  "Demolition",
   "Other",
 ] as const;
 

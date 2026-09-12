@@ -4,11 +4,10 @@ import { branding } from "@/app/lib/branding";
 /**
  * The BIG Agreements brand mark.
  *
- * Deliberately separate from `MikeIcon`, which is not a logo: that component is
- * the assistant's *status* indicator and spins, recolours for done/error, and
- * carries no brand meaning. Swapping a flat multicolour logo into those states
- * would spin the hard hat and repaint it red on failure. Brand surfaces use
- * this; status surfaces keep MikeIcon.
+ * Deliberately separate from status indication. A flat multicolour logo cannot
+ * spin or recolour for an error without looking broken, so brand surfaces use
+ * this and assistant status uses `ResponseIndicator`. Upstream's `MikeIcon`
+ * conflated the two jobs and no longer renders anywhere.
  *
  * The file itself is `public/big-logo.png` by default and is swappable without
  * touching code — set NEXT_PUBLIC_PRODUCT_LOGO (build-time, like every

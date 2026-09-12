@@ -5,7 +5,6 @@ import Image from "next/image";
 import { MoreHorizontal } from "lucide-react";
 import { useAuth } from "@/app/contexts/AuthContext";
 import { useUserProfile } from "@/app/contexts/UserProfileContext";
-import { MikeIcon } from "@/app/components/chat/mike-icon";
 import { ChatInput, type ChatInputHandle } from "./ChatInput";
 import { QuickActionsModal } from "./QuickActionsModal";
 import {
@@ -114,7 +113,8 @@ export function InitialView({ onSubmit }: InitialViewProps) {
         if (!profile || !textRef.current) return;
         const h1Width = textRef.current.offsetWidth;
         setIconOffset((h1Width + GAP) / 2);
-        setTextOffset((ICON_SIZE + GAP) / 2);
+        // No icon beside the greeting any more, so it centres on its own.
+        setTextOffset(0);
     }, [profile]);
 
     useEffect(() => {
@@ -179,20 +179,6 @@ export function InitialView({ onSubmit }: InitialViewProps) {
         <div className="grid h-full w-full grid-rows-[minmax(0,1fr)_auto_minmax(0,1fr)] px-6">
             <div className="flex min-h-0 items-end justify-center pb-6">
                 <div className="relative h-10 w-full max-w-4xl px-0 xl:px-8">
-                    <div
-                        className="absolute h-[30px] w-[30px]"
-                        style={{
-                            left: "50%",
-                            top: "50%",
-                            transform: loaded
-                                ? `translate(calc(-50% - ${iconOffset}px), -50%)`
-                                : "translate(-50%, -50%)",
-                            transition:
-                                "transform 900ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                        }}
-                    >
-                        <MikeIcon size={ICON_SIZE} />
-                    </div>
                     <h1
                         ref={textRef}
                         className="absolute text-4xl font-serif font-light text-gray-900 whitespace-nowrap"

@@ -13,7 +13,7 @@ import {
     Trash2,
     X,
 } from "lucide-react";
-import { MikeIcon } from "@/app/components/chat/mike-icon";
+import { ResponseIndicator } from "@/app/components/shared/ResponseIndicator";
 import {
     streamTabularChat,
     getTabularChats,
@@ -178,11 +178,10 @@ function TRResponseStatus({ isActive }: { isActive: boolean }) {
 
     return (
         <div className="w-full h-9 flex items-center mb-2">
-            <MikeIcon
-                spin={isActive}
-                done={showDone && doneVisible}
-                mike={!(showDone && doneVisible)}
-                size={22}
+            <ResponseIndicator
+                state={
+                    isActive ? "active" : showDone && doneVisible ? "done" : null
+                }
             />
         </div>
     );

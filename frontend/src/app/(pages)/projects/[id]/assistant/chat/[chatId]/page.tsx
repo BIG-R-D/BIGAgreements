@@ -45,7 +45,6 @@ import { SpreadsheetView } from "@/app/components/shared/views/SpreadsheetView";
 import { ConfirmPopup } from "@/app/components/popups/ConfirmPopup";
 import { PermissionDeniedPopup } from "@/app/components/popups/PermissionDeniedPopup";
 import { DocxView } from "@/app/components/shared/views/DocxView";
-import { MikeIcon } from "@/app/components/chat/mike-icon";
 import { useAuth } from "@/app/contexts/AuthContext";
 import { useUserProfile } from "@/app/contexts/UserProfileContext";
 import { useSidebar } from "@/app/contexts/SidebarContext";
@@ -112,7 +111,8 @@ function AssistantGreeting({ username }: { username: string }) {
         if (!profile || !textRef.current) return;
         const h1Width = textRef.current.offsetWidth;
         setIconOffset((h1Width + GAP) / 2);
-        setTextOffset((ICON_SIZE + GAP) / 2);
+        // No icon beside the greeting any more, so it centres on its own.
+        setTextOffset(0);
     }, [profile]);
 
     useEffect(() => {
@@ -124,19 +124,6 @@ function AssistantGreeting({ username }: { username: string }) {
     return (
         <div className="flex-1 flex items-center justify-center">
             <div className="relative flex items-center justify-center h-[28px]">
-                <div
-                    className="absolute h-[30px]"
-                    style={{
-                        left: "50%",
-                        transform: loaded
-                            ? `translateX(calc(-50% - ${iconOffset}px))`
-                            : "translateX(-50%)",
-                        transition:
-                            "transform 900ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                    }}
-                >
-                    <MikeIcon size={ICON_SIZE} />
-                </div>
                 <h1
                     ref={textRef}
                     className="absolute text-3xl font-serif font-light text-gray-900 whitespace-nowrap"

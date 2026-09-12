@@ -32,7 +32,7 @@ describe("branding defaults", () => {
         expect(branding.termsUrl).toBe("https://bigapp.work/terms");
         expect(branding.privacyUrl).toBe("https://bigapp.work/privacy");
         expect(branding.description).toContain("agreements");
-        expect(branding.logoUrl).toBe("/big-logo.svg");
+        expect(branding.logoUrl).toBe("/big-logo.png");
     });
 
     it("points the open-source notice at the source repository", async () => {

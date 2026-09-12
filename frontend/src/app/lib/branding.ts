@@ -63,5 +63,5 @@ export const branding: ProductBranding = {
     description:
         process.env.NEXT_PUBLIC_PRODUCT_DESCRIPTION ||
         "Generate, review and translate agreements for BIG members.",
-    logoUrl: process.env.NEXT_PUBLIC_PRODUCT_LOGO || "/big-logo.svg",
+    logoUrl: process.env.NEXT_PUBLIC_PRODUCT_LOGO || "/big-logo.png",
 };

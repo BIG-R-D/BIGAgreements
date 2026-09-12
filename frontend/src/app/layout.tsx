@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     description: branding.description,
     icons: {
         icon: [
-            { url: "/icon.svg", type: "image/svg+xml" },
+            { url: "/icon.png", type: "image/png" },
             { url: "/favicon.ico" },
         ],
         apple: "/apple-touch-icon.png",

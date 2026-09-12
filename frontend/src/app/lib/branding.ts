@@ -62,6 +62,6 @@ export const branding: ProductBranding = {
         process.env.NEXT_PUBLIC_PRIVACY_URL || "https://bigapp.work/privacy",
     description:
         process.env.NEXT_PUBLIC_PRODUCT_DESCRIPTION ||
-        "Generate, review and translate agreements for BIG members.",
+        "The BIG contract tool. Create, review and sign agreements for your jobs.",
     logoUrl: process.env.NEXT_PUBLIC_PRODUCT_LOGO || "/big-logo.png",
 };

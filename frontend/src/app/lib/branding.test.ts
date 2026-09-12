@@ -31,7 +31,7 @@ describe("branding defaults", () => {
         expect(branding.legalFooter).toBe("BIG R/D");
         expect(branding.termsUrl).toBe("https://bigapp.work/terms");
         expect(branding.privacyUrl).toBe("https://bigapp.work/privacy");
-        expect(branding.description).toContain("agreements");
+        expect(branding.description).toContain("contract tool");
         expect(branding.logoUrl).toBe("/big-logo.png");
     });
 

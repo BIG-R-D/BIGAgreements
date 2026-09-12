@@ -36,7 +36,7 @@ export const metadata: Metadata = {
             {
                 url: "/link-image.jpg",
                 width: 1200,
-                height: 651,
+                height: 630,
                 alt: branding.productName,
             },
         ],

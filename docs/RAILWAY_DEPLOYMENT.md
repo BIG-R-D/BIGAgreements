@@ -126,3 +126,31 @@ Database migration strategy on deploy (`backend/migrations/` applies files newer
 than the deployed version, in filename order — see `docs/deployment.md`),
 backup and PITR policy, and log retention with contract text excluded. These
 land in Phase 6.
+
+---
+
+## Automatic deploys
+
+Each service is connected to `BIG-R-D/BIGAgreements`, branch `main`, and a
+**repo trigger** is what actually fires a deploy on push. The two are separate:
+`serviceInstance.source.repo` can still read `BIG-R-D/BIGAgreements` — so the
+UI looks connected — while `service.repoTriggers` is empty and nothing deploys.
+
+That failure mode is silent and easy to misread: the merge looks done, but the
+live site keeps serving the previous build.
+
+Check both:
+
+```bash
+railway api 'query($id:String!){service(id:$id){name repoTriggers{edges{node{repository branch}}}}}' --var id=<serviceId>
+```
+
+Restore with:
+
+```bash
+railway service source connect --repo BIG-R-D/BIGAgreements --branch main --service <service>
+```
+
+Verify `rootDirectory` afterwards — `backend` for `big-agreements-api`, and
+**empty** for `big-agreements-web`, which needs repo-root context because its
+Dockerfile copies `backend/src` and `word-addin/src`.

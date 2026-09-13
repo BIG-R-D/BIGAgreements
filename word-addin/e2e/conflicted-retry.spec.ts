@@ -59,7 +59,7 @@ test("Accept & apply supersedes the occupying revisions and lands the edit", asy
   });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Fix the typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the typo");
   await page.getByRole("button", { name: "Send" }).click();
 
   // The target passage carries a pending revision → conflicted card with

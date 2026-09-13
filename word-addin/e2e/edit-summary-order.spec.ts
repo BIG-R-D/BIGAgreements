@@ -80,7 +80,7 @@ test("keeps edit activity out of the pre-response wrapper", async ({
     documentText: "The Suplier shall deliver the goods.",
   });
   await addin.expectAuthedShell();
-  await page.getByPlaceholder("How can I help?").fill("Fix the supplier typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the supplier typo");
   await page.getByRole("button", { name: "Send" }).click();
 
   await expect(page.getByText("The Supplier", { exact: true })).toBeVisible();

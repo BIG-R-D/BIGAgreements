@@ -357,7 +357,7 @@ function WorkflowAddonPreviewDialog({
               <MetadataItem label="Language" value={addon.language || "—"} />
               <MetadataItem label="Version" value={addon.version || "—"} />
               <MetadataItem
-                label="Trade / discipline"
+                label="Trade"
                 value={addon.practice || "General"}
               />
               <MetadataItem

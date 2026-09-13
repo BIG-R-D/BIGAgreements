@@ -130,7 +130,7 @@ describe("NewProjectModal sharing", () => {
         });
         renderModal();
 
-        expect(await screen.findByLabelText("Trade / discipline")).toHaveTextContent(
+        expect(await screen.findByLabelText("Trade")).toHaveTextContent(
             "Corporate and M&A",
         );
     });

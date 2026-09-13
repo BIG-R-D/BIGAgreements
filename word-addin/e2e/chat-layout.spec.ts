@@ -37,7 +37,7 @@ test("uses the frontend assistant spacer while a new answer grows", async ({
   });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("First long question");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("First long question");
   await page.getByRole("button", { name: "Send" }).click();
   await expect(
     page.getByText(firstParagraphs.at(-1)!, { exact: true }),
@@ -174,7 +174,7 @@ test("uses the frontend assistant spacer while a new answer grows", async ({
     streamedParagraphs.map((paragraph) => `${paragraph}\n\n`),
   );
 
-  await page.getByPlaceholder("How can I help?").fill(SECOND_PROMPT);
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill(SECOND_PROMPT);
   await page.getByRole("button", { name: "Send" }).click();
   await expect
     .poll(() =>
@@ -361,7 +361,7 @@ test("keeps the submitted turn at 80px while Working becomes Completed", async (
   await addin.expectAuthedShell();
 
   await page
-    .getByPlaceholder("How can I help?")
+    .getByRole("combobox", { name: "Ask about a project agreement...", exact: true })
     .fill("Initial layout question");
   await page.getByRole("button", { name: "Send" }).click();
   await expect(
@@ -413,7 +413,7 @@ test("keeps the submitted turn at 80px while Working becomes Completed", async (
   });
 
   const prompt = "Inspect the completion race";
-  await page.getByPlaceholder("How can I help?").fill(prompt);
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill(prompt);
   await page.getByRole("button", { name: "Send" }).click();
   await expect
     .poll(() =>
@@ -527,7 +527,7 @@ test("keeps the pinned turn steady when a tall activity strip completes", async 
   await addin.expectAuthedShell();
 
   await page
-    .getByPlaceholder("How can I help?")
+    .getByRole("combobox", { name: "Ask about a project agreement...", exact: true })
     .fill("Initial layout question");
   await page.getByRole("button", { name: "Send" }).click();
   await expect(
@@ -597,7 +597,7 @@ test("keeps the pinned turn steady when a tall activity strip completes", async 
   });
 
   const prompt = "Inspect the tall-activity completion";
-  await page.getByPlaceholder("How can I help?").fill(prompt);
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill(prompt);
   await page.getByRole("button", { name: "Send" }).click();
   await expect
     .poll(() =>
@@ -715,7 +715,7 @@ test("jumps straight to the current bottom and does not follow later stream grow
   });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Initial arrow question");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Initial arrow question");
   await page.getByRole("button", { name: "Send" }).click();
   await expect(
     page.getByText("Prior response paragraph 28", { exact: false }),
@@ -765,7 +765,7 @@ test("jumps straight to the current bottom and does not follow later stream grow
   });
 
   const prompt = "Stream enough content for the arrow";
-  await page.getByPlaceholder("How can I help?").fill(prompt);
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill(prompt);
   await page.getByRole("button", { name: "Send" }).click();
   await expect
     .poll(() =>

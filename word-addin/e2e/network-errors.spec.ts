@@ -66,7 +66,7 @@ test("a failed workflow load names the endpoint it could not reach", async ({
   await addin.expectAuthedShell();
 
   await page.getByRole("button", { name: "Open menu" }).click();
-  await page.getByRole("menuitem", { name: "Workflows" }).click();
+  await page.getByRole("menuitem", { name: "Agreement Templates" }).click();
 
   const message = page.getByText(/Couldn’t reach GET/);
   await expect(message).toBeVisible();

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { ChevronDown, X } from "lucide-react";
 import { authInputClassName } from "@/app/components/auth/authStyles";
 import { Input } from "@/app/components/ui/input";
@@ -14,6 +14,7 @@ import {
 import {
     LiquidDropdownCheckboxItem,
     LiquidDropdownContent,
+    LiquidDropdownLabel,
     LiquidDropdownRadioItem,
 } from "@/app/components/ui/liquid-dropdown";
 import { cn } from "@/app/lib/utils";
@@ -23,6 +24,7 @@ import {
     OTHER_JURISDICTION_OPTION,
     PRACTICE_AREA_OPTIONS,
     PRACTICE_SETTING_OPTIONS,
+    TRADE_GROUP_OPTIONS,
     PROFESSIONAL_TITLE_OPTIONS,
     type PracticeSetting,
     type ProfessionalTitle,
@@ -325,16 +327,35 @@ export function PersonalisationFields({
                         sideOffset={6}
                         className="max-h-72 w-[var(--radix-dropdown-menu-trigger-width)] overflow-y-auto"
                     >
-                        {COMMON_PRACTICE_AREAS.map((area) => (
-                            <LiquidDropdownCheckboxItem
-                                key={area}
-                                checked={form.selectedAreas.includes(area)}
-                                onCheckedChange={() => form.toggleArea(area)}
-                                onSelect={(event) => event.preventDefault()}
-                            >
-                                {area}
-                            </LiquidDropdownCheckboxItem>
-                        ))}
+                        {TRADE_GROUP_OPTIONS.map((group) => {
+                            const areas = group.trades.filter(
+                                (area) => area !== "Other",
+                            );
+                            if (areas.length === 0) return null;
+                            return (
+                                <Fragment key={group.label}>
+                                    <LiquidDropdownLabel>
+                                        {group.label}
+                                    </LiquidDropdownLabel>
+                                    {areas.map((area) => (
+                                        <LiquidDropdownCheckboxItem
+                                            key={area}
+                                            checked={form.selectedAreas.includes(
+                                                area,
+                                            )}
+                                            onCheckedChange={() =>
+                                                form.toggleArea(area)
+                                            }
+                                            onSelect={(event) =>
+                                                event.preventDefault()
+                                            }
+                                        >
+                                            {area}
+                                        </LiquidDropdownCheckboxItem>
+                                    ))}
+                                </Fragment>
+                            );
+                        })}
                         <LiquidDropdownCheckboxItem
                             checked={form.otherSelected}
                             onCheckedChange={(checked) =>
@@ -385,7 +406,7 @@ export function PersonalisationFields({
                                 form.setOtherArea(event.target.value)
                             }
                             maxLength={100}
-                            placeholder="Enter your trade or discipline"
+                            placeholder="Enter your trade"
                             className={`w-full ${authInputClassName}`}
                         />
                     </div>

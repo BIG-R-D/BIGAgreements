@@ -139,7 +139,7 @@ test("tabular reviews page has no critical accessibility violations", async ({
     await page.goto("/tabular-reviews");
     await expect(page).toHaveURL(/\/tabular-reviews/);
     await expect(
-        page.getByRole("heading", { name: "Tabular Reviews" }),
+        page.getByRole("heading", { name: "Compare Bids" }),
     ).toBeVisible({ timeout: 10_000 });
 
     await expectNoBlockingViolations(page, "/tabular-reviews");

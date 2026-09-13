@@ -108,7 +108,7 @@ test("review mode: one card applies and accepts every occurrence", async ({
   await addin.expectAuthedShell();
 
   await page
-    .getByPlaceholder("How can I help?")
+    .getByRole("combobox", { name: "Ask about a project agreement...", exact: true })
     .fill("Replace all Acme Corp with Acme Ltd");
   await page.getByRole("button", { name: "Send" }).click();
   await applyReviewProposal(page);
@@ -138,7 +138,7 @@ test("review mode: rejecting the card rejects every occurrence", async ({
   await addin.expectAuthedShell();
 
   await page
-    .getByPlaceholder("How can I help?")
+    .getByRole("combobox", { name: "Ask about a project agreement...", exact: true })
     .fill("Replace all Acme Corp with Acme Ltd");
   await page.getByRole("button", { name: "Send" }).click();
   await applyReviewProposal(page);
@@ -162,7 +162,7 @@ test("edit mode: every occurrence is applied immediately as tracked changes", as
   await chooseApplyMode(page, "Edit");
 
   await page
-    .getByPlaceholder("How can I help?")
+    .getByRole("combobox", { name: "Ask about a project agreement...", exact: true })
     .fill("Replace all Acme Corp with Acme Ltd");
   await page.getByRole("button", { name: "Send" }).click();
 
@@ -182,7 +182,7 @@ test("a replace-all card survives a task-pane reload and still resolves all occu
   await addin.expectAuthedShell();
 
   await page
-    .getByPlaceholder("How can I help?")
+    .getByRole("combobox", { name: "Ask about a project agreement...", exact: true })
     .fill("Rename Acme Corp everywhere");
   await page.getByRole("button", { name: "Send" }).click();
   await applyReviewProposal(page);

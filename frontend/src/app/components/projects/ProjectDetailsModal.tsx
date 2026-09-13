@@ -171,7 +171,7 @@ export function ProjectDetailsModal({
 
                 <div>
                     <FieldLabel htmlFor="project-details-practice">
-                        Trade / discipline
+                        Trade
                     </FieldLabel>
                     <ProjectPracticeField
                         id="project-details-practice"

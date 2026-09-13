@@ -72,7 +72,7 @@ describe("OnboardingPracticePage", () => {
             screen.getByRole("menuitemradio", { name: "General contractor" }),
         );
         await user.click(
-            screen.getByRole("button", { name: "Select the work you do" }),
+            screen.getByRole("button", { name: "Work you do" }),
         );
         await user.click(
             screen.getByRole("menuitemcheckbox", { name: "Electrical" }),
@@ -120,7 +120,7 @@ describe("OnboardingPracticePage", () => {
             }),
         );
         await user.click(
-            screen.getByRole("button", { name: "Select the work you do" }),
+            screen.getByRole("button", { name: "Work you do" }),
         );
         await user.click(
             screen.getByRole("menuitemcheckbox", { name: "Other" }),

@@ -78,7 +78,7 @@ async function applyPersistedEdit(
   await addin.gotoTaskpane({ documentText: ORIGINAL });
   await addin.expectAuthedShell();
   await page
-    .getByPlaceholder("How can I help?")
+    .getByRole("combobox", { name: "Ask about a project agreement...", exact: true })
     .fill("Correct the supplier typo");
   await page.getByRole("button", { name: "Send" }).click();
 

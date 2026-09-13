@@ -29,8 +29,8 @@ const WORKFLOWS = [
       contributors: [],
       language: "English",
       version: "1.2",
-      practice: "Litigation",
-      jurisdictions: ["Singapore"],
+      practice: "General Construction",
+      jurisdictions: ["California"],
     },
     skill_md: "# Summarize document\n\nSummarize the document.",
     columns_config: null,
@@ -79,7 +79,7 @@ async function openWorkflows(
   await addin.gotoTaskpane({ documentText });
   await addin.expectAuthedShell();
   await addin.page.getByRole("button", { name: "Open menu" }).click();
-  await addin.page.getByRole("menuitem", { name: "Workflows" }).click();
+  await addin.page.getByRole("menuitem", { name: "Agreement Templates" }).click();
 }
 
 test("shows a full-pane workflow list and opens skill details", async ({
@@ -98,11 +98,11 @@ test("shows a full-pane workflow list and opens skill details", async ({
   await expect(page.getByTestId("workflows-page-title")).toHaveClass(
     /font-medium/,
   );
-  await expect(page.getByPlaceholder("Search workflows...")).toBeVisible();
+  await expect(page.getByPlaceholder("Search templates...")).toBeVisible();
   await expect(page.getByRole("button", { name: "Add-ons" })).toHaveCount(0);
   await expect(page.getByRole("combobox")).toHaveCount(0);
   const summaryRow = page.getByRole("button", {
-    name: /Summarize document.*Litigation/,
+    name: /Summarize document.*General Construction/,
   });
   await expect(summaryRow).toBeVisible();
   await expect(
@@ -115,23 +115,23 @@ test("shows a full-pane workflow list and opens skill details", async ({
   await summaryRow.click();
   const header = page.getByTestId("floating-header");
   await expect(
-    header.getByRole("button", { name: "Back to workflows" }),
+    header.getByRole("button", { name: "Back to templates" }),
   ).toBeVisible();
   await expect(
     header.getByRole("button", { name: "Use", exact: true }),
   ).toBeVisible();
   await expect(header.getByTestId("workflow-back-bubble")).toBeVisible();
   await expect(
-    header.getByRole("button", { name: "Back to workflows" }).locator("svg"),
+    header.getByRole("button", { name: "Back to templates" }).locator("svg"),
   ).toHaveCount(1);
   await expect(
-    header.getByRole("button", { name: "Back to workflows" }),
-  ).toContainText("Workflows");
+    header.getByRole("button", { name: "Back to templates" }),
+  ).toContainText("Agreement Templates");
   await expect(
     header.getByRole("button", { name: "Use", exact: true }).locator("svg"),
   ).toHaveCount(1);
   const actionsButton = header.getByRole("button", {
-    name: "Workflow actions",
+    name: "Template actions",
   });
   await expect(actionsButton).toBeVisible();
   await expect(actionsButton.locator("svg")).toHaveCount(1);
@@ -163,13 +163,13 @@ test("shows a full-pane workflow list and opens skill details", async ({
   await expect(page.getByText("Skill", { exact: true })).toHaveCount(0);
   await expect(
     page.getByTestId("workflow-detail-title").locator(".."),
-  ).not.toContainText("Litigation");
+  ).not.toContainText("General Construction");
   await expect(
     page.getByRole("button", { name: "Run workflow on document" }),
   ).toHaveCount(0);
 
-  await header.getByRole("button", { name: "Back to workflows" }).click();
-  await expect(page.getByPlaceholder("Search workflows...")).toBeVisible();
+  await header.getByRole("button", { name: "Back to templates" }).click();
+  await expect(page.getByPlaceholder("Search templates...")).toBeVisible();
   await expect(
     header.getByRole("button", { name: "Use", exact: true }),
   ).toHaveCount(0);
@@ -186,8 +186,8 @@ test("creates an assistant workflow and edits its Markdown with Tiptap", async (
       ...WORKFLOWS[0]!.metadata,
       title: "Review defined terms",
       version: null,
-      practice: "Corporate",
-      jurisdictions: ["Singapore"],
+      practice: "Plumbing",
+      jurisdictions: ["California"],
     },
     skill_md: null,
   };
@@ -204,12 +204,12 @@ test("creates an assistant workflow and edits its Markdown with Tiptap", async (
 
   const header = page.getByTestId("floating-header");
   const newWorkflowButton = header.getByRole("button", {
-    name: "New workflow",
+    name: "New template",
   });
   await expect(newWorkflowButton).toBeVisible();
   await newWorkflowButton.click();
 
-  const modal = page.getByRole("dialog", { name: "New workflow" });
+  const modal = page.getByRole("dialog", { name: "New template" });
   await expect(modal).toBeVisible();
   await expect(modal.getByText("Type", { exact: true })).toHaveCount(0);
   await expect(modal.getByText("Assistant", { exact: true })).toHaveCount(0);
@@ -218,25 +218,25 @@ test("creates an assistant workflow and edits its Markdown with Tiptap", async (
   await titleInput.pressSequentially("Review defined terms");
   await expect(titleInput).toBeFocused();
   await expect(modal.getByRole("button", { name: "Close" })).not.toBeFocused();
-  await modal.getByLabel("Practice area").click();
-  await page.getByRole("menuitem", { name: "Corporate", exact: true }).click();
+  await modal.getByLabel("Trade").click();
+  await page.getByRole("menuitem", { name: "Plumbing", exact: true }).click();
   await modal.getByLabel("Jurisdiction").click();
-  await page.getByRole("menuitem", { name: "Singapore", exact: true }).click();
+  await page.getByRole("menuitem", { name: "California", exact: true }).click();
 
   const createRequest = page.waitForRequest(
     (request) =>
       request.method() === "POST" &&
       new URL(request.url()).pathname.endsWith("/workflows"),
   );
-  await modal.getByRole("button", { name: "Create workflow" }).click();
+  await modal.getByRole("button", { name: "Create template" }).click();
   const createBody = (await createRequest).postDataJSON();
   expect(createBody).toEqual({
     metadata: {
       title: "Review defined terms",
       type: "assistant",
       language: "English",
-      practice: "Corporate",
-      jurisdictions: ["Singapore"],
+      practice: "Plumbing",
+      jurisdictions: ["California"],
     },
   });
 
@@ -275,9 +275,9 @@ test("opens and saves editable workflow metadata from the header", async ({
     metadata: {
       ...WORKFLOWS[0]!.metadata,
       title: "Updated summary workflow",
-      language: "French",
-      practice: "Corporate",
-      jurisdictions: ["Hong Kong"],
+      language: "Spanish",
+      practice: "Plumbing",
+      jurisdictions: ["Texas"],
     },
   };
   await openWorkflows(addin, WORKFLOWS);
@@ -315,9 +315,9 @@ test("opens and saves editable workflow metadata from the header", async ({
   });
 
   await page
-    .getByRole("button", { name: /Summarize document.*Litigation/ })
+    .getByRole("button", { name: /Summarize document.*General Construction/ })
     .click();
-  await page.getByRole("button", { name: "Workflow actions" }).click();
+  await page.getByRole("button", { name: "Template actions" }).click();
   await page.getByRole("menuitem", { name: "Edit details" }).click();
 
   const modal = page.getByRole("dialog", { name: "View and Edit details" });
@@ -327,8 +327,8 @@ test("opens and saves editable workflow metadata from the header", async ({
   await expect(modal.getByText("1.2", { exact: true })).toHaveCount(0);
   await expect(modal.getByLabel("Title")).toHaveValue("Summarize document");
   await expect(modal.getByLabel("Language")).toContainText("English");
-  await expect(modal.getByLabel("Practice area")).toContainText("Litigation");
-  await expect(modal.getByLabel("Jurisdiction")).toContainText("Singapore");
+  await expect(modal.getByLabel("Trade")).toContainText("General Construction");
+  await expect(modal.getByLabel("Jurisdiction")).toContainText("California");
 
   await modal.getByLabel("Title").fill("Updated summary workflow");
   await skillPatchSeen;
@@ -350,11 +350,11 @@ test("opens and saves editable workflow metadata from the header", async ({
     "Updated summary workflow",
   );
   await modal.getByLabel("Language").click();
-  await page.getByRole("menuitem", { name: "French", exact: true }).click();
-  await modal.getByLabel("Practice area").click();
-  await page.getByRole("menuitem", { name: "Corporate", exact: true }).click();
+  await page.getByRole("menuitem", { name: "Spanish", exact: true }).click();
+  await modal.getByLabel("Trade").click();
+  await page.getByRole("menuitem", { name: "Plumbing", exact: true }).click();
   await modal.getByLabel("Jurisdiction").click();
-  await page.getByRole("menuitem", { name: "Hong Kong", exact: true }).click();
+  await page.getByRole("menuitem", { name: "Texas", exact: true }).click();
 
   const requestPromise = page.waitForRequest((request) => {
     if (
@@ -371,9 +371,9 @@ test("opens and saves editable workflow metadata from the header", async ({
   expect(body).toEqual({
     metadata: {
       title: "Updated summary workflow",
-      language: "French",
-      practice: "Corporate",
-      jurisdictions: ["Hong Kong"],
+      language: "Spanish",
+      practice: "Plumbing",
+      jurisdictions: ["Texas"],
     },
   });
   await expect(modal).toHaveCount(0);
@@ -381,9 +381,9 @@ test("opens and saves editable workflow metadata from the header", async ({
     "Updated summary workflow",
   );
 
-  await page.getByRole("button", { name: "Back to workflows" }).click();
+  await page.getByRole("button", { name: "Back to templates" }).click();
   await expect(
-    page.getByRole("button", { name: /Updated summary workflow.*Corporate/ }),
+    page.getByRole("button", { name: /Updated summary workflow.*Plumbing/ }),
   ).toBeVisible();
 });
 
@@ -401,7 +401,7 @@ test("shows an empty state when no runnable workflows exist", async ({
   // Only non-runnable rows => filtered list is empty.
   await openWorkflows(addin, [WORKFLOWS[2], WORKFLOWS[3]]);
 
-  await expect(page.getByText("No workflows found.")).toBeVisible();
+  await expect(page.getByText("No agreement templates found.")).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Run workflow on document" }),
   ).toHaveCount(0);
@@ -413,7 +413,7 @@ test("shows an empty state when the list response is empty", async ({
 }) => {
   await openWorkflows(addin, []);
 
-  await expect(page.getByText("No workflows found.")).toBeVisible();
+  await expect(page.getByText("No agreement templates found.")).toBeVisible();
 });
 
 test("surfaces an error when the workflow list fails to load", async ({
@@ -425,7 +425,7 @@ test("surfaces an error when the workflow list fails to load", async ({
   await addin.gotoTaskpane({ documentText: "Doc" });
   await addin.expectAuthedShell();
   await page.getByRole("button", { name: "Open menu" }).click();
-  await page.getByRole("menuitem", { name: "Workflows" }).click();
+  await page.getByRole("menuitem", { name: "Agreement Templates" }).click();
 
   // listWorkflows() throws a MikeApiError ("API error: 500"), shown verbatim.
   await expect(page.getByText(/API error: 500/)).toBeVisible();
@@ -442,24 +442,24 @@ test("uses a workflow by attaching it to the Assistant chat input", async ({
   await addin.mockChatStream(["The contract has three key risks."]);
 
   await page
-    .getByRole("button", { name: /Summarize document.*Litigation/ })
+    .getByRole("button", { name: /Summarize document.*General Construction/ })
     .click();
   await page
     .getByTestId("floating-header")
     .getByRole("button", { name: "Use", exact: true })
     .click();
 
-  await expect(page.getByPlaceholder("How can I help?")).toBeVisible();
+  await expect(page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true })).toBeVisible();
   const chatInput = page.getByTestId("chat-input");
   await expect(chatInput.getByText("Summarize document")).toBeVisible();
   await expect(
     chatInput.getByRole("button", {
-      name: "Remove workflow Summarize document",
+      name: "Remove template Summarize document",
     }),
   ).toBeVisible();
   await expect(page.getByTestId("workflow-skill-content")).toHaveCount(0);
 
-  await page.getByPlaceholder("How can I help?").fill("Review this document");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Review this document");
   const requestPromise = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
   const request = await requestPromise;
@@ -484,11 +484,11 @@ test("can go back from one workflow and open another", async ({
   await openWorkflows(addin, WORKFLOWS);
 
   await page
-    .getByRole("button", { name: /Summarize document.*Litigation/ })
+    .getByRole("button", { name: /Summarize document.*General Construction/ })
     .click();
   await page
     .getByTestId("floating-header")
-    .getByRole("button", { name: "Back to workflows" })
+    .getByRole("button", { name: "Back to templates" })
     .click();
   await page.getByRole("button", { name: "Identify risks" }).click();
 

@@ -8,7 +8,7 @@ import {
     type RouterSlug,
     type ReasoningLevel,
 } from "../components/assistant/ModelToggle";
-import { isModelAvailable } from "../lib/modelAvailability";
+import { defaultModelId, isModelAvailable } from "../lib/modelAvailability";
 import type { ApiKeyState } from "../lib/mikeApi";
 
 /**
@@ -64,7 +64,15 @@ function usableStoredModel(
     return canonical;
 }
 
-/** Resolve chat model → profile last-selected model, without a product default. */
+/**
+ * Resolve chat model → profile last-selected model → first available model.
+ *
+ * The last step used to be an empty string, so a member who had never opened
+ * Settings typed a message, pressed send, and was told to pick a model first —
+ * choosing between "Claude Opus 4.7" and "Claude Sonnet 4.6" to ask about a
+ * subcontract. Falling back to whatever the account can actually run keeps the
+ * picker an option rather than a toll gate.
+ */
 export function useSelectedModel(
     sources: SelectedModelSources = {},
 ): [string, (id: string) => void] {
@@ -123,6 +131,7 @@ export function useSelectedModel(
                 selectionSources.lastSelectedModel,
                 selectionSources,
             ) ??
+            defaultModelId(selectionSources.apiKeys) ??
             "";
         setModelState(next);
     }, [selectionSources]);

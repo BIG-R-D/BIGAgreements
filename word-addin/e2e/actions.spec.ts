@@ -75,7 +75,7 @@ test("opens action details without leaving the Quick Actions page", async ({
   await expect(modal).toBeVisible();
   await expect(modal).toHaveAttribute("aria-label", "Proofread agreement");
   await expect(modal.getByLabel("Name")).toHaveValue("Proofread agreement");
-  await expect(modal.getByLabel("Workflow used")).toContainText("Proofread");
+  await expect(modal.getByLabel("Template used")).toContainText("Proofread");
   await expect(modal.getByLabel("Prompt")).toHaveValue(
     "Review the current document for drafting quality, internal consistency, grammar, punctuation, formatting, numbering, defined terms, and cross-reference errors. List each issue with its location, severity, and a specific recommended fix.",
   );
@@ -91,7 +91,7 @@ test("opens action details without leaving the Quick Actions page", async ({
   await expect(page.getByTestId("quick-actions-full-screen")).toBeVisible();
   // The Assistant stays mounted so its draft and conversation survive
   // navigation, but it must not be visible behind the Quick Actions page.
-  await expect(page.getByPlaceholder("How can I help?")).toBeHidden();
+  await expect(page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true })).toBeHidden();
 });
 
 test("creates a named quick action from the top bar", async ({
@@ -131,7 +131,7 @@ test("creates a named quick action from the top bar", async ({
   await header.getByRole("button", { name: "New quick action" }).click();
   const modal = page.getByRole("dialog", { name: "New Quick Action" });
   await expect(modal).toBeVisible();
-  await modal.getByLabel("Workflow used").click();
+  await modal.getByLabel("Template used").click();
   await page
     .getByRole("menuitem", { name: "Review clauses", exact: true })
     .click();

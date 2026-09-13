@@ -20,15 +20,15 @@ test.describe.configure({ mode: "serial" });
 /* ─── Helpers ────────────────────────────────────────────────────────────── */
 
 /**
- * Click the "New review" Plus icon button in the Tabular Reviews list-page header.
+ * Click the "New review" Plus icon button in the Compare Bids list-page header.
  *
  * The button has no aria-label or visible text — it is an icon-only button
  * rendered immediately after the HeaderSearchBtn (magnifier icon) in the same
- * flex container that is the sibling of the <h1>Tabular Reviews</h1>.
+ * flex container that is the sibling of the <h1>Compare Bids</h1>.
  *
  * DOM structure:
  *   <div class="… justify-between …">
- *     <h1>Tabular Reviews</h1>
+ *     <h1>Compare Bids</h1>
  *     <div class="flex items-center gap-2">   ← xpath=../div[1] from h1
  *       <div>…<button>{SearchIcon}</button></div>   ← HeaderSearchBtn
  *       <button>{PlusIcon}</button>                 ← new-review button (.last())
@@ -42,7 +42,7 @@ async function clickNewReviewBtn(page: import("@playwright/test").Page) {
     // Walk from the h1 to the parent div, then select its first div child
     // (the actions container); the last button within it is the Plus icon.
     const actionsDiv = page
-        .getByRole("heading", { name: "Tabular Reviews" })
+        .getByRole("heading", { name: "Compare Bids" })
         .locator("xpath=../div[1]"); // TODO: verify selector
     await actionsDiv.getByRole("button").last().click();
 }
@@ -77,7 +77,7 @@ async function createReview(
 ): Promise<string> {
     await page.goto("/tabular-reviews");
     await expect(
-        page.getByRole("heading", { name: "Tabular Reviews" }),
+        page.getByRole("heading", { name: "Compare Bids" }),
     ).toBeVisible({ timeout: 10_000 });
 
     const reviewName = `${label} ${Date.now()}`;
@@ -86,19 +86,8 @@ async function createReview(
     if (onFirstOpen) await onFirstOpen();
     await titleInput.fill(reviewName);
 
-    // A model is required before the review can advance. The clean E2E
-    // profile does not have a saved tabular-review model, so choose the first
-    // model exposed by the configured providers for this environment.
-    await page.getByRole("button", { name: "Choose model" }).click();
-    const modelMenu = page.getByRole("menu");
-    const firstModel = modelMenu
-        .locator('[role="menuitem"]:not([aria-expanded])')
-        .first();
-    await expect(firstModel).toBeVisible();
-    await firstModel.click();
-
     // NewTRModal is a three-step wizard (Details -> Access -> Add Documents).
-    // "Next" only enables once the review has a name and model.
+    // The model is selected automatically; entering a name enables Next.
     await page.getByRole("button", { name: "Next", exact: true }).click();
     await expect(page.getByRole("dialog", { name: "Access" })).toBeVisible();
     await page.getByRole("button", { name: "Next", exact: true }).click();
@@ -143,7 +132,7 @@ test("navigates to /tabular-reviews and the list page renders", async ({
 
     // The page renders an h1 heading with the section title
     await expect(
-        page.getByRole("heading", { name: "Tabular Reviews" }),
+        page.getByRole("heading", { name: "Compare Bids" }),
     ).toBeVisible({ timeout: 10_000 });
 
     // The ToolbarTabs bar renders the "All" tab
@@ -200,7 +189,7 @@ test("review detail page renders the table structure and toolbar controls", asyn
     // Depending on the width available to the header actions, the parent
     // breadcrumb is either visible or placed in the overflow menu.
     const parentBreadcrumb = page
-        .getByRole("button", { name: "Tabular Reviews", exact: true })
+        .getByRole("button", { name: "Compare Bids", exact: true })
         .filter({ visible: true })
         .first();
     const collapsedBreadcrumbs = page.getByRole("button", {
@@ -212,7 +201,7 @@ test("review detail page renders the table structure and toolbar controls", asyn
         await expect(collapsedBreadcrumbs).toBeVisible();
         await collapsedBreadcrumbs.click();
         await expect(
-            page.getByRole("menuitem", { name: "Tabular Reviews", exact: true }),
+            page.getByRole("menuitem", { name: "Compare Bids", exact: true }),
         ).toBeVisible();
         await page.keyboard.press("Escape");
     }).toPass({ timeout: 10_000 });

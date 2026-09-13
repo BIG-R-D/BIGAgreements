@@ -54,7 +54,7 @@ function PracticeDetailsForm({
         if (saved) {
             router.replace("/assistant");
         } else {
-            setError("Unable to save your trade or discipline details");
+            setError("Unable to save your trade details");
             setSubmitting(false);
         }
     };
@@ -97,6 +97,7 @@ function PracticeDetailsForm({
                         "practiceSetting",
                         "practiceAreas",
                     ]}
+                    practiceAreasAriaLabel="Work you do"
                     className="space-y-4"
                 />
 

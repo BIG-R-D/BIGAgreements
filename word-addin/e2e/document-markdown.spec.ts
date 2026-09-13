@@ -46,7 +46,7 @@ test("document_context carries heading, list, and table structure", async ({
   });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Summarize this");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Summarize this");
   const requestPromise = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
   const body = (await requestPromise).postDataJSON();
@@ -76,7 +76,7 @@ test("an edit quoting the renderer's heading marker still applies as a tracked c
   });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Rename the heading");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Rename the heading");
   await page.getByRole("button", { name: "Send" }).click();
   await page.getByRole("button", { name: "Apply", exact: true }).click();
 
@@ -109,7 +109,7 @@ test("a citation quoting a list marker still selects the underlying text", async
   });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Define Affiliate");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Define Affiliate");
   await page.getByRole("button", { name: "Send" }).click();
 
   const chip = page.getByRole("link", {

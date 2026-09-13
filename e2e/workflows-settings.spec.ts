@@ -4,8 +4,8 @@
  * Test user: e2e@mike.local / E2eTestPass1! (session loaded from e2e/.auth/user.json)
  *
  * Key source facts used by these selectors:
- *  - WorkflowList.tsx: h1 "Workflows"; Plus icon button (no aria-label) opens NewWorkflowModal
- *  - NewWorkflowModal.tsx: placeholder "Workflow name"; submit button text "Create workflow"
+ *  - WorkflowList.tsx: h1 "Agreement Templates"; "New template" button opens NewWorkflowModal
+ *  - NewWorkflowModal.tsx: input label "Title"; submit button text "Create template"
  *  - New accounts receive editable default workflows, including "Proofread"
  *  - WorkflowPromptEditor.tsx: editorProps class = "workflow-editor-content" on the ProseMirror div
  *  - WorkflowDetailPage save status: text "Saving…" → "Saved" rendered in a plain <span>
@@ -20,7 +20,7 @@ import { test, expect, type Page } from "@playwright/test";
  * for the post-create navigation to /workflows/<id>.
  */
 async function createWorkflowAndOpenDetail(page: Page, title: string) {
-    const nameInput = page.getByPlaceholder("Workflow name");
+    const nameInput = page.getByRole("textbox", { name: "Title", exact: true });
     await expect(nameInput).toBeVisible({ timeout: 5_000 });
     await nameInput.fill(title);
 
@@ -33,10 +33,10 @@ async function createWorkflowAndOpenDetail(page: Page, title: string) {
         page.getByRole("dialog", { name: "Add Assets" }),
     ).toBeVisible();
 
-    // Match the submit button in BOTH states: its label is "Create workflow" when
+    // Match the submit button in BOTH states: its label is "Create template" when
     // idle and "Creating…" while the request is in flight.
     const createBtn = page.getByRole("button", {
-        name: /create workflow|creating/i,
+        name: /create template|creating/i,
     });
     await expect(createBtn).toBeEnabled({ timeout: 10_000 });
     await createBtn.click();
@@ -60,7 +60,7 @@ test.describe("Workflows", () => {
 
         // The WorkflowList renders an h1 heading
         await expect(
-            page.getByRole("heading", { name: "Workflows" }),
+            page.getByRole("heading", { name: "Agreement Templates" }),
         ).toBeVisible({ timeout: 10_000 });
 
         // Default workflows are installed as user-owned rows on first use.
@@ -77,21 +77,15 @@ test.describe("Workflows", () => {
     }) => {
         await page.goto("/workflows");
         await expect(
-            page.getByRole("heading", { name: "Workflows" }),
+            page.getByRole("heading", { name: "Agreement Templates" }),
         ).toBeVisible({ timeout: 10_000 });
 
-        // The Plus icon button (no aria-label) is the last button inside the div
-        // that directly contains the h1 "Workflows" heading.  The only other button
-        // in that container is the HeaderSearchBtn search toggle, which comes first.
-        // TODO: verify selector if the page header layout changes
-        const newWorkflowBtn = page
-            .locator("div:has(> h1:has-text('Workflows')) button")
-            .last();
+        const newWorkflowBtn = page.getByRole("button", { name: "New template", exact: true });
         await expect(newWorkflowBtn).toBeVisible({ timeout: 5_000 });
         await newWorkflowBtn.click();
 
-        // The NewWorkflowModal opens — its breadcrumb reads "New workflow"
-        await expect(page.getByText("New workflow")).toBeVisible({
+        // The NewWorkflowModal opens — its breadcrumb reads "New template"
+        await expect(page.getByText("New template")).toBeVisible({
             timeout: 5_000,
         });
 
@@ -145,13 +139,10 @@ test.describe("Workflows", () => {
         /* Step 1: create a fresh custom workflow to edit */
         await page.goto("/workflows");
         await expect(
-            page.getByRole("heading", { name: "Workflows" }),
+            page.getByRole("heading", { name: "Agreement Templates" }),
         ).toBeVisible({ timeout: 10_000 });
 
-        // TODO: verify selector if the page header layout changes
-        const newWorkflowBtn = page
-            .locator("div:has(> h1:has-text('Workflows')) button")
-            .last();
+        const newWorkflowBtn = page.getByRole("button", { name: "New template", exact: true });
         await newWorkflowBtn.click();
 
         const workflowTitle = `E2E Edit Workflow ${Date.now()}`;

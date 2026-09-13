@@ -88,7 +88,7 @@ test("Review mode validates a forwarded call and reports it as proposed", async 
       new URL(request.url()).pathname.endsWith("/word-chat"),
   );
   const toolResultPromise = page.waitForRequest(toolResultRequest);
-  await page.getByPlaceholder("How can I help?").fill("Fix the supplier typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the supplier typo");
   await page.getByRole("button", { name: "Send" }).click();
 
   // The pane advertises the capability that makes the backend forward calls.
@@ -157,7 +157,7 @@ test("Edit mode applies a forwarded call and reports it as applied", async ({
   await chooseApplyMode(page, "Edit");
 
   const toolResultPromise = page.waitForRequest(toolResultRequest);
-  await page.getByPlaceholder("How can I help?").fill("Fix the supplier typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the supplier typo");
   await page.getByRole("button", { name: "Send" }).click();
 
   const toolResultBody = (await toolResultPromise).postDataJSON();
@@ -206,7 +206,7 @@ test("reports an ambiguous match without touching the document", async ({
   await addin.expectAuthedShell();
 
   const toolResultPromise = page.waitForRequest(toolResultRequest);
-  await page.getByPlaceholder("How can I help?").fill("Update the fee clause");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Update the fee clause");
   await page.getByRole("button", { name: "Send" }).click();
 
   // Validation failures are failures in BOTH modes — this is what enables
@@ -242,7 +242,7 @@ test("answers read_active_document with the live document body", async ({
   await addin.expectAuthedShell();
 
   const toolResultPromise = page.waitForRequest(toolResultRequest);
-  await page.getByPlaceholder("How can I help?").fill("Summarize the document");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Summarize the document");
   await page.getByRole("button", { name: "Send" }).click();
 
   const toolResultBody = (await toolResultPromise).postDataJSON();
@@ -310,7 +310,7 @@ test("accumulates ordinals across sequential apply_word_edits calls", async ({
       statuses: body.result.edits.map((edit) => edit.status),
     });
   });
-  await page.getByPlaceholder("How can I help?").fill("Fix all three typos");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix all three typos");
   await page.getByRole("button", { name: "Send" }).click();
 
   await expect.poll(() => posts.length).toBe(2);
@@ -389,7 +389,7 @@ test("persists tool edits through the canonical edit rows", async ({
 
   await addin.gotoTaskpane({ documentText: ORIGINAL });
   await addin.expectAuthedShell();
-  await page.getByPlaceholder("How can I help?").fill("Fix the supplier typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the supplier typo");
   await page.getByRole("button", { name: "Send" }).click();
   await expect(
     page.getByRole("button", { name: "Apply", exact: true }),
@@ -438,7 +438,7 @@ test("ignores an <EDITS> block in the prose once a tool call has arrived", async
   await addin.expectAuthedShell();
   await chooseApplyMode(page, "Edit");
   const toolResultPromise = page.waitForRequest(toolResultRequest);
-  await page.getByPlaceholder("How can I help?").fill("Fix the supplier typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the supplier typo");
   await page.getByRole("button", { name: "Send" }).click();
   await toolResultPromise;
 
@@ -478,7 +478,7 @@ test("posts a tool result exactly once when the call has expired (404)", async (
   });
   await addin.gotoTaskpane({ documentText: ORIGINAL });
   await addin.expectAuthedShell();
-  await page.getByPlaceholder("How can I help?").fill("Fix the typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the typo");
   await page.getByRole("button", { name: "Send" }).click();
 
   await expect.poll(() => postCount).toBe(1);
@@ -516,7 +516,7 @@ test("retries a failed tool-result post once, then succeeds", async ({
   });
   await addin.gotoTaskpane({ documentText: ORIGINAL });
   await addin.expectAuthedShell();
-  await page.getByPlaceholder("How can I help?").fill("Fix the typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the typo");
   await page.getByRole("button", { name: "Send" }).click();
 
   await expect.poll(() => postCount, { timeout: 10_000 }).toBe(2);
@@ -598,7 +598,7 @@ test("restores tool-applied cards and anchors from the persisted edit rows", asy
   await addin.expectAuthedShell();
   await chooseApplyMode(page, "Edit");
   const toolResultPromise = page.waitForRequest(toolResultRequest);
-  await page.getByPlaceholder("How can I help?").fill("Fix the supplier typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the supplier typo");
   await page.getByRole("button", { name: "Send" }).click();
   await toolResultPromise;
   await expect(
@@ -778,7 +778,7 @@ test("a proposed row whose change is already in the document restores as applied
   await addin.expectAuthedShell();
   await chooseApplyMode(page, "Edit");
   const toolResultPromise = page.waitForRequest(toolResultRequest);
-  await page.getByPlaceholder("How can I help?").fill("Fix the supplier typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the supplier typo");
   await page.getByRole("button", { name: "Send" }).click();
   await toolResultPromise;
   await expect

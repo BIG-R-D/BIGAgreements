@@ -1,7 +1,7 @@
 import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { useSelectedModel, useSelectedReasoning } from "./useSelectedModel";
-import { canonicalModelId } from "../components/assistant/ModelToggle";
+import { MODELS, canonicalModelId } from "../components/assistant/ModelToggle";
 import type { ApiKeyState } from "../lib/mikeApi";
 
 const keys: ApiKeyState = {
@@ -21,8 +21,36 @@ const routerSelections = {
 };
 
 describe("useSelectedModel", () => {
-    it("has no invented default when neither saved source is usable", () => {
+    it("falls back to an available model when neither saved source is usable", () => {
+        // Previously "" — which made the composer refuse to send until the
+        // member picked a model by name. Contractors have no basis for that
+        // choice, so the last resort is now the first model the account can
+        // actually run.
         const { result } = renderHook(() => useSelectedModel());
+        expect(result.current[0]).toBe(MODELS[0].id);
+    });
+
+    it("skips providers with no key when falling back", () => {
+        const geminiOnly: ApiKeyState = {
+            ...keys,
+            claude: { configured: false, source: null },
+            openai: { configured: false, source: null },
+            openrouter: { configured: false, source: null },
+            gemini: { configured: true, source: "user" },
+        };
+        const { result } = renderHook(() =>
+            useSelectedModel({ apiKeys: geminiOnly }),
+        );
+        expect(result.current[0]).toBe(
+            MODELS.find((m) => m.group === "Google")!.id,
+        );
+    });
+
+    it("stays empty when no provider is configured at all", () => {
+        const none: ApiKeyState = Object.fromEntries(
+            Object.keys(keys).map((k) => [k, { configured: false, source: null }]),
+        ) as ApiKeyState;
+        const { result } = renderHook(() => useSelectedModel({ apiKeys: none }));
         expect(result.current[0]).toBe("");
     });
 

@@ -782,7 +782,7 @@ function ResourceTable({
   const copy = {
     projects: {
       title: "Projects",
-      context: "Trade / discipline",
+      context: "Trade",
       empty: "No projects belong to this organization.",
       icon: <ClosedProjectSvgIcon />,
     },

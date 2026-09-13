@@ -81,7 +81,7 @@ test("Edit mode applies streamed edits immediately as pending tracked changes", 
   await addin.expectAuthedShell();
 
   await chooseApplyMode(page, "Edit");
-  await page.getByPlaceholder("How can I help?").fill("Fix the contract");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the contract");
   await page.getByRole("button", { name: "Send" }).click();
 
   // Both edits are written immediately, but remain pending for the user.
@@ -113,7 +113,7 @@ test("Review mode waits for Apply before writing a tracked change", async ({
   await addin.gotoTaskpane({ documentText: DOCUMENT_TEXT });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Fix the contract");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the contract");
   await page.getByRole("button", { name: "Send" }).click();
 
   await expect(
@@ -178,7 +178,7 @@ test("changing mode does not auto-apply proposals already prepared for review", 
   await addin.gotoTaskpane({ documentText: DOCUMENT_TEXT });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Fix the contract");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the contract");
   await page.getByRole("button", { name: "Send" }).click();
   await expect(
     page.getByRole("button", { name: "Apply", exact: true }),

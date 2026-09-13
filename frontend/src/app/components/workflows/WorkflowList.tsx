@@ -71,7 +71,7 @@ type WorkflowListTab = "all" | "assistant" | "tabular" | "addons";
 const WORKFLOW_TABS: { id: WorkflowListTab; label: string }[] = [
   { id: "all", label: "All" },
   { id: "assistant", label: "Agreement Assistant" },
-  { id: "tabular", label: "Compare & Review" },
+  { id: "tabular", label: "Compare Bids" },
   { id: "addons", label: "Add-ons" },
 ];
 const WORKFLOW_TAB_IDS = WORKFLOW_TABS.map((tab) => tab.id);
@@ -843,10 +843,10 @@ function WorkflowTable({
             )}
           </TableHeaderCell>
           <TableHeaderCell className="flex w-52 items-center gap-1">
-            <span>Trade / discipline</span>
+            <span>Trade</span>
             {!loading && (
               <TableFilters
-                label="Filter by trade or discipline"
+                label="Filter by trade"
                 value={practiceFilter}
                 allLabel="All trades and disciplines"
                 widthClassName="w-52"
@@ -1245,7 +1245,7 @@ function AddonTable({
         <TableCell className="ml-auto w-28">
           <span className="inline-flex items-center gap-1.5 text-xs text-gray-600">
             <Icon className="h-3 w-3 shrink-0" />
-            {addon.type === "tabular" ? "Compare & Review" : "Agreement Assistant"}
+            {addon.type === "tabular" ? "Compare Bids" : "Agreement Assistant"}
           </span>
         </TableCell>
         <TableCell className="w-52 text-xs text-gray-600">
@@ -1302,7 +1302,7 @@ function AddonTable({
             Name
           </TableStickyCell>
           <TableHeaderCell className="ml-auto w-28">Type</TableHeaderCell>
-          <TableHeaderCell className="w-52">Trade / discipline</TableHeaderCell>
+          <TableHeaderCell className="w-52">Trade</TableHeaderCell>
           <TableHeaderCell className="w-40">State / jurisdiction</TableHeaderCell>
           <TableHeaderCell className="w-28">Language</TableHeaderCell>
           <TableHeaderCell className="w-20" />

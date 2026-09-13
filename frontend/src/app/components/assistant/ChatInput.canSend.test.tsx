@@ -14,7 +14,11 @@ vi.mock("@/app/contexts/UserProfileContext", () => ({
     useUserProfile: vi.fn(),
 }));
 
-vi.mock("@/app/lib/modelAvailability", () => ({
+// Spread the real module: this mock only needs to neutralise the two
+// availability lookups, and listing exports by hand meant that adding one
+// (defaultModelId) broke this suite for a reason unrelated to what it tests.
+vi.mock("@/app/lib/modelAvailability", async (importOriginal) => ({
+    ...(await importOriginal<typeof import("@/app/lib/modelAvailability")>()),
     getModelProvider: vi.fn(),
     isModelAvailable: vi.fn(() => true),
 }));

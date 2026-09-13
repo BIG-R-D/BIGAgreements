@@ -43,7 +43,7 @@ async function createProject(
     await expect(createBtn).toBeVisible({ timeout: 10_000 });
     await createBtn.click();
 
-    const nameInput = page.getByPlaceholder("Project name");
+    const nameInput = page.getByLabel("Project name");
     await expect(nameInput).toBeVisible({ timeout: 5_000 });
     await nameInput.fill(projectName);
 

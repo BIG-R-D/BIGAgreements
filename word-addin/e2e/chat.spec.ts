@@ -79,7 +79,7 @@ test("shows frontend-style quick actions before any message is sent", async ({
 
   await page.getByRole("button", { name: "Extract key terms" }).click();
   await expect(
-    page.getByRole("button", { name: "Remove workflow Extract Key Terms" }),
+    page.getByRole("button", { name: "Remove template Extract Key Terms" }),
   ).toBeVisible();
   await expect(page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true })).toHaveValue(
     "Extract the key legal, commercial, and operational terms from the current document. Present them in a concise table with the term, value, location, and notes, and flag material omissions or ambiguities without inventing missing information.",
@@ -1415,8 +1415,8 @@ test("selects a workflow from the plus menu and attaches it to chat", async ({
   // Workflows are reached through the "+" menu rather than a dedicated
   // composer button.
   await page.getByRole("button", { name: "Add documents" }).click();
-  await page.getByRole("menuitem", { name: "Workflows" }).click();
-  const modal = page.getByRole("dialog", { name: "Add workflow" });
+  await page.getByRole("menuitem", { name: "Agreement Templates" }).click();
+  const modal = page.getByRole("dialog", { name: "Add template" });
   await expect(modal).toBeVisible();
   await expect(modal.getByText("Contract review")).toBeVisible();
   await expect(modal.getByText("Summarize document")).toBeVisible();
@@ -1424,7 +1424,7 @@ test("selects a workflow from the plus menu and attaches it to chat", async ({
     name: /Contract review/,
   });
   const [workflowSearchBox, contractWorkflowBox] = await Promise.all([
-    modal.getByPlaceholder("Search workflows...").locator("..").boundingBox(),
+    modal.getByPlaceholder("Search templates...").locator("..").boundingBox(),
     contractWorkflow.boundingBox(),
   ]);
   expect(workflowSearchBox).not.toBeNull();

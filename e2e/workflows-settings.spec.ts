@@ -5,7 +5,7 @@
  *
  * Key source facts used by these selectors:
  *  - WorkflowList.tsx: h1 "Agreement Templates"; "New template" button opens NewWorkflowModal
- *  - NewWorkflowModal.tsx: placeholder "Workflow name"; submit button text "Create workflow"
+ *  - NewWorkflowModal.tsx: input label "Title"; submit button text "Create template"
  *  - New accounts receive editable default workflows, including "Proofread"
  *  - WorkflowPromptEditor.tsx: editorProps class = "workflow-editor-content" on the ProseMirror div
  *  - WorkflowDetailPage save status: text "Saving…" → "Saved" rendered in a plain <span>
@@ -20,7 +20,7 @@ import { test, expect, type Page } from "@playwright/test";
  * for the post-create navigation to /workflows/<id>.
  */
 async function createWorkflowAndOpenDetail(page: Page, title: string) {
-    const nameInput = page.getByPlaceholder("Workflow name");
+    const nameInput = page.getByRole("textbox", { name: "Title", exact: true });
     await expect(nameInput).toBeVisible({ timeout: 5_000 });
     await nameInput.fill(title);
 
@@ -33,10 +33,10 @@ async function createWorkflowAndOpenDetail(page: Page, title: string) {
         page.getByRole("dialog", { name: "Add Assets" }),
     ).toBeVisible();
 
-    // Match the submit button in BOTH states: its label is "Create workflow" when
+    // Match the submit button in BOTH states: its label is "Create template" when
     // idle and "Creating…" while the request is in flight.
     const createBtn = page.getByRole("button", {
-        name: /create workflow|creating/i,
+        name: /create template|creating/i,
     });
     await expect(createBtn).toBeEnabled({ timeout: 10_000 });
     await createBtn.click();

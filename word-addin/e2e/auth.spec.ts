@@ -424,8 +424,8 @@ test.describe("cookie session", () => {
     await addin.gotoTaskpane();
     await addin.expectAuthedShell();
     await page.getByRole("button", { name: "Open menu" }).click();
-    await page.getByRole("menuitem", { name: "Workflows" }).click();
-    await expect(page.getByText("No workflows found.")).toBeVisible();
+    await page.getByRole("menuitem", { name: "Agreement Templates" }).click();
+    await expect(page.getByText("No agreement templates found.")).toBeVisible();
     expect(authorization).toBeUndefined();
     expect(requestOrigin).toBe("http://localhost:3100");
   });
@@ -454,7 +454,7 @@ test.describe("cookie session", () => {
       }),
     );
     await page.getByRole("button", { name: "Open menu" }).click();
-    await page.getByRole("menuitem", { name: "Workflows" }).click();
+    await page.getByRole("menuitem", { name: "Agreement Templates" }).click();
     await expect(page.getByRole("button", { name: "Log in" })).toBeVisible();
   });
 });

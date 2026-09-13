@@ -19,12 +19,11 @@ import { ModalSelect } from "../modals/ModalSelect";
 import { FieldLabel, FormTextInput } from "../ui/form-field";
 import { ToggleSwitch } from "@/app/components/ui/toggle-switch";
 import {
-    ModelToggle,
     type NoModelsReason,
     type RouterSlug,
 } from "../assistant/ModelToggle";
 import { useUserProfile } from "@/app/contexts/UserProfileContext";
-import { isModelAvailable } from "@/app/lib/modelAvailability";
+import { defaultModelId, isModelAvailable } from "@/app/lib/modelAvailability";
 import { NoModelsWarningPopup } from "../popups/NoModelsWarningPopup";
 import { useAuth } from "@/app/contexts/AuthContext";
 import {
@@ -152,7 +151,15 @@ export function NewTRModal({
     }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        if (!open || !profile?.tabularModel) return;
+        if (!open) return;
+        // A member who has never opened Settings has no tabularModel. Rather
+        // than block Create behind a question about model names, fall back to
+        // whatever is actually available.
+        if (!profile?.tabularModel) {
+            const fallback = defaultModelId(apiKeys);
+            if (fallback) setSelectedModel((current) => current || fallback);
+            return;
+        }
         const defaultModel = profile.tabularModel;
         const router = (["openrouter", "vercel", "opencode-go"] as const).find(
             (slug) => defaultModel.startsWith(`${slug}/`),
@@ -503,20 +510,13 @@ export function NewTRModal({
                             />
                         </div>
 
-                        <div>
-                            <FieldLabel as="p">Model</FieldLabel>
-                            <ModelToggle
-                                value={selectedModel}
-                                onChange={setSelectedModel}
-                                apiKeys={apiKeys}
-                                apiKeysLoading={profileLoading && !profile}
-                                openRouterModels={profile?.openRouterModels}
-                                vercelModels={profile?.vercelModels}
-                                openCodeGoModels={profile?.openCodeGoModels}
-                                onNoModelsClick={setNoModelsWarning}
-                                modalInput
-                            />
-                        </div>
+                        {!selectedModel && !profileLoading && (
+                            <p className="text-xs text-red-600">
+                                No AI model is available on this account yet.
+                                Add a key under Settings → Bring Your Own Keys,
+                                or ask an admin to configure one.
+                            </p>
+                        )}
 
                         {/* Starting columns: a built-in set or a saved template */}
                         <div>

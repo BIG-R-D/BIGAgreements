@@ -1,4 +1,5 @@
 import {
+    MODELS,
     SETTINGS_MODELS,
     type ModelOption,
 } from "../components/assistant/ModelToggle";
@@ -38,6 +39,27 @@ export function isProviderAvailable(
 ): boolean {
     if (provider === "ollama") return true; // local, no key needed
     return !!apiKeys[provider]?.configured;
+}
+
+/**
+ * A model to use when the member has not chosen one.
+ *
+ * BIG members are contractors. Asking one to decide between "Claude Opus 4.7"
+ * and "Claude Sonnet 4.6" before they can compare two bids is asking a question
+ * they have no way to answer, and it blocked the create button until they
+ * guessed. Model choice belongs in Settings for the people who care.
+ *
+ * No ranking is invented here: this walks MODELS in its existing order and
+ * takes the first entry whose provider has a key. Missing key state means the
+ * profile has not loaded or is degraded, and the caller should not be blocked
+ * on that, so the first model wins — the same assumption the availability
+ * check already makes elsewhere.
+ */
+export function defaultModelId(apiKeys?: ApiKeyState): string | null {
+    for (const model of MODELS) {
+        if (!apiKeys || isModelAvailable(model.id, apiKeys)) return model.id;
+    }
+    return null;
 }
 
 export function providerLabel(provider: ModelProvider): string {

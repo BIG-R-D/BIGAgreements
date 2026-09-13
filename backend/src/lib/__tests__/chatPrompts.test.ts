@@ -6,8 +6,12 @@ import { productBranding } from "../branding";
 describe("buildSystemPrompt", () => {
     it("always contains the core identity and rules", () => {
         for (const prompt of [buildSystemPrompt(true), buildSystemPrompt(false)]) {
+            // Only the identity itself is pinned. The sentence that follows
+            // describes what the assistant helps with and is expected to be
+            // reworded; asserting all of it made an ordinary copy edit look
+            // like a broken build.
             expect(prompt).toContain(
-                `You are ${productBranding().assistantName}, helping BIG members put their working arrangements in writing.`,
+                `You are ${productBranding().assistantName}, helping BIG members`,
             );
             // The members are contractors, not lawyers. Guard against the
             // upstream persona creeping back in on an upstream sync.

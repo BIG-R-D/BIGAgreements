@@ -31,6 +31,12 @@ import {
     CreateAccessStep,
     type PendingDirectGrant,
 } from "../modals/CreateAccessStep";
+import {
+    STARTER_COLUMN_SETS,
+    starterColumnsFor,
+    starterSetFor,
+    starterSetOptionValue,
+} from "./starterColumnSets";
 
 const isDev = process.env.NODE_ENV !== "production";
 const devLog = (...args: Parameters<typeof console.log>) => {
@@ -226,7 +232,9 @@ export function NewTRModal({
                 selectedDocuments.length > 0
                     ? selectedDocuments.map((document) => document.id)
                     : undefined,
-                selectedWorkflow?.columns_config ?? undefined,
+                starterColumnsFor(selectedWorkflowId) ??
+                    selectedWorkflow?.columns_config ??
+                    undefined,
                 groupBySubfolder ? "folder" : "document",
                 selectedModel,
                 assignments,
@@ -327,11 +335,18 @@ export function NewTRModal({
                 ? "Loading templates..."
                 : "No template - start from scratch",
         },
+        // Built-in sets come first: without them a new comparison opens empty,
+        // and the saved templates below are often none at all.
+        ...STARTER_COLUMN_SETS.map((set) => ({
+            value: starterSetOptionValue(set),
+            label: set.label,
+        })),
         ...workflows.map((workflow) => ({
             value: workflow.id,
             label: workflow.metadata.title,
         })),
     ];
+    const selectedStarterSet = starterSetFor(selectedWorkflowId);
     const projectOptions = projects.length
         ? projects.map((project) => ({
               value: project.id,
@@ -365,7 +380,7 @@ export function NewTRModal({
                   `${projectName}${projectCmNumber ? ` (#${projectCmNumber})` : ""}`,
                   "New comparison",
               ]
-            : ["Compare & Review", "New comparison"];
+            : ["Compare Bids", "New comparison"];
 
     return (
         <Modal
@@ -503,9 +518,9 @@ export function NewTRModal({
                             />
                         </div>
 
-                        {/* Workflow template */}
+                        {/* Starting columns: a built-in set or a saved template */}
                         <div>
-                            <FieldLabel as="p">Review template</FieldLabel>
+                            <FieldLabel as="p">Starting columns</FieldLabel>
                             <ModalSelect
                                 id="new-tr-workflow-template"
                                 value={selectedWorkflowId ?? ""}
@@ -515,6 +530,13 @@ export function NewTRModal({
                                 }
                                 disabled={loadingWorkflows}
                             />
+                            {selectedStarterSet && (
+                                <p className="mt-2 text-xs text-gray-500">
+                                    {selectedStarterSet.description} Adds{" "}
+                                    {selectedStarterSet.columns.length} columns
+                                    you can edit afterwards.
+                                </p>
+                            )}
                         </div>
 
                         {/* Create under a project toggle */}

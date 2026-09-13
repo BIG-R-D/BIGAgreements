@@ -1226,21 +1226,21 @@ export function TRView({ reviewId, projectId }: Props) {
                               ]
                             : [
                                   {
-                                      label: "Compare & Review",
+                                      label: "Compare Bids",
                                       onClick: () =>
                                           router.push("/tabular-reviews"),
-                                      title: "Back to Compare & Review",
+                                      title: "Back to Compare Bids",
                                   },
                               ]),
                         ...(projectId
                             ? [
                                   {
-                                      label: "Compare & Review",
+                                      label: "Compare Bids",
                                       onClick: () =>
                                           router.push(
                                               `/projects/${projectId}/tabular-reviews`,
                                           ),
-                                      title: "Back to Compare & Review",
+                                      title: "Back to Compare Bids",
                                   },
                               ]
                             : []),

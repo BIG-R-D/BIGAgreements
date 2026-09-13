@@ -113,7 +113,7 @@ describe("WorkflowList pack toolbar", () => {
       within(toolbar as HTMLElement).queryByText("Agreement Assistant"),
     ).not.toBeInTheDocument();
     expect(
-      within(toolbar as HTMLElement).queryByText("Compare & Review"),
+      within(toolbar as HTMLElement).queryByText("Compare Bids"),
     ).not.toBeInTheDocument();
     expect(
       within(toolbar as HTMLElement).queryByText("Add-ons"),

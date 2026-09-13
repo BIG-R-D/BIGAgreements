@@ -50,7 +50,7 @@ const NAV_ITEMS = [
     { href: "/library", label: "Documents", icon: LibrarySkeuoIcon },
     {
         href: "/tabular-reviews",
-        label: "Compare & Review",
+        label: "Compare Bids",
         icon: TabularReviewSkeuoIcon,
     },
     { href: "/workflows", label: "Agreement Templates", icon: WorkflowSkeuoIcon },

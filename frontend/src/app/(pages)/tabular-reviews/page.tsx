@@ -537,7 +537,7 @@ export default function TabularReviewsPage() {
                 ]}
             >
                 <h1 className="text-2xl font-medium font-serif text-gray-900">
-                    Compare &amp; Review
+                    Compare Bids
                 </h1>
             </PageHeader>
 
@@ -658,11 +658,12 @@ export default function TabularReviewsPage() {
                             <>
                                 <TabularReviewSkeuoIcon className="mb-4 h-8 w-8" />
                                 <p className="text-2xl font-medium font-serif text-gray-900">
-                                    Compare &amp; Review
+                                    Compare Bids
                                 </p>
                                 <p className="mt-1 text-xs text-gray-400 max-w-xs text-left">
-                                    Extract data from documents into tables
-                                    using AI.
+                                    Put several bids, subcontracts or
+                                    certificates side by side and see what
+                                    each one actually says.
                                 </p>
                                 <PillButton
                                     tone="black"

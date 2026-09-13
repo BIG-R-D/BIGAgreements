@@ -30,7 +30,6 @@ import type { WordEditApplyMode } from "../../lib/wordChatSettings";
 import { AddDocumentsModal } from "../documents/AddDocumentsModal";
 import { FileTypeIcon } from "../documents/DirectoryIcons";
 import { DocumentSourceMenu } from "../documents/DocumentSourceMenu";
-import { ModelToggle } from "./ModelToggle";
 import type {
   WorkflowAttachment,
   ReasoningLevel,
@@ -82,8 +81,6 @@ export const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
       lastSelectedModel,
       chatReasoningLevel,
       lastSelectedReasoningLevel,
-      onModelSelected,
-      onReasoningSelected,
       isResponseLoading,
       requestError,
       selectedWorkflow,
@@ -107,7 +104,6 @@ export const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
       string | null
     >(null);
     const [keyStatus, setKeyStatus] = useState<ApiKeyStatus | null>(null);
-    const [keyStatusLoading, setKeyStatusLoading] = useState(true);
     const [openRouterModels, setOpenRouterModels] = useState<string[]>([]);
     const [vercelModels, setVercelModels] = useState<string[]>([]);
     const [openCodeGoModels, setOpenCodeGoModels] = useState<string[]>([]);
@@ -115,7 +111,7 @@ export const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
       string | null
     >(null);
     const [profileLoaded, setProfileLoaded] = useState(false);
-    const [model, setModel, modelSettingsResolved] = useSelectedModel({
+    const [model] = useSelectedModel({
       sessionKey,
       chatModel,
       lastSelectedModel: lastSelectedModel ?? profileLastSelectedModel,
@@ -127,9 +123,6 @@ export const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
     const [modelError, setModelError] = useState<string | null>(null);
     const [profileLastSelectedReasoningLevel, setProfileLastSelectedReasoningLevel] =
       useState<ReasoningLevel>(lastSelectedReasoningLevel);
-    const [reasoningLevel, setReasoningLevel] = useState<ReasoningLevel>(
-      chatReasoningLevel ?? lastSelectedReasoningLevel ?? "high",
-    );
     const [slashWorkflows, setSlashWorkflows] = useState<Workflow[] | null>(
       null,
     );
@@ -137,21 +130,11 @@ export const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
     const [slashMenuDismissed, setSlashMenuDismissed] = useState(false);
     const localFileInputRef = useRef<HTMLInputElement>(null);
     const composerRef = useRef<HTMLDivElement>(null);
-    const [compactControls, setCompactControls] = useState(false);
     const mountedRef = useRef(true);
     const uploadGenerationRef = useRef(0);
-    const modelSelectionSaveRef = useRef<Promise<void>>(Promise.resolve());
-    const reasoningManuallySelectedRef = useRef(false);
-    const resolvedReasoningLevel = reasoningManuallySelectedRef.current
-      ? reasoningLevel
-      : (chatReasoningLevel ??
-        lastSelectedReasoningLevel ??
-        profileLastSelectedReasoningLevel ??
-        "high");
-    const chatSettingsLoading =
-      chatModel === undefined ||
-      chatReasoningLevel === undefined ||
-      !modelSettingsResolved;
+    const resolvedReasoningLevel =
+      chatReasoningLevel ?? lastSelectedReasoningLevel ??
+      profileLastSelectedReasoningLevel ?? "high";
 
     const slashQuery = (() => {
       const trimmed = input.trim();
@@ -206,19 +189,8 @@ export const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
     }, [slashCommandsLoading]);
 
     useEffect(() => {
-      const composer = composerRef.current;
-      if (!composer || typeof ResizeObserver === "undefined") return;
-      const update = (): void => setCompactControls(composer.offsetWidth < 430);
-      update();
-      const observer = new ResizeObserver(update);
-      observer.observe(composer);
-      return () => observer.disconnect();
-    }, []);
-
-    useEffect(() => {
       let cancelled = false;
-      // Three-state preflight: while it runs the model toggle stays neutral
-      // (no premature "No Models"); each request retries once with backoff; after a
+      // Each preflight request retries once with backoff; after a
       // final failure keyStatus stays null and availability FAILS OPEN (the
       // backend still authoritatively rejects models it cannot serve).
       void Promise.all([
@@ -249,7 +221,6 @@ export const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
           );
           setProfileLoaded(true);
         }
-        setKeyStatusLoading(false);
       });
       return () => {
         cancelled = true;
@@ -265,28 +236,7 @@ export const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
       setUploadingLocalFiles(false);
       setDocumentUploadError(null);
       setModelError(null);
-      reasoningManuallySelectedRef.current = false;
-      setReasoningLevel(
-        chatReasoningLevel ??
-          lastSelectedReasoningLevel ??
-          profileLastSelectedReasoningLevel ??
-          "high",
-      );
     }, [sessionKey]);
-
-    useEffect(() => {
-      if (reasoningManuallySelectedRef.current) return;
-      setReasoningLevel(
-        chatReasoningLevel ??
-          lastSelectedReasoningLevel ??
-          profileLastSelectedReasoningLevel ??
-          "high",
-      );
-    }, [
-      chatReasoningLevel,
-      lastSelectedReasoningLevel,
-      profileLastSelectedReasoningLevel,
-    ]);
 
     const handleLocalFiles = async (
       event: React.ChangeEvent<HTMLInputElement>,
@@ -400,7 +350,7 @@ export const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
       }
       if (!content || isResponseLoading) return;
       if (!model) {
-        setModelError("Select a model before sending your message.");
+        setModelError("No AI service is available. Check your connection settings and try again.");
         return;
       }
       if (!isModelAvailable(model, keyStatus)) {
@@ -597,49 +547,6 @@ export const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
                     onModeChange={onEditApplyModeChange}
                   />
                 </div>
-              }
-              rightSlot={
-                chatSettingsLoading ? undefined : (
-                  <ModelToggle
-                    value={model}
-                    onChange={(next) => {
-                      setModelError(null);
-                      setModel(next);
-                      modelSelectionSaveRef.current =
-                        modelSelectionSaveRef.current
-                          .catch(() => undefined)
-                          .then(() => onModelSelected(next));
-                    }}
-                    keyStatus={keyStatus}
-                    keyStatusLoading={keyStatusLoading}
-                    openRouterModels={openRouterModels}
-                    vercelModels={vercelModels}
-                    openCodeGoModels={openCodeGoModels}
-                    compact={compactControls}
-                    reasoningLevel={resolvedReasoningLevel}
-                    onReasoningChange={(next) => {
-                      reasoningManuallySelectedRef.current = true;
-                      setReasoningLevel(next);
-                      modelSelectionSaveRef.current =
-                        modelSelectionSaveRef.current
-                          .catch(() => undefined)
-                          .then(() => onReasoningSelected(next));
-                    }}
-                    onNoModelsClick={() => {
-                      const routerHasNoModels =
-                        (keyStatus?.openrouter &&
-                          openRouterModels.length === 0) ||
-                        (keyStatus?.vercel && vercelModels.length === 0) ||
-                        (keyStatus?.["opencode-go"] &&
-                          openCodeGoModels.length === 0);
-                      setModelError(
-                        routerHasNoModels
-                          ? "Your router is connected, but it has no saved models. Add one in Bring Your Own Keys → Routers."
-                          : "Add an API key in Bring Your Own Keys before selecting a model.",
-                      );
-                    }}
-                  />
-                )
               }
             />
           </div>

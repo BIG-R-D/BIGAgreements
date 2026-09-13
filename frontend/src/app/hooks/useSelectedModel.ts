@@ -132,6 +132,13 @@ export function useSelectedModel(
                 selectionSources,
             ) ??
             defaultModelId(selectionSources.apiKeys) ??
+            Object.entries(selectionSources.routerSelections ?? {})
+                .flatMap(([key, ids]) => {
+                    const slug = key === "openRouterModels" ? "openrouter" :
+                        key === "vercelModels" ? "vercel" : "opencode-go";
+                    return ids.map((id: string) => `${slug}/${id}`);
+                })
+                .find((id) => usableStoredModel(id, selectionSources)) ??
             "";
         setModelState(next);
     }, [selectionSources]);

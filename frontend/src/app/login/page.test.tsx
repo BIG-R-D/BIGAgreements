@@ -64,16 +64,9 @@ describe("LoginPage", () => {
         expect(push).toHaveBeenCalledWith("/onboarding/profile");
     });
 
-    it("places Google login after the primary login action", () => {
+    it("offers email authentication without a Google option", () => {
         render(<LoginPage />);
-
-        const login = screen.getByRole("button", { name: "Log in" });
-        const google = screen.getByRole("button", {
-            name: "Continue with Google",
-        });
-        expect(
-            login.compareDocumentPosition(google) &
-                Node.DOCUMENT_POSITION_FOLLOWING,
-        ).toBeTruthy();
+        expect(screen.getByRole("button", { name: "Log in" })).toBeVisible();
+        expect(screen.queryByRole("button", { name: "Continue with Google" })).not.toBeInTheDocument();
     });
 });

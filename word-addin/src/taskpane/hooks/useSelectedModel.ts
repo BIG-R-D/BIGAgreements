@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { ApiKeyStatus } from "../api/client";
 import {
   ROUTER_SLUGS,
+  STATIC_MODELS,
   canonicalModelId,
   isAllowedModelId,
   isModelAvailable,
@@ -71,6 +72,12 @@ export function useSelectedModel(
     const next =
       usableStoredModel(sources.chatModel, sources) ??
       usableStoredModel(sources.lastSelectedModel, sources) ??
+      STATIC_MODELS.find((entry) => isModelAvailable(entry.id, sources.apiKeyStatus))?.id ??
+      ROUTER_SLUGS.flatMap((slug) => {
+        const choices = slug === "openrouter" ? openRouterModels :
+          slug === "vercel" ? vercelModels : openCodeGoModels;
+        return (choices ?? []).map((id) => `${slug}/${id}`);
+      }).find((id) => isModelAvailable(id, sources.apiKeyStatus)) ??
       "";
     setModelState(next);
     setSettingsResolved(true);

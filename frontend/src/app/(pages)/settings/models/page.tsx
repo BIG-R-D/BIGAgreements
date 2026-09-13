@@ -30,11 +30,12 @@ import { SETTINGS_CONTROL_CLASS } from "@/app/components/settings/SettingsTextIn
 import { SettingsSection } from "../SettingsSection";
 import { useOllamaModels } from "@/app/hooks/useOllamaModels";
 
-type ModelPreferenceField = "titleModel" | "tabularModel";
+type ModelPreferenceField = "titleModel" | "tabularModel" | "lastSelectedChatModel";
 
 export default function ModelPreferencesPage() {
-    const { profile, updateModelPreference } = useUserProfile();
+    const { profile, updateModelPreference, persistChatModelSelection } = useUserProfile();
     const ollamaModels = useOllamaModels();
+    const [saveError, setSaveError] = useState<string | null>(null);
     const [savingField, setSavingField] = useState<ModelPreferenceField | null>(
         null,
     );
@@ -64,10 +65,13 @@ export default function ModelPreferencesPage() {
         field: ModelPreferenceField,
         id: string,
     ) => {
+        setSaveError(null);
         setOptimisticValues((current) => ({ ...current, [field]: id }));
         setSavedField(null);
         setSavingField(field);
-        const ok = await updateModelPreference(field, id || null);
+        const ok = field === "lastSelectedChatModel"
+            ? await persistChatModelSelection(id)
+            : await updateModelPreference(field, id || null);
         setSavingField((current) => (current === field ? null : current));
         if (ok) {
             setSavedField(field);
@@ -78,6 +82,7 @@ export default function ModelPreferencesPage() {
                 );
             }, 1600);
         } else {
+            setSaveError("Couldn’t save your model preference. Please try again.");
             setOptimisticValues((current) => {
                 const next = { ...current };
                 delete next[field];
@@ -92,7 +97,34 @@ export default function ModelPreferencesPage() {
                 <h2 className="text-2xl font-medium font-serif text-gray-900">
                     Model Preferences
                 </h2>
+                {saveError && <p role="alert" className="text-sm text-red-600">{saveError}</p>}
                 <SettingsSection>
+                    <div className="px-4 py-5">
+                        <FieldLabel>Assistant model</FieldLabel>
+                        <p className="text-xs text-gray-400 mb-2">
+                            Used for new chats in the assistant and Word add-in.
+                            Existing chats keep their saved model.
+                        </p>
+                        <ModelPreferenceDropdown
+                            label="Assistant model"
+                            value={canonicalModelId(
+                                optimisticValues.lastSelectedChatModel ??
+                                profile?.lastSelectedChatModel ?? "",
+                            )}
+                            options={[
+                                ...MODELS,
+                                ...selectedOpenRouterOptions,
+                                ...selectedVercelOptions,
+                                ...selectedOpenCodeGoOptions,
+                                ...ollamaModels,
+                            ]}
+                            apiKeys={profile?.apiKeys}
+                            isSaving={savingField === "lastSelectedChatModel"}
+                            isSaved={savedField === "lastSelectedChatModel"}
+                            emptyOptionLabel="Automatic"
+                            onChange={(id) => handleModelChange("lastSelectedChatModel", id)}
+                        />
+                    </div>
                     <div className="px-4 py-5">
                         <FieldLabel>Title generation model</FieldLabel>
                         <p className="text-xs text-gray-400 mb-2">
@@ -156,6 +188,7 @@ export default function ModelPreferencesPage() {
 }
 
 function ModelPreferenceDropdown({
+    label,
     value,
     onChange,
     apiKeys,
@@ -164,6 +197,7 @@ function ModelPreferenceDropdown({
     isSaved,
     emptyOptionLabel,
 }: {
+    label?: string;
     value: string;
     onChange: (id: string) => void;
     apiKeys?: ApiKeyState;
@@ -193,6 +227,7 @@ function ModelPreferenceDropdown({
             <DropdownMenuTrigger asChild>
                 <button
                     type="button"
+                    aria-label={label}
                     disabled={isSaving}
                     className={`flex h-9 items-center justify-between gap-2 hover:bg-gray-200/70 ${SETTINGS_CONTROL_CLASS}`}
                 >

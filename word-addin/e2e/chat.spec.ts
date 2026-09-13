@@ -1459,7 +1459,7 @@ test("selects a workflow from the plus menu and attaches it to chat", async ({
   });
 });
 
-test("model toggle sends the selected frontend model", async ({
+test("sends with the saved model without exposing a model picker", async ({
   addin,
   page,
 }) => {
@@ -1467,14 +1467,28 @@ test("model toggle sends the selected frontend model", async ({
   await addin.gotoTaskpane({ documentText: "Current Word document" });
   await addin.expectAuthedShell();
 
-  await page.getByRole("button", { name: "Choose model" }).click();
-  await page.getByRole("menuitem", { name: "OpenAI", exact: true }).click();
-  await page.getByRole("menuitem", { name: "GPT-5.4", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Choose model" })).toHaveCount(0);
   await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Hello");
   const requestPromise = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
   const body = (await requestPromise).postDataJSON();
-  expect(body.model).toBe("gpt-5.4");
+  expect(body.model).toBe("gemini-3-flash-preview");
+});
+
+test("automatically selects an available model for a new user", async ({ addin, page }) => {
+  await addin.mockApiJson("GET", "**/user/profile", {
+    displayName: "Test User", lastSelectedChatModel: null,
+    lastSelectedReasoningLevel: "high", openRouterModels: [],
+    vercelModels: [], openCodeGoModels: [],
+  });
+  await addin.mockChatStream(["Ready."]);
+  await addin.gotoTaskpane();
+  await addin.expectAuthedShell();
+  await expect(page.getByRole("button", { name: "Choose model" })).toHaveCount(0);
+  await page.getByRole("combobox").fill("Hello");
+  const request = page.waitForRequest("**/word-chat");
+  await page.getByRole("button", { name: "Send" }).click();
+  expect((await request).postDataJSON().model).toBe("claude-fable-5");
 });
 
 test("composer controls fit a narrow Word task pane", async ({
@@ -1495,7 +1509,7 @@ test("composer controls fit a narrow Word task pane", async ({
   await expect(page.getByTestId("edit-apply-toggle")).toBeVisible();
   await expect(
     page.getByRole("button", { name: "Choose model" }),
-  ).toBeVisible();
+  ).toHaveCount(0);
   const sendButton = page.getByRole("button", { name: "Send" });
   await expect(sendButton).toHaveClass(/rounded-\[11px\]/);
   await expect(sendButton).toHaveClass(/border-0/);
@@ -1513,24 +1527,22 @@ test("composer controls fit a narrow Word task pane", async ({
   const applyModeBounds = await page
     .getByTestId("edit-apply-toggle")
     .boundingBox();
-  const modelBounds = await page
-    .getByRole("button", { name: "Choose model" })
-    .boundingBox();
+  const sendBounds = await sendButton.boundingBox();
   expect(placeholderBounds).not.toBeNull();
   expect(plusBounds).not.toBeNull();
   expect(addDocumentBounds).not.toBeNull();
   expect(applyModeBounds).not.toBeNull();
-  expect(modelBounds).not.toBeNull();
+  expect(sendBounds).not.toBeNull();
   expect(Math.abs(plusBounds!.x - placeholderBounds!.x)).toBeLessThanOrEqual(3);
   // The whole action row shares one line: mode pill after the documents
-  // button, icon-only model button flush inside the pane.
+  // button, send button flush inside the pane.
   expect(
     Math.abs(applyModeBounds!.y - addDocumentBounds!.y),
   ).toBeLessThanOrEqual(2);
-  expect(Math.abs(modelBounds!.y - addDocumentBounds!.y)).toBeLessThanOrEqual(
+  expect(Math.abs(sendBounds!.y - addDocumentBounds!.y)).toBeLessThanOrEqual(
     2,
   );
-  expect(modelBounds!.x + modelBounds!.width).toBeLessThanOrEqual(360);
+  expect(sendBounds!.x + sendBounds!.width).toBeLessThanOrEqual(360);
 
   await page.getByRole("button", { name: "Add documents" }).click();
   await page.getByRole("menuitem", { name: "Web files" }).click();

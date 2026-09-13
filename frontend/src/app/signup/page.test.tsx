@@ -74,16 +74,9 @@ describe("SignupPage", () => {
         expect(push).toHaveBeenCalledWith("/signup/check-email");
     });
 
-    it("places Google signup after the primary signup action", () => {
+    it("offers email authentication without a Google option", () => {
         render(<SignupPage />);
-
-        const signup = screen.getByRole("button", { name: "Sign up" });
-        const google = screen.getByRole("button", {
-            name: "Continue with Google",
-        });
-        expect(
-            signup.compareDocumentPosition(google) &
-                Node.DOCUMENT_POSITION_FOLLOWING,
-        ).toBeTruthy();
+        expect(screen.getByRole("button", { name: "Sign up" })).toBeVisible();
+        expect(screen.queryByRole("button", { name: "Continue with Google" })).not.toBeInTheDocument();
     });
 });

@@ -1,2 +1,8 @@
 [mcp_servers.supabase]
 url = "https://mcp.supabase.com/mcp?project_ref=dwoycfwximckrkuincpi&features=docs%2Caccount%2Cdatabase%2Cdebugging%2Cdevelopment%2Cfunctions%2Cbranching"
+
+[shell_environment_policy]
+inherit = "core"
+
+[shell_environment_policy.set]
+SUPABASE_ACCESS_TOKEN = "PASTE_YOUR_SUPABASE_PAT_HERE"

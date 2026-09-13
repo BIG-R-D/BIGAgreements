@@ -30,6 +30,15 @@ describe("useSelectedModel", () => {
         expect(result.current[0]).toBe(MODELS[0].id);
     });
 
+    it("uses a saved router model when no direct provider is configured", () => {
+        const { result } = renderHook(() => useSelectedModel({
+            apiKeys: { ...keys, claude: { configured: false, source: null },
+                openai: { configured: false, source: null } },
+            routerSelections,
+        }));
+        expect(result.current[0]).toBe("openrouter/openai/gpt-5.4");
+    });
+
     it("skips providers with no key when falling back", () => {
         const geminiOnly: ApiKeyState = {
             ...keys,

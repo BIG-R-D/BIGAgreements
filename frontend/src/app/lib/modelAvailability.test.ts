@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { SETTINGS_MODELS } from "../components/assistant/ModelToggle";
 import type { ApiKeyState } from "./mikeApi";
+import { MODELS } from "../components/assistant/ModelToggle";
 import {
+    defaultModelId,
     getModelProvider,
     isModelAvailable,
     isProviderAvailable,
@@ -146,5 +148,34 @@ describe("modelGroupToProvider", () => {
         expect(modelGroupToProvider("Vercel AI Gateway")).toBe("vercel");
         expect(modelGroupToProvider("Local")).toBe("ollama");
         expect(modelGroupToProvider("Google")).toBe("gemini");
+    });
+});
+
+describe("defaultModelId", () => {
+    it("picks the first model whose provider has a key", () => {
+        // Anthropic leads MODELS, so with only Google configured the default
+        // has to skip past every Claude entry rather than stop at the top.
+        const id = defaultModelId(keys({ gemini: true }));
+        expect(id).not.toBeNull();
+        expect(getModelProvider(id!)).toBe("gemini");
+        expect(id).toBe(MODELS.find((m) => m.group === "Google")!.id);
+    });
+
+    it("prefers the earliest entry when several providers are configured", () => {
+        expect(defaultModelId(keys({ claude: true, gemini: true }))).toBe(
+            MODELS[0].id,
+        );
+    });
+
+    it("fails open when key state is unknown", () => {
+        // A degraded profile must not leave the composer without a model; the
+        // submit path checks availability again before it sends.
+        expect(defaultModelId(undefined)).toBe(MODELS[0].id);
+    });
+
+    it("returns null when no provider is configured", () => {
+        // The caller surfaces this as "no model available", not as a silent
+        // disabled button.
+        expect(defaultModelId(keys({}))).toBeNull();
     });
 });

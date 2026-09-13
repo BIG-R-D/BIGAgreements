@@ -18,13 +18,9 @@ import { Modal } from "../modals/Modal";
 import { ModalSelect } from "../modals/ModalSelect";
 import { FieldLabel, FormTextInput } from "../ui/form-field";
 import { ToggleSwitch } from "@/app/components/ui/toggle-switch";
-import {
-    type NoModelsReason,
-    type RouterSlug,
-} from "../assistant/ModelToggle";
+import { type RouterSlug } from "../assistant/ModelToggle";
 import { useUserProfile } from "@/app/contexts/UserProfileContext";
 import { defaultModelId, isModelAvailable } from "@/app/lib/modelAvailability";
-import { NoModelsWarningPopup } from "../popups/NoModelsWarningPopup";
 import { useAuth } from "@/app/contexts/AuthContext";
 import {
     CreateAccessStep,
@@ -84,8 +80,6 @@ export function NewTRModal({
     const [selectedProjectId, setSelectedProjectId] = useState("");
     const [directGrants, setDirectGrants] = useState<PendingDirectGrant[]>([]);
     const [selectedModel, setSelectedModel] = useState("");
-    const [noModelsWarning, setNoModelsWarning] =
-        useState<NoModelsReason | null>(null);
     const { profile, loading: profileLoading, apiKeysDegraded } =
         useUserProfile();
     const { user } = useAuth();
@@ -190,7 +184,6 @@ export function NewTRModal({
         setSelectedProjectId("");
         setDirectGrants([]);
         setSelectedModel("");
-        setNoModelsWarning(null);
         setProjectDocs([]);
         setProjectFolders([]);
         setExtraStandaloneDocs([]);
@@ -620,10 +613,6 @@ export function NewTRModal({
                     </div>
                 )}
             </form>
-            <NoModelsWarningPopup
-                reason={noModelsWarning}
-                onClose={() => setNoModelsWarning(null)}
-            />
         </Modal>
     );
 }

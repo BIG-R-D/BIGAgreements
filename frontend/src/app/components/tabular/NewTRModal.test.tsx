@@ -90,19 +90,12 @@ describe("NewTRModal", () => {
         ).toBeInTheDocument();
 
         const reviewNameInput = screen.getByLabelText("Review name");
-        const modelSelect = screen.getByRole("button", {
-            name: "Choose model",
-        });
+        // The model picker used to sit here. Creating a comparison must not
+        // ask a contractor to choose between model names, so the model is
+        // resolved from the profile or the first available provider instead.
         expect(
-            reviewNameInput.compareDocumentPosition(modelSelect) &
-                Node.DOCUMENT_POSITION_FOLLOWING,
-        ).toBeTruthy();
-        expect(modelSelect).toHaveClass(
-            "h-10",
-            "w-full",
-            "rounded-xl",
-            "liquid-glass-subtle",
-        );
+            screen.queryByRole("button", { name: "Choose model" }),
+        ).not.toBeInTheDocument();
 
         fireEvent.change(reviewNameInput, {
             target: { value: "Closing review" },

@@ -449,7 +449,7 @@ test("uses a workflow by attaching it to the Assistant chat input", async ({
     .getByRole("button", { name: "Use", exact: true })
     .click();
 
-  await expect(page.getByPlaceholder("How can I help?")).toBeVisible();
+  await expect(page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true })).toBeVisible();
   const chatInput = page.getByTestId("chat-input");
   await expect(chatInput.getByText("Summarize document")).toBeVisible();
   await expect(
@@ -459,7 +459,7 @@ test("uses a workflow by attaching it to the Assistant chat input", async ({
   ).toBeVisible();
   await expect(page.getByTestId("workflow-skill-content")).toHaveCount(0);
 
-  await page.getByPlaceholder("How can I help?").fill("Review this document");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Review this document");
   const requestPromise = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
   const request = await requestPromise;

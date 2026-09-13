@@ -91,7 +91,7 @@ test("opens action details without leaving the Quick Actions page", async ({
   await expect(page.getByTestId("quick-actions-full-screen")).toBeVisible();
   // The Assistant stays mounted so its draft and conversation survive
   // navigation, but it must not be visible behind the Quick Actions page.
-  await expect(page.getByPlaceholder("How can I help?")).toBeHidden();
+  await expect(page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true })).toBeHidden();
 });
 
 test("creates a named quick action from the top bar", async ({

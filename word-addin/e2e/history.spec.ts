@@ -338,7 +338,7 @@ test("persisted cloud failures and cancellations both refresh history", async ({
   await addin.gotoTaskpane({ token: TOKEN });
   await addin.expectAuthedShell();
 
-  const composer = page.getByPlaceholder("How can I help?");
+  const composer = page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true });
   await composer.fill("Fail after persistence");
   await page.getByRole("button", { name: "Send" }).click();
   await expect(page.getByRole("alert")).toHaveText(

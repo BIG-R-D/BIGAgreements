@@ -81,7 +81,7 @@ test("shows frontend-style quick actions before any message is sent", async ({
   await expect(
     page.getByRole("button", { name: "Remove workflow Extract Key Terms" }),
   ).toBeVisible();
-  await expect(page.getByPlaceholder("How can I help?")).toHaveValue(
+  await expect(page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true })).toHaveValue(
     "Extract the key legal, commercial, and operational terms from the current document. Present them in a concise table with the term, value, location, and notes, and flag material omissions or ambiguities without inventing missing information.",
   );
   // No bubbles yet: the message list isn't rendered.
@@ -161,7 +161,7 @@ test("new chat clears the current conversation", async ({ addin, page }) => {
   await addin.gotoTaskpane();
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Existing question");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Existing question");
   await page.getByRole("button", { name: "Send" }).click();
   await expect(page.getByText("Existing answer.")).toBeVisible();
 
@@ -181,7 +181,7 @@ test("section navigation preserves the live conversation and request history", a
   await addin.gotoTaskpane();
   await addin.expectAuthedShell();
 
-  const composer = page.getByPlaceholder("How can I help?");
+  const composer = page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true });
   await composer.fill("First question");
   await page.getByRole("button", { name: "Send" }).click();
   await expect(page.getByText("First answer.", { exact: true })).toBeVisible();
@@ -236,7 +236,7 @@ test("a document read from an old chat cannot resume into a new session", async 
       });
   });
 
-  await page.getByPlaceholder("How can I help?").fill("Stale question");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Stale question");
   await page.getByRole("button", { name: "Send" }).click();
   await expect
     .poll(() => page.evaluate(() => !!(window as any).__WORD_READ_WAITING__))
@@ -270,7 +270,7 @@ test("does not send without the required Word document context", async ({
       Promise.reject(new Error("Simulated document read failure"));
   });
 
-  const composer = page.getByPlaceholder("How can I help?");
+  const composer = page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true });
   await composer.fill("Review this document");
   await page.getByRole("button", { name: "Send" }).click();
 
@@ -396,7 +396,7 @@ test("shows a scroll-to-bottom control while the transcript is scrolled up", asy
   await expect(scrollButton).toHaveCount(0);
 
   await page
-    .getByPlaceholder("How can I help?")
+    .getByRole("combobox", { name: "Ask about a project agreement...", exact: true })
     .fill("Review the final section");
   await page.getByRole("button", { name: "Send" }).click();
   await expect(
@@ -528,7 +528,7 @@ test("typing + Send streams an assistant bubble that concatenates content_delta 
   await addin.expectAuthedShell();
 
   await page
-    .getByPlaceholder("How can I help?")
+    .getByRole("combobox", { name: "Ask about a project agreement...", exact: true })
     .fill("Summarize this document");
   await page.getByRole("button", { name: "Send" }).click();
 
@@ -610,7 +610,7 @@ test("a reasoning delta replaces Thinking with a live reasoning trace", async ({
   await addin.gotoTaskpane();
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Review the agreement");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Review the agreement");
   await page.getByRole("button", { name: "Send" }).click();
 
   const assistant = page.locator("[data-assistant-message-id]").last();
@@ -666,7 +666,7 @@ test("a pre-[DONE] error event surfaces as 'Error: ...' in the assistant bubble"
   await addin.gotoTaskpane();
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Do something");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Do something");
   await page.getByRole("button", { name: "Send" }).click();
 
   // The client throws on the pre-[DONE] error; ChatPanel replaces the bubble
@@ -683,7 +683,7 @@ test("sends a document snapshot without claiming the model read it", async ({
   await addin.gotoTaskpane({ documentText: docText });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("What law governs?");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("What law governs?");
 
   const requestPromise = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
@@ -716,7 +716,7 @@ test("uses Web Crypto for document IDs when randomUUID is unavailable", async ({
   await addin.gotoTaskpane({ documentText: "Fallback UUID test" });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Check this document");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Check this document");
   const requestPromise = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
   const body = (await requestPromise).postDataJSON();
@@ -737,7 +737,7 @@ test("a Save As copy of the document mints a fresh chat identity", async ({
   await addin.gotoTaskpane({ documentText: "Copy detection test" });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("First question");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("First question");
   const firstRequest = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
   const firstId = (await firstRequest).postDataJSON().document_id as string;
@@ -754,7 +754,7 @@ test("a Save As copy of the document mints a fresh chat identity", async ({
   });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Second question");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Second question");
   const secondRequest = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
   const secondId = (await secondRequest).postDataJSON().document_id as string;
@@ -779,7 +779,7 @@ test("keeps the existing identity when either document URL is unknown", async ({
   await addin.gotoTaskpane({ documentText: "Conservative identity test" });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("First question");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("First question");
   const firstRequest = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
   const firstId = (await firstRequest).postDataJSON().document_id as string;
@@ -792,7 +792,7 @@ test("keeps the existing identity when either document URL is unknown", async ({
   });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Second question");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Second question");
   const secondRequest = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
   expect((await secondRequest).postDataJSON().document_id).toBe(firstId);
@@ -802,7 +802,7 @@ test("keeps the existing identity when either document URL is unknown", async ({
   await addin.gotoTaskpane({ documentUrl: "" });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Third question");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Third question");
   const thirdRequest = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
   expect((await thirdRequest).postDataJSON().document_id).toBe(firstId);
@@ -869,7 +869,7 @@ test("shows Reading and Read only when the model triggers the read tool", async 
   await addin.gotoTaskpane({ documentText: "Delaware governs." });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("What law governs?");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("What law governs?");
   await page.getByRole("button", { name: "Send" }).click();
 
   await expect(page.getByText("Reading", { exact: true })).toBeVisible();
@@ -937,7 +937,7 @@ test("removes an unfinished Reading event when the stream is stopped", async ({
   await addin.gotoTaskpane({ documentText: "Delaware governs." });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Review the document");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Review the document");
   await page.getByRole("button", { name: "Send" }).click();
   await expect(page.getByText("Reading", { exact: true })).toBeVisible();
 
@@ -962,7 +962,7 @@ test("document context and tracked-edit behavior are fixed on without switches",
   await expect(page.getByRole("switch")).toHaveCount(0);
   await expect(page.getByTestId("edit-apply-toggle")).toHaveText(/Review/);
 
-  await page.getByPlaceholder("How can I help?").fill("Hello");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Hello");
 
   const requestPromise = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
@@ -979,7 +979,7 @@ test("Enter sends the message", async ({ addin, page }) => {
   await addin.gotoTaskpane();
   await addin.expectAuthedShell();
 
-  const input = page.getByPlaceholder("How can I help?");
+  const input = page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true });
   await input.fill("Send with Enter");
   await input.press("Enter");
 
@@ -992,7 +992,7 @@ test("Shift+Enter does not send the message", async ({ addin, page }) => {
   await addin.gotoTaskpane();
   await addin.expectAuthedShell();
 
-  const input = page.getByPlaceholder("How can I help?");
+  const input = page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true });
   await input.fill("Draft line one");
   await input.press("Shift+Enter");
 
@@ -1015,7 +1015,7 @@ test("the composer swaps Send for a Stop control while streaming, then restores"
   await addin.gotoTaskpane();
   await addin.expectAuthedShell();
 
-  const input = page.getByPlaceholder("How can I help?");
+  const input = page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true });
 
   await input.fill("Take your time");
   await page.getByRole("button", { name: "Send" }).click();
@@ -1077,7 +1077,7 @@ test("sends only user text because tracked-edit instructions are server-side", a
   await addin.gotoTaskpane({ documentText: docText });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Fix the typos");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the typos");
   const requestPromise = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
   const request = await requestPromise;
@@ -1191,7 +1191,7 @@ test("opens a left-aligned source menu and selects web files from the document m
   await expect(
     page.getByTestId("chat-input").getByText("agreement.pdf"),
   ).toBeVisible();
-  await page.getByPlaceholder("How can I help?").fill("Review the attachment");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Review the attachment");
   const requestPromise = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
   const body = (await requestPromise).postDataJSON();
@@ -1235,7 +1235,7 @@ test("attaches a library template from the Templates tab", async ({
   await modal.getByRole("button", { name: "Confirm" }).click();
 
   await page
-    .getByPlaceholder("How can I help?")
+    .getByRole("combobox", { name: "Ask about a project agreement...", exact: true })
     .fill("Draft from this template");
   const requestPromise = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
@@ -1290,7 +1290,7 @@ test("expands a project and attaches one of its documents", async ({
   await projectDocument.click();
   await modal.getByRole("button", { name: "Confirm" }).click();
 
-  await page.getByPlaceholder("How can I help?").fill("Review the disclosure");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Review the disclosure");
   const requestPromise = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
   const payload = (await requestPromise).postDataJSON();
@@ -1356,7 +1356,7 @@ test("uploads desktop files directly from the document source menu", async ({
     0,
   );
 
-  await page.getByPlaceholder("How can I help?").fill("Review the local file");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Review the local file");
   const requestPromise = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
   const body = (await requestPromise).postDataJSON();
@@ -1448,7 +1448,7 @@ test("selects a workflow from the plus menu and attaches it to chat", async ({
     page.getByTestId("chat-input").getByText("Contract review"),
   ).toBeVisible();
 
-  await page.getByPlaceholder("How can I help?").fill("Run this workflow");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Run this workflow");
   const requestPromise = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
   const body = (await requestPromise).postDataJSON();
@@ -1470,7 +1470,7 @@ test("model toggle sends the selected frontend model", async ({
   await page.getByRole("button", { name: "Choose model" }).click();
   await page.getByRole("menuitem", { name: "OpenAI", exact: true }).click();
   await page.getByRole("menuitem", { name: "GPT-5.4", exact: true }).click();
-  await page.getByPlaceholder("How can I help?").fill("Hello");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Hello");
   const requestPromise = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
   const body = (await requestPromise).postDataJSON();
@@ -1501,7 +1501,7 @@ test("composer controls fit a narrow Word task pane", async ({
   await expect(sendButton).toHaveClass(/border-0/);
 
   const placeholderBounds = await page
-    .getByPlaceholder("How can I help?")
+    .getByRole("combobox", { name: "Ask about a project agreement...", exact: true })
     .boundingBox();
   const plusBounds = await page
     .getByRole("button", { name: "Add documents" })
@@ -1574,7 +1574,7 @@ test("composer grows upward when narrower text wraps onto more lines", async ({
   await addin.expectAuthedShell();
 
   await page
-    .getByPlaceholder("How can I help?")
+    .getByRole("combobox", { name: "Ask about a project agreement...", exact: true })
     .fill(
       "Review the document and identify every important contractual obligation, exception, limitation, deadline, dependency, and material risk.",
     );
@@ -1633,7 +1633,7 @@ test("streams sealed edit cards into Word and resolves their exact revisions", a
   await addin.expectAuthedShell();
   await chooseEditMode(page);
 
-  await page.getByPlaceholder("How can I help?").fill("Propose edits");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Propose edits");
   await page.getByRole("button", { name: "Send" }).click();
 
   // Edit mode applies sealed blocks without a separate Apply click.
@@ -1776,7 +1776,7 @@ test("hides a provisional edit card until it can be reviewed and applied", async
     documentText: "The Suplier delivered the goods.",
   });
   await addin.expectAuthedShell();
-  await page.getByPlaceholder("How can I help?").fill("Fix the typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the typo");
   await page.getByRole("button", { name: "Send" }).click();
 
   await expect(page.getByText("Receiving change…")).toHaveCount(0);
@@ -1843,7 +1843,7 @@ test("View scrolls Word to a proposed change before it is applied", async ({
   });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Fix the typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the typo");
   await page.getByRole("button", { name: "Send" }).click();
 
   const view = page.getByRole("button", { name: "View", exact: true });
@@ -1881,7 +1881,7 @@ test("View falls back to a second anchor when Word invalidates the first", async
   await addin.expectAuthedShell();
   await chooseEditMode(page);
 
-  await page.getByPlaceholder("How can I help?").fill("Fix the typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the typo");
   await page.getByRole("button", { name: "Send" }).click();
 
   await page.getByRole("button", { name: "View", exact: true }).click();
@@ -1906,7 +1906,7 @@ test("a change Word cannot scroll to reports plain language, not a Word error co
   });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Fix the typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the typo");
   await page.getByRole("button", { name: "Send" }).click();
 
   await page.getByRole("button", { name: "View", exact: true }).click();
@@ -1983,7 +1983,7 @@ test("stopping a stream leaves sealed edits reviewable and marks its tail incomp
     documentText: "The Suplier will deliver goods tomorrow.",
   });
   await addin.expectAuthedShell();
-  await page.getByPlaceholder("How can I help?").fill("Fix the document");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the document");
   await page.getByRole("button", { name: "Send" }).click();
 
   await expect(
@@ -2025,7 +2025,7 @@ test("Accept all resolves every pending tracked-change handle", async ({
   await addin.expectAuthedShell();
   await chooseEditMode(page);
 
-  await page.getByPlaceholder("How can I help?").fill("Fix both issues");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix both issues");
   await page.getByRole("button", { name: "Send" }).click();
 
   const acceptAll = page.getByRole("button", { name: "Accept all" });
@@ -2066,7 +2066,7 @@ test("skips an edit whose target already contains an unrelated tracked revision"
   });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Fix the typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the typo");
   await page.getByRole("button", { name: "Send" }).click();
 
   await expect(
@@ -2101,7 +2101,7 @@ test("explains when an edit's source text is missing from the document", async (
   });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Fix the typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the typo");
   await page.getByRole("button", { name: "Send" }).click();
 
   await expect(
@@ -2129,7 +2129,7 @@ test("explains when an edit's source passage cannot be safely searched", async (
   await addin.gotoTaskpane({ documentText: oversizedSource });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Condense the passage");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Condense the passage");
   await page.getByRole("button", { name: "Send" }).click();
 
   await expect(
@@ -2151,7 +2151,7 @@ test("keeps an edit reviewable through its passage when Word withholds revision 
   });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Fix the typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the typo");
   await page.getByRole("button", { name: "Send" }).click();
 
   await page.getByRole("button", { name: "Apply", exact: true }).click();
@@ -2210,7 +2210,7 @@ test("edits sharing replacement text resolve independently by location", async (
   });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Fix the first typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the first typo");
   await page.getByRole("button", { name: "Send" }).click();
   await page.getByRole("button", { name: "Apply", exact: true }).click();
   await expect(
@@ -2220,7 +2220,7 @@ test("edits sharing replacement text resolve independently by location", async (
   await addin.mockChatStream([
     wordEdits(replacementEdit("hte Buyer", "the Buyer", "Fix the typo.")),
   ]);
-  await page.getByPlaceholder("How can I help?").fill("Fix the second typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Fix the second typo");
   await page.getByRole("button", { name: "Send" }).click();
   await page.getByRole("button", { name: "Apply", exact: true }).click();
   await expect(
@@ -2264,7 +2264,7 @@ test("does not broaden one edit across repeated exact passages", async ({
   });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Clarify the supplier");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Clarify the supplier");
   await page.getByRole("button", { name: "Send" }).click();
 
   await expect(
@@ -2303,7 +2303,7 @@ test("an applied card names the paragraph the change landed in", async ({
   });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Clarify the supplier");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Clarify the supplier");
   await page.getByRole("button", { name: "Send" }).click();
   await page.getByRole("button", { name: "Apply", exact: true }).click();
 
@@ -2325,7 +2325,7 @@ test("plain prose answers offer no document mutation controls", async ({
   await addin.gotoTaskpane();
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("What law governs?");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("What law governs?");
   await page.getByRole("button", { name: "Send" }).click();
   await expect(
     page.getByText("Delaware law governs this agreement."),

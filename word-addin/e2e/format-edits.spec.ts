@@ -28,7 +28,7 @@ test("streams a format block into Word as a formatted tracked change and resolve
   await addin.gotoTaskpane({ documentText: DOCUMENT_TEXT });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Bold the heading");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Bold the heading");
   await page.getByRole("button", { name: "Send" }).click();
   await page.getByRole("button", { name: "Apply", exact: true }).click();
 
@@ -79,7 +79,7 @@ test("rejecting a format edit leaves the passage's styling decision to Word", as
   await addin.gotoTaskpane({ documentText: DOCUMENT_TEXT });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Style the heading");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Style the heading");
   await page.getByRole("button", { name: "Send" }).click();
   await page.getByRole("button", { name: "Apply", exact: true }).click();
 
@@ -112,7 +112,7 @@ test("Edit mode applies a format edit immediately and leaves it pending", async 
 
   await page.getByTestId("edit-apply-toggle").click();
   await page.getByRole("menuitem", { name: /Edit/ }).click();
-  await page.getByPlaceholder("How can I help?").fill("Bold the heading");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Bold the heading");
   await page.getByRole("button", { name: "Send" }).click();
 
   await expect
@@ -146,7 +146,7 @@ test("a heading format applies the paragraph style as a reviewable tracked chang
   await addin.gotoTaskpane({ documentText: DOCUMENT_TEXT });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Make it a heading");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Make it a heading");
   await page.getByRole("button", { name: "Send" }).click();
   await page.getByRole("button", { name: "Apply", exact: true }).click();
 
@@ -185,7 +185,7 @@ test("a format block naming no recognized formatting settles as incomplete and n
   await addin.gotoTaskpane({ documentText: DOCUMENT_TEXT });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Style the heading");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Style the heading");
   await page.getByRole("button", { name: "Send" }).click();
 
   await expect(

@@ -25,7 +25,7 @@ test("renders a citation chip and clicking it selects the quoted text in Word", 
   await addin.gotoTaskpane({ documentText: DOCUMENT_TEXT });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Can we exit early?");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Can we exit early?");
   await page.getByRole("button", { name: "Send" }).click();
 
   const chip = page.getByRole("link", {
@@ -60,7 +60,7 @@ test("a citation whose text is no longer in the document searches but never sele
   await addin.gotoTaskpane({ documentText: DOCUMENT_TEXT });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("What is the cap?");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("What is the cap?");
   await page.getByRole("button", { name: "Send" }).click();
 
   const chip = page.getByRole("link", {
@@ -97,7 +97,7 @@ test("the backend's native [n] markers become chips resolved through the citatio
   await addin.gotoTaskpane({ documentText: DOCUMENT_TEXT });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Notice period?");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Notice period?");
   await page.getByRole("button", { name: "Send" }).click();
 
   const chipOne = page.getByRole("button", {
@@ -132,7 +132,7 @@ test("citation matching falls back to a case-insensitive search", async ({
   await addin.gotoTaskpane({ documentText: DOCUMENT_TEXT });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Notice period?");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Notice period?");
   await page.getByRole("button", { name: "Send" }).click();
 
   await page

@@ -19,7 +19,7 @@ test("collapses long user messages and expands them from the bottom chevron", as
     (_, index) =>
       `Paragraph ${index + 1} asks Mike to review a different part of the agreement.`,
   ).join("\n");
-  await page.getByPlaceholder("How can I help?").fill(prompt);
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill(prompt);
   await page.getByRole("button", { name: "Send" }).click();
 
   const content = page.getByTestId("user-message-content");

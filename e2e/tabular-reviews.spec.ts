@@ -86,19 +86,8 @@ async function createReview(
     if (onFirstOpen) await onFirstOpen();
     await titleInput.fill(reviewName);
 
-    // A model is required before the review can advance. The clean E2E
-    // profile does not have a saved tabular-review model, so choose the first
-    // model exposed by the configured providers for this environment.
-    await page.getByRole("button", { name: "Choose model" }).click();
-    const modelMenu = page.getByRole("menu");
-    const firstModel = modelMenu
-        .locator('[role="menuitem"]:not([aria-expanded])')
-        .first();
-    await expect(firstModel).toBeVisible();
-    await firstModel.click();
-
     // NewTRModal is a three-step wizard (Details -> Access -> Add Documents).
-    // "Next" only enables once the review has a name and model.
+    // The model is selected automatically; entering a name enables Next.
     await page.getByRole("button", { name: "Next", exact: true }).click();
     await expect(page.getByRole("dialog", { name: "Access" })).toBeVisible();
     await page.getByRole("button", { name: "Next", exact: true }).click();

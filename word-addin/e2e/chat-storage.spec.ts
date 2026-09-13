@@ -25,7 +25,7 @@ test("cloud edit resolution is persisted on the normalized edit row", async ({
     documentText: "The Suplier shall deliver the goods.",
   });
   await addin.expectAuthedShell();
-  await page.getByPlaceholder("How can I help?").fill("Correct the typo");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Correct the typo");
   await page.getByRole("button", { name: "Send" }).click();
   await page.getByRole("button", { name: "Apply", exact: true }).click();
   await expect(
@@ -81,7 +81,7 @@ test("cloud is default and local mode persists document chats in IndexedDB", asy
 
   await page.getByRole("button", { name: "Open menu" }).click();
   await page.getByRole("menuitem", { name: "Assistant" }).click();
-  await page.getByPlaceholder("How can I help?").fill("Keep this chat local");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Keep this chat local");
 
   const requestPromise = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
@@ -147,7 +147,7 @@ test("device-only history restores accepted and rejected edit outcomes", async (
   await page.getByRole("menuitem", { name: "Assistant" }).click();
 
   await page
-    .getByPlaceholder("How can I help?")
+    .getByRole("combobox", { name: "Ask about a project agreement...", exact: true })
     .fill("Correct both drafting issues");
   await page.getByRole("button", { name: "Send" }).click();
   await expect(page.getByRole("button", { name: "Send" })).toBeVisible();
@@ -268,7 +268,7 @@ test("stopping a local edit stream preserves the assistant turn for reload", asy
   await page.getByRole("menuitem", { name: "Assistant" }).click();
 
   await page
-    .getByPlaceholder("How can I help?")
+    .getByRole("combobox", { name: "Ask about a project agreement...", exact: true })
     .fill("Correct the supplier typo");
   await page.getByRole("button", { name: "Send" }).click();
   await page.getByRole("button", { name: "Apply", exact: true }).click();
@@ -369,7 +369,7 @@ test("a clean SSE cancellation finalizes and persists a partial local turn", asy
   await page.getByRole("menuitem", { name: "Assistant" }).click();
 
   await page
-    .getByPlaceholder("How can I help?")
+    .getByRole("combobox", { name: "Ask about a project agreement...", exact: true })
     .fill("Finish this change locally");
   await page.getByRole("button", { name: "Send" }).click();
   await expect(page.getByText("Receiving change…")).toHaveCount(0);

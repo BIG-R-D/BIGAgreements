@@ -40,7 +40,7 @@ test.beforeEach(async ({ addin }) => {
 /** Send a follow-up message and return the document_context it carried. */
 async function nextDocumentContext(addin: Addin, page: Page): Promise<string> {
   await addin.mockChatStream(["ok"]);
-  await page.getByPlaceholder("How can I help?").fill("Thanks");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Thanks");
   const requestPromise = page.waitForRequest("**/word-chat");
   await page.getByRole("button", { name: "Send" }).click();
   const body = (await requestPromise).postDataJSON();
@@ -72,7 +72,7 @@ test("review mode: accepting a full-item deletion removes the paragraph and renu
   await addin.gotoTaskpane(NUMBERED_DOC);
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Remove point 2");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Remove point 2");
   await page.getByRole("button", { name: "Send" }).click();
   await applyReviewProposal(page);
 
@@ -104,7 +104,7 @@ test("edit mode: the item is applied immediately as a tracked change", async ({
   await addin.expectAuthedShell();
 
   await chooseApplyMode(page, "Edit");
-  await page.getByPlaceholder("How can I help?").fill("Remove point 2");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Remove point 2");
   await page.getByRole("button", { name: "Send" }).click();
 
   await expect
@@ -131,7 +131,7 @@ test("rejecting the deletion restores the item with its original number", async 
   await addin.gotoTaskpane(NUMBERED_DOC);
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Remove point 2");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Remove point 2");
   await page.getByRole("button", { name: "Send" }).click();
   await applyReviewProposal(page);
 
@@ -167,7 +167,7 @@ test("a partial deletion inside an item never escalates to the paragraph", async
   });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Trim point 2");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Trim point 2");
   await page.getByRole("button", { name: "Send" }).click();
   await applyReviewProposal(page);
 
@@ -194,7 +194,7 @@ test("an original quoting the renderer's list marker still deletes the paragraph
   await addin.gotoTaskpane(NUMBERED_DOC);
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Remove point 2");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Remove point 2");
   await page.getByRole("button", { name: "Send" }).click();
   await applyReviewProposal(page);
 
@@ -226,7 +226,7 @@ test("an over-length item degrades to an honest skip, not a partial delete", asy
   });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Remove point 2");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Remove point 2");
   await page.getByRole("button", { name: "Send" }).click();
 
   await expect(
@@ -254,7 +254,7 @@ test("a whole plain paragraph deletes too, leaving no empty line", async ({
   });
   await addin.expectAuthedShell();
 
-  await page.getByPlaceholder("How can I help?").fill("Remove the aside");
+  await page.getByRole("combobox", { name: "Ask about a project agreement...", exact: true }).fill("Remove the aside");
   await page.getByRole("button", { name: "Send" }).click();
   await applyReviewProposal(page);
 

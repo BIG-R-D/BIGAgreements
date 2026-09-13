@@ -65,21 +65,101 @@ export const US_STATE_OPTIONS = [
 
 export const OTHER_JURISDICTION_OPTION = "Other" as const;
 
-export const PRACTICE_AREA_OPTIONS = [
-    "General Construction",
-    "Carpentry",
-    "Electrical",
-    "Plumbing",
-    "HVAC",
-    "Roofing",
-    "Concrete and Masonry",
-    "Drywall and Painting",
-    "Flooring",
-    "Landscaping",
-    "Remodeling",
-    "Demolition",
-    "Other",
-] as const;
+/**
+ * Trades, grouped in build order — preconstruction, site, structure, envelope,
+ * systems, interiors, then specialty — because that is the order a contractor
+ * already thinks in, and because a flat list this long is not scannable.
+ *
+ * This must stay in step with `TRADES` in `backend/src/lib/trades.ts`, which
+ * validates the write. A value offered here but unknown there is dropped
+ * silently on save.
+ */
+export const TRADE_GROUP_OPTIONS = [
+    {
+        label: "General",
+        trades: ["General Construction", "Remodeling"],
+    },
+    {
+        label: "Preconstruction",
+        trades: ["Design and Engineering", "Surveying"],
+    },
+    {
+        label: "Site work",
+        trades: [
+            "Site Work and Excavation",
+            "Grading and Paving",
+            "Utilities and Underground",
+            "Septic and Well",
+            "Demolition",
+        ],
+    },
+    {
+        label: "Structure",
+        trades: [
+            "Foundations",
+            "Concrete and Masonry",
+            "Framing",
+            "Carpentry",
+            "Structural Steel",
+            "Welding and Metal Fabrication",
+            "Scaffolding and Shoring",
+        ],
+    },
+    {
+        label: "Building envelope",
+        trades: [
+            "Roofing",
+            "Siding and Exterior",
+            "Waterproofing",
+            "Insulation",
+            "Windows and Doors",
+            "Glass and Glazing",
+        ],
+    },
+    {
+        label: "Systems",
+        trades: [
+            "Electrical",
+            "Plumbing",
+            "HVAC",
+            "Fire Protection",
+            "Low Voltage and Security",
+            "Solar and Renewables",
+            "Elevators and Conveying",
+        ],
+    },
+    {
+        label: "Interiors",
+        trades: [
+            "Drywall and Painting",
+            "Plaster and Stucco",
+            "Tile and Stone",
+            "Flooring",
+            "Cabinetry and Millwork",
+            "Countertops",
+        ],
+    },
+    {
+        label: "Specialty",
+        trades: [
+            "Landscaping",
+            "Fencing and Gates",
+            "Decking",
+            "Pools and Spas",
+            "Environmental and Abatement",
+            "Restoration and Water Damage",
+            "Equipment and Hauling",
+            "Other",
+        ],
+    },
+] as const satisfies readonly { label: string; trades: readonly string[] }[];
+
+export type PracticeArea =
+    (typeof TRADE_GROUP_OPTIONS)[number]["trades"][number];
+
+/** Flat list, in the same order the groups render. */
+export const PRACTICE_AREA_OPTIONS: readonly PracticeArea[] =
+    TRADE_GROUP_OPTIONS.flatMap((group) => group.trades);
 
 export const PRACTICE_SETTING_OPTIONS = [
     { value: "general_contractor", label: "General contractor" },

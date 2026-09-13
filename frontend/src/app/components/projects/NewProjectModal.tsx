@@ -428,7 +428,7 @@ export function NewProjectModal({ open, onClose, onCreated }: Props) {
 
                         <div>
                             <FieldLabel htmlFor="new-project-practice">
-                                Trade / discipline
+                                Trade
                             </FieldLabel>
                             <ProjectPracticeField
                                 id="new-project-practice"

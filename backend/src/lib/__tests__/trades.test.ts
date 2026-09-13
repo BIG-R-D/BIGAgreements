@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   TRADES,
+  TRADE_GROUPS,
   MAX_TRADES,
   isKnownTrade,
   normalizeTrades,
@@ -22,15 +23,31 @@ describe("the canonical trade list", () => {
     }
   });
 
-  it("matches the values permitted by migration 20260912_01", () => {
-    // The migration clears any stored value outside this list, so the two
-    // drifting apart silently destroys member data.
+  it("puts every trade in a known group", () => {
+    for (const trade of TRADES) {
+      expect(TRADE_GROUPS).toContain(trade.group);
+    }
+  });
+
+  it("keeps trades contiguous within their group", () => {
+    // The UI renders one heading per group in TRADE_GROUPS order and walks the
+    // list once, so a trade out of position would land under the wrong heading.
+    const order = TRADES.map((t) => TRADE_GROUPS.indexOf(t.group));
+    expect(order).toEqual([...order].sort((a, b) => a - b));
+  });
+
+  it("still recognises every value migration 20260912_01 preserves", () => {
+    // The migration clears any stored value outside the list it names, so a
+    // value it keeps but this list has dropped would survive the migration and
+    // then be rejected on the next profile write. Adding trades is safe;
+    // removing one of these is not.
     const migration = [
       "General Construction", "Carpentry", "Electrical", "Plumbing", "HVAC",
       "Roofing", "Concrete and Masonry", "Drywall and Painting", "Flooring",
       "Landscaping", "Remodeling", "Demolition", "Other",
     ];
-    expect(TRADES.map((t) => t.id).sort()).toEqual(migration.sort());
+    const ids = new Set(TRADES.map((t) => t.id));
+    expect(migration.filter((id) => !ids.has(id))).toEqual([]);
   });
 });
 
@@ -78,8 +95,11 @@ describe("normalizeTrades", () => {
     // Dedupe runs first, so the cap can only be exceeded by distinct trades.
     const tooMany = Array.from({ length: MAX_TRADES + 1 }, (_, i) => `t${i}`);
     expect(normalizeTrades(tooMany)).toEqual([]); // unknown ids drop out
-    const allKnown = TRADES.map((t) => t.id);
-    expect(normalizeTrades(allKnown)).toHaveLength(allKnown.length);
+
+    const ids = TRADES.map((t) => t.id);
+    expect(ids.length).toBeGreaterThan(MAX_TRADES); // else the cap is untested
+    expect(normalizeTrades(ids.slice(0, MAX_TRADES))).toHaveLength(MAX_TRADES);
+    expect(normalizeTrades(ids.slice(0, MAX_TRADES + 1))).toBeNull();
   });
 
   it("accepts an empty list", () => {
@@ -113,7 +133,7 @@ describe("considerationsFor", () => {
   });
 
   it("returns nothing for a trade with no considerations", () => {
-    expect(considerationsFor(["Flooring"])).toEqual([]);
+    expect(considerationsFor(["Countertops"])).toEqual([]);
   });
 
   it("phrases prompts as things to check, never as legal conclusions", () => {

@@ -90,7 +90,7 @@ describe("NewWorkflowModal editing", () => {
             screen.getByText("State / jurisdiction").parentElement;
         expect(typeField?.parentElement).toBe(jurisdictionField?.parentElement);
         expect(typeField?.parentElement).toHaveClass("grid", "md:grid-cols-2");
-        expect(await screen.findByLabelText("Trade / discipline")).toHaveTextContent(
+        expect(await screen.findByLabelText("Trade")).toHaveTextContent(
             "Electrical",
         );
     });

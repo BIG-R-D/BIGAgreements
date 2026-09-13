@@ -232,7 +232,7 @@ export function WorkflowDetailsModal({
 
             <div>
               <ModalFieldLabel htmlFor="workflow-details-practice">
-                Trade / discipline
+                Trade
               </ModalFieldLabel>
               <ModalSelect
                 id="workflow-details-practice"
@@ -248,7 +248,7 @@ export function WorkflowDetailsModal({
                 <ModalTextInput
                   value={customPractice}
                   onChange={(event) => setCustomPractice(event.target.value)}
-                  placeholder="Enter trade or discipline…"
+                  placeholder="Enter trade…"
                   disabled={readOnly}
                   className="mt-2"
                 />

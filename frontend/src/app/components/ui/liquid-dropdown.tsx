@@ -5,6 +5,7 @@ import {
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
     DropdownMenuItem,
+    DropdownMenuLabel,
     DropdownMenuRadioItem,
 } from "@/app/components/ui/dropdown-menu";
 import { cn } from "@/app/lib/utils";
@@ -86,6 +87,26 @@ export function LiquidDropdownRadioItem({
     return (
         <DropdownMenuRadioItem
             className={cn(LIQUID_DROPDOWN_ITEM_CLASS, className)}
+            {...props}
+        />
+    );
+}
+
+/**
+ * Section heading inside a long menu. Not focusable and not selectable, so it
+ * stays out of the keyboard order while still being announced as a group
+ * label by screen readers.
+ */
+export function LiquidDropdownLabel({
+    className,
+    ...props
+}: React.ComponentProps<typeof DropdownMenuLabel>) {
+    return (
+        <DropdownMenuLabel
+            className={cn(
+                "px-3 pb-1 pt-2 text-[0.65rem] font-medium uppercase tracking-wide text-gray-400",
+                className,
+            )}
             {...props}
         />
     );

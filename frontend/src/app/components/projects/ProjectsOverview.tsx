@@ -309,7 +309,7 @@ export function ProjectsOverview() {
     );
     const practiceFilterButton = (
         <TableFilters
-            label="Filter by trade or discipline"
+            label="Filter by trade"
             value={practiceFilter}
             allLabel="All trades and disciplines"
             options={practices.map((practice) => ({
@@ -598,7 +598,7 @@ export function ProjectsOverview() {
                         </TableHeaderCell>
                         <TableHeaderCell className="w-36">
                             <div className="flex items-center gap-1">
-                                <span>Trade / discipline</span>
+                                <span>Trade</span>
                                 {!loading && practiceFilterButton}
                             </div>
                         </TableHeaderCell>

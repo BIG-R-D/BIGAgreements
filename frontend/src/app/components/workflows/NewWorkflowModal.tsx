@@ -39,47 +39,13 @@ const DEFAULT_LANGUAGE = "English";
 const DEFAULT_PRACTICE = "";
 const DEFAULT_JURISDICTION = "";
 const PERSONAL_WORKSPACE = "__personal__";
+// BIG operates in the United States and its members work English- and
+// Spanish-speaking crews. A saved workflow in any other language still
+// loads — the modal falls back to "Other" plus a free-text value — but no
+// new one can be created in a language nobody here can review.
 const LANGUAGE_OPTIONS = [
     "English",
-    "Chinese",
     "Spanish",
-    "French",
-    "German",
-    "Japanese",
-    "Korean",
-    "Portuguese",
-    "Italian",
-    "Dutch",
-    "Arabic",
-    "Hebrew",
-    "Persian",
-    "Urdu",
-    "Hindi",
-    "Bengali",
-    "Tamil",
-    "Telugu",
-    "Indonesian",
-    "Malay",
-    "Filipino",
-    "Vietnamese",
-    "Thai",
-    "Burmese",
-    "Khmer",
-    "Lao",
-    "Russian",
-    "Ukrainian",
-    "Turkish",
-    "Polish",
-    "Czech",
-    "Romanian",
-    "Greek",
-    "Danish",
-    "Finnish",
-    "Norwegian",
-    "Swedish",
-    "Afrikaans",
-    "Swahili",
-    "Other",
 ] as const;
 const JURISDICTION_OPTIONS = [
     ...US_STATE_OPTIONS,
@@ -798,13 +764,13 @@ export function NewWorkflowModal({
 
                             <div>
                                 <FieldLabel htmlFor="workflow-practice">
-                                    Trade / discipline
+                                    Trade
                                 </FieldLabel>
                                 <ModalSelect
                                     id="workflow-practice"
                                     value={practice}
                                     options={PRACTICE_OPTIONS}
-                                    placeholder="Select trade or discipline"
+                                    placeholder="Select trade"
                                     disabled={viewOnly}
                                     open={openDropdown === "practice"}
                                     onOpenChange={(nextOpen) =>
@@ -835,7 +801,7 @@ export function NewWorkflowModal({
                                             practiceEditedRef.current = true;
                                             setCustomPractice(e.target.value);
                                         }}
-                                        placeholder="Enter trade or discipline…"
+                                        placeholder="Enter trade…"
                                         className="mt-2"
                                     />
                                 )}
